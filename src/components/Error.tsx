@@ -1,17 +1,20 @@
-import {Text, Stack, Center} from '@mantine/core'
+import {Text, Box, Center} from '@mantine/core'
 import {IconAlertTriangle} from '@tabler/icons-react'
-import AllCenter from './AllCenter'
 
-function ErrorDisplay(){
+interface ErrorDisplayInput{
+    iconSize:number,
+    textSize:string,
+    text:string
+}
+
+function ErrorDisplay({iconSize,textSize,text}:ErrorDisplayInput){
     return (
-        <AllCenter>
-            <Stack>
+            <Box>
                 <Center>
-                    <IconAlertTriangle size={100} color='red'/>
+                    <IconAlertTriangle size={iconSize} color='red'/>
                 </Center>
-                <Text c="red" size="lg">Errore: impossibile contattare il server</Text>
-            </Stack>
-        </AllCenter>
+                <Text c="red" ta="center" size={textSize}>{text}</Text>
+            </Box>
     )
 }
 
