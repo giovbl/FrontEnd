@@ -1,5 +1,3 @@
-/* eslint-disable  */ 
-
 import { Table,ActionIcon,Button,Stack,Group,TextInput,Center,Box,Text } from "@mantine/core"
 import { IconEye, IconPlus, IconSearch } from "@tabler/icons-react"
 
@@ -10,6 +8,8 @@ import AnalysisDisplay from "./AnalysisDisplay"
 import ShipmentDisplay from "./ShipmentDisplay"
 import WorkgroupInfo from "./WorkgroupInfo"
 import AnalysisState from "./AnalysisState"
+import ShipmentAddress from "./ShipmentAddress"
+import ShipmentState from "./ShipmentState"
 
 interface DataTableInput{
     type: 'sampleOncologo' | 'sampleAnalyst' | 'patient' | 'shipment',
@@ -98,7 +98,8 @@ function DataTable({type,data}:DataTableInput){
                     itm.sender.residenceCity.toLowerCase().includes(query) ||
                     itm.sender.cap.toLowerCase().includes(query) ||
                     (itm.sender.address+' '+itm.sender.civicNumber).toLowerCase().includes(query) ||
-                    shippingString(itm.shipping.status).toLowerCase().includes(query)               
+                    shippingString(itm.shipping.status).toLowerCase().includes(query) ||
+                    String(itm.sample).includes(query)
                 ))
                 break;
             default:
@@ -157,6 +158,15 @@ function DataTable({type,data}:DataTableInput){
                             <Table.Th>Centro oncologico</Table.Th>
                             <Table.Th>Spedizione</Table.Th>
                             <Table.Th>Stato analisi</Table.Th>
+                        </>
+                    }
+                    {type === 'shipment' &&
+                        <>
+                            <Table.Th>Id spedizione</Table.Th>
+                            <Table.Th>Id campione</Table.Th>
+                            <Table.Th>Mittente</Table.Th>
+                            <Table.Th>Destinatario</Table.Th>
+                            <Table.Th>Stato spedizione</Table.Th>
                         </>
                     }
                     </Table.Tr>
@@ -235,6 +245,31 @@ function DataTable({type,data}:DataTableInput){
                                 <Table.Td>
                                     <AnalysisState 
                                         sampleid={itm.id} 
+                                        status={itm.status}
+                                        data={tdata}
+                                        setData={setTdata}/>
+                                </Table.Td>
+                            </Table.Tr>
+                        ))
+                    }
+                    { type === 'shipment' &&
+                        tdata.map((itm) => (
+                            <Table.Tr key={itm.id}>
+                                <Table.Td>
+                                    {itm.id}
+                                </Table.Td>
+                                <Table.Td>
+                                    {itm.sample}
+                                </Table.Td>
+                                <Table.Td>
+                                    <ShipmentAddress facility={itm.sender}/>
+                                </Table.Td>
+                                <Table.Td>
+                                    <ShipmentAddress facility={itm.recipient}/>
+                                </Table.Td>
+                                <Table.Td>
+                                    <ShipmentState
+                                        shipmentId={itm.id}
                                         status={itm.status}
                                         data={tdata}
                                         setData={setTdata}/>

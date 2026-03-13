@@ -16,11 +16,12 @@ import DataTable from './components/datatable/DataTable';
 const patientData = [{fiscalCode:"RSSMRR2323DSD",name:"Mario",surname:"Rossi",phone:"666"},{fiscalCode:"BNCGLA7373HGD",name:"Giulia",surname:"Bianchi",phone:"333"}]
 const sampOncData = [{id:1,status:'unanalyzed',referto:1,patient:"AABB32323CC",shipment:{status:"arrived", expectedTakenDate: new Date(),effectiveTakenDate: new Date(),expectedDeliveryDate:new Date(),effectiveDeliveryDate:new Date()},analystWorkgroup:{groupName:"Gruppo Analisi",facility:{nome:"Centro Analisi"}}}]
 const sampAnData = [{id:1,status:'unanalyzed',referto:1,patient:"AABB32323CC",shipment:{status:"arrived", expectedTakenDate: new Date(),effectiveTakenDate: new Date(),expectedDeliveryDate:new Date(),effectiveDeliveryDate:new Date()},oncologiWorkgroup:{groupName:"Gruppo Analisi",facility:{nome:"Centro Analisi"}}}]
+const shipData = [{id:1,sample:1,status:"received",sender:{cap:'00128',residenceCity:'Marigliano',residenceProvince:'Napoli',residenceRegion:'Campania',address:'Via A. Berni',civicNumber:6},recipient:{cap:'00128',residenceCity:'Marigliano',residenceProvince:'Napoli',residenceRegion:'Campania',address:'Via A. Berni',civicNumber:6}}]
 
 
 const router = createBrowserRouter([
   
-  {path: '/',element:<DataTable type="sampleAnalyst" data={sampAnData}/>},
+  {path: '/',element:<DataTable type="shipment" data={shipData}/>},
   {
     path:'/auth/register',
     element:<Register/>,
