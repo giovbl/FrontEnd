@@ -1,4 +1,4 @@
-import { Table,ActionIcon,Button,Stack,Group,TextInput,Center,Box,Text } from "@mantine/core"
+import { Table,ActionIcon,Button,Stack,Group,TextInput,Center } from "@mantine/core"
 import { IconEye, IconPlus, IconSearch } from "@tabler/icons-react"
 
 import { useState } from "react"
