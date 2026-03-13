@@ -7,4 +7,27 @@ const api = axios.create({
   },
 });
 
+//Interceptor for automatic token refresh
+api.interceptors.response.use((response) => response,async (error) => {
+  
+    const originalRequest = error.config;
+
+    //If unauthorized and it's not a retry request
+    if (error.response.status === 401 && !originalRequest._retry) {
+
+      //Marking as retry request for preventing loops
+      originalRequest._retry = true;
+
+      try{
+        await api.post('api/refresh')
+        return api(originalRequest)
+      }
+      catch(err){
+        return Promise.reject(err);
+      }
+    }
+
+    return Promise.reject(error);
+})
+
 export default api;
