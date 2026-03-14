@@ -1,3 +1,5 @@
+type UserType = 'Oncologo' | 'Corriere' | 'Analista'
+
 interface Workgroup{
     id: number,
     groupName: "Oncologia",
@@ -12,7 +14,16 @@ interface Facility {
     workgroups: Array<Workgroup>
 }
 
+interface UserData{
+    id: number,
+    name: string
+    userType: UserType,
+    workgroup: number
+}
+
 export {
     type Workgroup,
-    type Facility
+    type Facility,
+    type UserData,
+    type UserType
 }

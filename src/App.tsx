@@ -6,8 +6,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ErrorDisplay from './components/Error';
 import AllCenter from './components/AllCenter';
 
-import Login from './pages/Login'
-import Register, {loader as registerLoader} from './pages/Register'
+import Login from './pages/LoginPage'
+import Register from './pages/Register'
+import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
 
 import AppLayout from './components/AppLayout'
 import MainPage from './pages/MainPage';
@@ -62,23 +63,23 @@ const router = createBrowserRouter([
         element:<Login/>
       },
       {
-        path:'login/workgroup',
-        element: <MainPage/>
-      },
-      {
         path:'register',
-        element:<Register/>,
-        loader: registerLoader,
-        errorElement: (
-          <AllCenter>
-              <ErrorDisplay 
-                width={300}
-                iconSize={150} 
-                textSize="lg" 
-                text="Errore di comunicazine col server"/>
-          </AllCenter>)
+        element:<Register/>
       }
     ]
+  },
+  {
+    path:'user/setup',
+    element: <WorkgroupPage/>,
+    loader: workgroupPageLoader,
+    errorElement: (
+      <AllCenter>
+          <ErrorDisplay 
+            width={300}
+            iconSize={150} 
+            textSize="lg" 
+            text="Errore di comunicazine col server"/>
+      </AllCenter>)
   },
   {
     path:'*',

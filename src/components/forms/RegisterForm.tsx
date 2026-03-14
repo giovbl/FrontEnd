@@ -9,21 +9,18 @@ import {z} from 'zod'
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import api from '../../utils/api'
-import { type Facility } from '../../utils/types';
 
 const schema = z.object({
   fullname: z.string().nonempty("Inserire un nome"),
   email: z.email("Email non corretta"),
   password: z.string().nonempty("Inserire una password"),
-  type: z.string().nonempty("Inserire un tipo"),
-  workgroup: z.string()
+  type: z.string().nonempty("Inserire un tipo")
 })
 
-function RegisterForm({facilities}: {facilities:Array<Facility>}){
+function RegisterForm(){
 
   const [failed, setFailed] = useState(false)
   const [userExsists, setUserExsists] = useState(false)
-  const [wgFilter,setWgFilter] = useState('Oncologo')
   const navigate = useNavigate();
 
   const {
@@ -43,8 +40,7 @@ function RegisterForm({facilities}: {facilities:Array<Facility>}){
     setFailed(false)
     setUserExsists(false)
 
-    if(data.type != 'Corriere' && 
-      data.workgroup === 'Seleziona un workgroup'){
+    if(data.type === 'null'){
       return;
     }
 
@@ -52,8 +48,7 @@ function RegisterForm({facilities}: {facilities:Array<Facility>}){
       fullname: data.fullname,
       email: data.email,
       pwd: data.password,
-      userType: data.type,
-      workgroup:Number(data.workgroup)
+      userType: data.type
     })
     .then((res) => {
 
@@ -101,37 +96,12 @@ function RegisterForm({facilities}: {facilities:Array<Facility>}){
 
                 <NativeSelect label="Tipo di utente"
                     {...register('type',{
-                      required:true,
-                      onChange: (e) => {setWgFilter(()=>e.target.value)}
-                    })}>
+                      required:true})}>
+                  <option key='null' value='null'>Seleziona un opzione</option>
                   <option key="Oncologo" value="Oncologo">Oncologo</option>
                   <option key="Corriere" value="Corriere">Corriere</option>
                   <option key="Analista" value="Analista">Analista</option>
                 </NativeSelect>
-
-                { wgFilter === 'Corriere'?
-                    <NativeSelect label="Workgroup" disabled
-                      {...register('workgroup')}>
-                        <option>Seleziona un workgroup</option>      
-                    </NativeSelect>
-                    :
-                    <NativeSelect label="Workgroup" error={errors.workgroup?.message}
-                      {...register('workgroup')}>
-                        <option>Seleziona un workgroup</option>
-              
-                        {facilities && facilities.map((facility:Facility) => (
-                            <optgroup key={facility.id} label={facility.nome}>
-                                {
-                                facility.workgroups.filter(
-                                  (wgi) => wgi.groupType === (wgFilter === 'Oncologo'? 'oncologo': 'analyst')
-                                  ).map((wg) => (
-                                    <option key={wg.id} value={wg.id}>{wg.groupName}</option>
-                                  ))
-                                }
-                            </optgroup>         
-                        ))}         
-                    </NativeSelect>
-                }
 
                 <Button type='submit'>Registrati</Button>
 

@@ -43,11 +43,10 @@ function LoginForm(){
     })
     .then((res) => {
 
-      //Storing user data for permissions
-      localStorage.setItem('user', JSON.stringify(res.data));
-
-      navigate('../register')
-
+      if(res.data.requiresConfig)
+        navigate('/user/setup')
+      else
+        navigate('/')
     })
     .catch((error) =>{
       if(error.status === 401)
@@ -66,7 +65,7 @@ function LoginForm(){
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack>
 
-              <TextInput 
+              <TextInput
                 label='Email' 
                 placeholder="alias@domain.com"
                 leftSection={<IconAt/>} 
