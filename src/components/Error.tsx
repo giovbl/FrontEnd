@@ -2,7 +2,7 @@ import {Text, Box, Center} from '@mantine/core'
 import {IconAlertTriangle} from '@tabler/icons-react'
 
 interface ErrorDisplayInput{
-    width: number,
+    width?: number,
     iconSize:number,
     textSize:string,
     text:string

@@ -1,5 +1,4 @@
 import RegisterForm from "../components/forms/RegisterForm"
-import AllCenter from "../components/AllCenter"
 
 import api from '../utils/api'
 import { useLoaderData } from "react-router-dom"
