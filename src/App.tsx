@@ -12,6 +12,8 @@ import Register, {loader as registerLoader} from './pages/Register'
 import AppLayout from './components/AppLayout'
 import MainPage from './pages/MainPage';
 import PatientsPage from './pages/PatientsPage';
+import AuthLayout from './components/AuthLayout';
+import RegisterForm from './components/forms/RegisterForm';
 
 /*
 Only for test
@@ -30,7 +32,8 @@ const router = createBrowserRouter([
     errorElement: (
       <AllCenter>
           <ErrorDisplay 
-            iconSize={400} 
+            width={300}
+            iconSize={150} 
             textSize="lg" 
             text="Errore di comunicazine col server"/>
       </AllCenter>
@@ -47,21 +50,31 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path:'/auth/register',
-    element:<Register/>,
-    loader: registerLoader,
-    errorElement: (
-      <AllCenter>
-          <ErrorDisplay 
-            iconSize={400} 
-            textSize="lg" 
-            text="Errore di comunicazine col server"/>
-      </AllCenter>
-    )
-  },
-  {
-    path:'/auth/login',
-    element:<Login/>
+    path:'auth',
+    element: <AuthLayout/>,
+    children:[
+      {
+        path:'',
+        element:<Login/>
+      },
+      {
+        path:'login',
+        element:<Login/>
+      },
+      {
+        path:'register',
+        element:<Register/>,
+        loader: registerLoader,
+        errorElement: (
+          <AllCenter>
+              <ErrorDisplay 
+                width={300}
+                iconSize={150} 
+                textSize="lg" 
+                text="Errore di comunicazine col server"/>
+          </AllCenter>)
+      }
+    ]
   }
 ])
 

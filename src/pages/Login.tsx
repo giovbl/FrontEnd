@@ -2,7 +2,6 @@ import { useSearchParams } from 'react-router-dom'
 import {Alert,Box,Space} from '@mantine/core'
 
 import LoginForm from '../components/forms/LoginForm'
-import AllCenter from '../components/AllCenter'
 import { IconCheck } from '@tabler/icons-react';
 
 function Login() {
@@ -11,7 +10,6 @@ function Login() {
   const regParam = searchParams.get("reg")
 
   return (
-    <AllCenter>
       <Box>
           {regParam === 'true' &&
             <Alert variant="light" 
@@ -25,7 +23,6 @@ function Login() {
 
           <LoginForm/>
       </Box>
-    </AllCenter>
   )
 }
 

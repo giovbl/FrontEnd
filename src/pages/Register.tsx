@@ -17,11 +17,7 @@ function Register(){
 
     const data = useLoaderData()
 
-    return (
-        <AllCenter>
-            <RegisterForm facilities={data}/>
-        </AllCenter>
-    )
+    return <RegisterForm facilities={data}/>
 }
 
 export default Register
