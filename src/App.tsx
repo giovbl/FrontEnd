@@ -13,7 +13,7 @@ import AppLayout from './components/AppLayout'
 import MainPage from './pages/MainPage';
 import PatientsPage from './pages/PatientsPage';
 import AuthLayout from './components/AuthLayout';
-import RegisterForm from './components/forms/RegisterForm';
+import Error404 from './pages/Error404';
 
 /*
 Only for test
@@ -62,6 +62,10 @@ const router = createBrowserRouter([
         element:<Login/>
       },
       {
+        path:'login/workgroup',
+        element: <MainPage/>
+      },
+      {
         path:'register',
         element:<Register/>,
         loader: registerLoader,
@@ -75,6 +79,10 @@ const router = createBrowserRouter([
           </AllCenter>)
       }
     ]
+  },
+  {
+    path:'*',
+    element: <Error404/>
   }
 ])
 
