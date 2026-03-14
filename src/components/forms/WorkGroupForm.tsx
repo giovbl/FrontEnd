@@ -10,6 +10,7 @@ import {z} from 'zod'
 import api from "../../utils/api"
 
 import type { Facility, UserData, UserType } from "../../utils/types"
+import { IconAlertTriangle } from "@tabler/icons-react"
 
 const schema = z.object({
   workgroup:z.string().nonempty("Inserire un workgroup")
@@ -96,7 +97,7 @@ function WorkGroupForm({facilities, user}: WorkGroupFormType) {
             </form>
 
             {failed && 
-                <Alert variant="light" color="red" title={login.message} icon={<IconAlertTriangle/>}/>
+                <Alert variant="light" color="red" title={failed} icon={<IconAlertTriangle/>}/>
             }
         </Box>
     )
