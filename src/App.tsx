@@ -38,7 +38,7 @@ const router = createBrowserRouter([
             width={300}
             iconSize={150} 
             textSize="lg" 
-            text="Errore di comunicazine col server"/>
+            text="Errore di comunicazione col server"/>
       </AllCenter>
     ),
     children:[
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
             width={300}
             iconSize={150} 
             textSize="lg" 
-            text="Errore di comunicazine col server"/>
+            text="Errore di comunicazione col server"/>
       </AllCenter>)
   },
   {
