@@ -1,23 +1,22 @@
-import { createContext } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { redirect, useLoaderData, useMatch, useNavigate } from 'react-router'
 
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Center, Group, Text, NavLink } from "@mantine/core";
+import { AppShell, Burger, Center, Group, Text, NavLink, Divider } from "@mantine/core";
+import { IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
 
 import api from '../utils/api';
 
 import AllCenter from './AllCenter';
-import type { UserData } from '../utils/types';
-import { IconTestPipe2Filled, IconUserFilled } from '@tabler/icons-react';
+import { UserContext } from '../utils/context';
 
-const UserContext = createContext(undefined);
-
+//Loader for getting current user's info
 // eslint-disable-next-line react-refresh/only-export-components
 export async function loader(){
     
     try{
         const res = await api.get('user')
+        console.log(res.data)
         return res.data
     }catch(err){
         if(err.status === 401)
@@ -35,7 +34,6 @@ function AppLayout(){
     const navigate = useNavigate();
 
     const user = useLoaderData()
-    const usr:UserData = user
 
     return(
         <UserContext.Provider value={user}>
@@ -56,7 +54,7 @@ function AppLayout(){
                 {opened &&
                     <AppShell.Navbar p="md" px="md">
 
-                        {usr.userType === 'Oncologo' &&
+                        {user.userType === 'Oncologo' &&
                             <>
                                 <NavLink
                                     label="Campioni"
@@ -67,10 +65,18 @@ function AppLayout(){
                                 <NavLink
                                     label="Pazienti"
                                     active={!!match && match.pathname === '/patient'}
-                                    leftSection={<IconUserFilled/>}
+                                    leftSection={<IconUsers/>}
                                     onClick={()=>navigate('/patient')}/>
+
+                                <Divider/>
                             </>                            
                         }
+
+                        <NavLink
+                            label="Account"
+                            active={!!match && match.pathname === '/user'}
+                            leftSection={<IconUserFilled/>}
+                            onClick={()=>navigate('/user')}/>
 
                     </AppShell.Navbar>
                 }

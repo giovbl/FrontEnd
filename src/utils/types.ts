@@ -1,29 +1,49 @@
 type UserType = 'Oncologo' | 'Corriere' | 'Analista'
+type WorkgroupType = "oncologo" | 'analyst'
 
-interface Workgroup{
+interface WorkgroupBase{
     id: number,
-    groupName: "Oncologia",
-    groupType: "oncologo" | 'analyst',
+    groupName: string,
+    groupType: WorkgroupType,
+}
+
+interface Workgroup extends WorkgroupBase{
     facility: number
 }
 
-interface Facility {
+interface WorkgroupInfo extends WorkgroupBase{
+    facility: Facility
+}
+
+interface Facility{
     id: number,
     nome: string,
-    firstName: string,
+    cap: string,
+    residenceCity: string,
+    residenceProvince: string,
+    residenceRegion: string,
+    address: string,
+    civicNumber: number
+}
+
+interface FacilityInfo extends Facility {
     workgroups: Array<Workgroup>
 }
 
 interface UserData{
     id: number,
-    name: string
+    fullname: string,
+    email: string,
     userType: UserType,
-    workgroup: number
+    workgroup: WorkgroupInfo
 }
 
 export {
+    type UserType,
+    type WorkgroupType,
     type Workgroup,
+    type WorkgroupInfo,
     type Facility,
-    type UserData,
-    type UserType
+    type FacilityInfo,
+    type UserData
 }

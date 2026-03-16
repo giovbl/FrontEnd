@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import MainPage from './pages/MainPage'
 import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
 import PatientsPage from './pages/PatientsPage';
+import UserInfoPage from './pages/UserInfoPage';
 
 import AppLayout, {loader as appLoader} from './components/AppLayout'
 import AuthLayout from './components/AuthLayout';
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
     loader: appLoader,
     errorElement: (
       <AllCenter>
-          <ErrorDisplay 
+          <ErrorDisplay
             width={300}
             iconSize={150} 
             textSize="lg" 
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path:'/patient',
         element: <PatientsPage/>
+      },
+      {
+        path:'/user',
+        element: <UserInfoPage/>
       }
     ],
   },
