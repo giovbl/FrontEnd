@@ -54,10 +54,11 @@ function DataTable({type,data}:DataTableInput){
         }
     }
 
+    //Function for filtering data (search functionality)
     function search(e: React.ChangeEvent<HTMLInputElement>){
         const query = e.target.value.toLowerCase()
 
-        if(!query || query.length <= 3){
+        if(!query){
             setTdata(data)
             return
         }
@@ -75,8 +76,8 @@ function DataTable({type,data}:DataTableInput){
                     itm.analystWorkgroup.facility.nome.toLowerCase().includes(query) ||
                     itm.analystWorkgroup.groupName.toLowerCase().includes(query) ||
                     itm.patient.toLowerCase().includes(query) ||
-                    shippingString(itm.shipping.status).toLowerCase().includes(query) ||
-                    sampleStatusString(itm.status).toLowerCase().includes(query)
+                    shippingString(itm.shipping?.status).toLowerCase().includes(query) ||
+                    sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
                 ))
                 break;
             case 'sampleAnalyst':
@@ -85,8 +86,8 @@ function DataTable({type,data}:DataTableInput){
                     itm.oncologiWorkgroup.facility.nome.toLowerCase().includes(query) ||
                     itm.oncologiWorkgroup.groupName.toLowerCase().includes(query) ||
                     itm.patient.toLowerCase().includes(query) ||
-                    shippingString(itm.shipping.status).toLowerCase().includes(query) ||
-                    sampleStatusString(itm.status).toLowerCase().includes(query)
+                    shippingString(itm.shipping?.status).toLowerCase().includes(query) ||
+                    sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
                 ))
                 break;
             case 'shipment':
@@ -98,7 +99,7 @@ function DataTable({type,data}:DataTableInput){
                     itm.sender.residenceCity.toLowerCase().includes(query) ||
                     itm.sender.cap.toLowerCase().includes(query) ||
                     (itm.sender.address+' '+itm.sender.civicNumber).toLowerCase().includes(query) ||
-                    shippingString(itm.shipping.status).toLowerCase().includes(query) ||
+                    shippingString(itm.status).toLowerCase().includes(query) ||
                     String(itm.sample).includes(query)
                 ))
                 break;
@@ -173,7 +174,7 @@ function DataTable({type,data}:DataTableInput){
                 </Table.Thead>
 
                 <Table.Tbody>
-                    { type === 'patient' &&
+                    {tdata && type === 'patient' &&
                         tdata.map((itm) => (
                             <Table.Tr key={itm.fiscalCode}>
                                 <Table.Td>{itm.fiscalCode}</Table.Td>
@@ -192,7 +193,7 @@ function DataTable({type,data}:DataTableInput){
                             </Table.Tr>
                         ))
                     }
-                    { type === 'sampleOncologo' &&
+                    {tdata && type === 'sampleOncologo' &&
                         tdata.map((itm) => (
                             <Table.Tr key={itm.id}>
                                 <Table.Td>
@@ -217,14 +218,14 @@ function DataTable({type,data}:DataTableInput){
                                 </Table.Td>
                                 <Table.Td>
                                     <AnalysisDisplay 
-                                        status={itm.status}
+                                        status={itm.analysisStat}
                                         refertoid={itm.referto}
                                         strfun={sampleStatusString}/>
                                 </Table.Td>
                             </Table.Tr>
                         ))
                     }
-                    { type === 'sampleAnalyst' &&
+                    {tdata && type === 'sampleAnalyst' &&
                         tdata.map((itm) => (
                             <Table.Tr key={itm.id}>
                                 <Table.Td>
@@ -245,14 +246,14 @@ function DataTable({type,data}:DataTableInput){
                                 <Table.Td>
                                     <AnalysisState 
                                         sampleid={itm.id} 
-                                        status={itm.status}
+                                        status={itm.analysisStat}
                                         data={tdata}
                                         setData={setTdata}/>
                                 </Table.Td>
                             </Table.Tr>
                         ))
                     }
-                    { type === 'shipment' &&
+                    {tdata && type === 'shipment' &&
                         tdata.map((itm) => (
                             <Table.Tr key={itm.id}>
                                 <Table.Td>

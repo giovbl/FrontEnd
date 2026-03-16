@@ -2,9 +2,9 @@ import { useContext } from 'react'
 
 import {Box, Space, TextInput, Group, Fieldset} from '@mantine/core'
 
-import { UserContext } from '../utils/context'
-import type { UserData } from '../utils/types'
-import WorkgroupInfo from '../components/datatable/WorkgroupInfo'
+import { UserContext } from '../../utils/context'
+import type { UserData } from '../../utils/types'
+import WorkgroupInfo from '../../components/datatable/WorkgroupInfo'
 
 function UserInfoPage(){
 

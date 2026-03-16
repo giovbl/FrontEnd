@@ -3,7 +3,7 @@ import { redirect, useLoaderData, useMatch, useNavigate } from 'react-router'
 
 import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Center, Group, Text, NavLink, Divider } from "@mantine/core";
-import { IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
+import { IconPackage, IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
 
 import api from '../utils/api';
 
@@ -16,7 +16,6 @@ export async function loader(){
     
     try{
         const res = await api.get('user')
-        console.log(res.data)
         return res.data
     }catch(err){
         if(err.status === 401)
@@ -58,19 +57,39 @@ function AppLayout(){
                             <>
                                 <NavLink
                                     label="Campioni"
-                                    active={!!match && match.pathname === '/'}
+                                    active={!!match && match.pathname === '/oncologo'}
                                     leftSection={<IconTestPipe2Filled/>}
-                                    onClick={()=>navigate('/')}/>
+                                    onClick={()=>navigate('/oncologo')}/>
 
                                 <NavLink
                                     label="Pazienti"
                                     active={!!match && match.pathname === '/patient'}
                                     leftSection={<IconUsers/>}
                                     onClick={()=>navigate('/patient')}/>
-
-                                <Divider/>
-                            </>                            
+                            </> 
                         }
+
+                        {user.userType === 'Corriere' &&
+                            <>
+                                <NavLink
+                                    label="Spedizioni"
+                                    active={!!match && match.pathname === '/courier'}
+                                    leftSection={<IconPackage/>}
+                                    onClick={()=>navigate('/courier')}/>
+                            </> 
+                        }
+
+                        {user.userType === 'Analista' &&
+                            <>
+                                <NavLink
+                                    label="Campioni"
+                                    active={!!match && match.pathname === '/analyst'}
+                                    leftSection={<IconTestPipe2Filled/>}
+                                    onClick={()=>navigate('/analyst')}/>
+                            </> 
+                        }
+
+                        <Divider/>
 
                         <NavLink
                             label="Account"
