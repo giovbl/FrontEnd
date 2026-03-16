@@ -8,12 +8,13 @@ import AllCenter from './components/AllCenter';
 
 import Login from './pages/LoginPage'
 import Register from './pages/Register'
+import MainPage from './pages/MainPage'
 import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
-
-import AppLayout from './components/AppLayout'
-import MainPage from './pages/MainPage';
 import PatientsPage from './pages/PatientsPage';
+
+import AppLayout, {loader as appLoader} from './components/AppLayout'
 import AuthLayout from './components/AuthLayout';
+
 import Error404 from './pages/Error404';
 
 /*
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <AppLayout/>,
+    loader: appLoader,
     errorElement: (
       <AllCenter>
           <ErrorDisplay 
