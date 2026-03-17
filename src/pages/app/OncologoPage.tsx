@@ -1,8 +1,9 @@
-import { useLoaderData, redirect } from "react-router-dom";
+import { useLoaderData, redirect, useNavigation } from "react-router-dom";
 
 import DataTable from "../../components/datatable/DataTable";
 
 import api from "../../utils/api";
+import Loading from "../../components/Loading";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -23,8 +24,12 @@ export async function loader(){
 function OncologoPage(){
 
     const samples = useLoaderData()
-    
-    return <DataTable type="sampleOncologo" data={samples}/>
+    const navigation = useNavigation()
+
+    if(navigation.state === 'loading')
+        return <Loading/>
+    else
+        return <DataTable type="sampleOncologo" data={samples}/>
 }
 
 export default OncologoPage

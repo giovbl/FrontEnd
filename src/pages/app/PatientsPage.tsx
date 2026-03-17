@@ -1,8 +1,9 @@
-import { useLoaderData, redirect } from "react-router-dom";
+import { useLoaderData, redirect, useNavigation } from "react-router-dom";
 
 import DataTable from "../../components/datatable/DataTable";
 
 import api from "../../utils/api";
+import Loading from "../../components/Loading";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -23,8 +24,12 @@ export async function loader(){
 function PatientsPage(){
 
     const patients = useLoaderData()
+    const navigation = useNavigation()
     
-    return <DataTable type="patient" data={patients}/>
+    if(navigation.state === 'loading')
+        return <Loading/>
+    else
+        return <DataTable type="patient" data={patients}/>
 }
 
 export default PatientsPage

@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { Text,Loader, Center, Box } from '@mantine/core'
+
 import { UserContext } from "../../utils/context"
 import { type UserData } from '../../utils/types'
 
@@ -26,9 +28,12 @@ function MainPage(){
     },[])
 
     return (
-        <>
-        REDIREZIONE
-        </>
+        <Box>
+            <Center>
+                <Loader color="blue"/>
+                <Text>Redirezione in corso...</Text>
+            </Center>
+        </Box>
     )
 }
 

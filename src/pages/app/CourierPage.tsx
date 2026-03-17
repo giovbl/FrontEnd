@@ -1,8 +1,9 @@
-import { useLoaderData, redirect } from "react-router-dom";
+import { useLoaderData, redirect, useNavigation } from "react-router-dom";
 
 import DataTable from "../../components/datatable/DataTable";
 
 import api from "../../utils/api";
+import Loading from "../../components/Loading";
 
 //Loader for getting user's shippings
 // eslint-disable-next-line react-refresh/only-export-components
@@ -23,8 +24,12 @@ export async function loader(){
 function CourierPage(){
 
     const samples = useLoaderData()
+    const navigation = useNavigation()
     
-    return <DataTable type="shipment" data={samples}/>
+    if(navigation.state === 'loading')
+        return <Loading/>
+    else
+        return <DataTable type="shipment" data={samples}/>
 }
 
 export default CourierPage
