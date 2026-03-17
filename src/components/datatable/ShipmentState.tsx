@@ -4,6 +4,7 @@ import { Button, Group, Text } from '@mantine/core'
 import type { ShipmentStatus } from "./types";
 import ErrorDisplay from "../Error";
 import { IconCheck } from "@tabler/icons-react";
+import api from "../../utils/api";
 
 interface ShipmentStateInput{
     shipmentId: number,
@@ -16,7 +17,7 @@ function ShipmentState({shipmentId,status,data,setData}:ShipmentStateInput){
 
     const [failed, setFailed] = useState(false)
 
-    const changeStatus = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const changeStatus = async (e: React.MouseEvent<HTMLButtonElement>) => {
         
         let newStatus:ShipmentStatus;
         
@@ -31,12 +32,15 @@ function ShipmentState({shipmentId,status,data,setData}:ShipmentStateInput){
             case 'in transit':
                 newStatus = 'arrived'
                 break;
+            default:
+                newStatus= 'taken'
+                break;
         }
 
         try{
-            /*
-            change state
-            */
+            await api.patch(`shipment/${shipmentId}/status`,{
+                status:newStatus
+            })
 
             setData(data.map(itm => {
                   if(itm.id == shipmentId)
@@ -58,8 +62,7 @@ function ShipmentState({shipmentId,status,data,setData}:ShipmentStateInput){
             case 'taken':
                 return 'Segna come in transito'
             case 'in transit':
-                return 'Segna come consegnato'
-        
+                return 'Segna come consegnato'      
             default:
                 break;
         }

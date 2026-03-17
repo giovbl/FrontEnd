@@ -3,6 +3,7 @@ import { Button } from '@mantine/core'
 
 import { type AnalysisStatus } from "./types"
 import ErrorDisplay from "../Error";
+import api from "../../utils/api";
 
 interface AnalysisStateInput{
     status: AnalysisStatus,
@@ -16,17 +17,13 @@ function AnalysisState({status,sampleid,data,setData}:AnalysisStateInput){
     const [failed, setFailed] = useState(false)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const setToAnalyze = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const setToAnalyze = async (e: React.MouseEvent<HTMLButtonElement>) => {
         const newState = 'analyzing'
 
-        /*
-        ensure auth
-        */
-
         try{
-            /*
-            make request
-            */
+            await api.patch(`sample/${sampleid}/status`,{
+                status:newState
+            })
 
             setData(data.map(itm => {
                   if(itm.id == sampleid)
