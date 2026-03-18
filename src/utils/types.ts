@@ -1,21 +1,23 @@
-type UserType = 'Oncologo' | 'Corriere' | 'Analista'
-type WorkgroupType = "oncologo" | 'analyst'
+export type UserType = 'Oncologo' | 'Corriere' | 'Analista'
+export type WorkgroupType = "oncologo" | 'analyst'
+export type AnalysisStatus = 'unanalyzed' | 'analyzing' | 'completed';
+export type ShipmentStatus = 'received' | 'taken' | 'in transit' | 'arrived';
 
-interface WorkgroupBase{
+export interface WorkgroupBase{
     id: number,
     groupName: string,
     groupType: WorkgroupType,
 }
 
-interface Workgroup extends WorkgroupBase{
+export interface Workgroup extends WorkgroupBase{
     facility: number
 }
 
-interface WorkgroupInfo extends WorkgroupBase{
+export interface WorkgroupInfo extends WorkgroupBase{
     facility: Facility
 }
 
-interface Facility{
+export interface Facility{
     id: number,
     nome: string,
     cap: string,
@@ -26,11 +28,11 @@ interface Facility{
     civicNumber: number
 }
 
-interface FacilityInfo extends Facility {
+export interface FacilityInfo extends Facility {
     workgroups: Array<Workgroup>
 }
 
-interface UserData{
+export interface UserData{
     id: number,
     fullname: string,
     email: string,
@@ -38,12 +40,36 @@ interface UserData{
     workgroup: WorkgroupInfo
 }
 
-export {
-    type UserType,
-    type WorkgroupType,
-    type Workgroup,
-    type WorkgroupInfo,
-    type Facility,
-    type FacilityInfo,
-    type UserData
+export interface Patient{
+    fiscalCode: string,
+    isForeign: boolean,
+    name: string,
+    surname: string,
+    birthDate: Date,
+    initials: string,
+    gender: string,
+    ethnicOrigin: string,
+    otherEthnicOrigin: string,
+    residenceRegion: string,
+    residenceCity: string,
+    residenceProvince: string,
+    cap: string,
+    address: string,
+    civicNumber: number,
+    phone: string,
+    privacyAndConditions: boolean,
+    privacyPersonalData: boolean
+    diagnosis: string,
+    neoplasia: string,
+    familiarity: number,
+    brcaSomaticTest: boolean,
+    mutationResult: string,
+    histology: string,
+    otherHistology: string,
+    isoTypeOtherDetails: string,
+    hasReceivedSystemicTreatment: boolean,
+    platinumSensitive: boolean,
+    oncologistNotes: string,
+    allergies: string,
+    previousTreatments: string
 }

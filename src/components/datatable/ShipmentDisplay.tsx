@@ -1,6 +1,6 @@
 import {Group,Text,Box} from '@mantine/core'
 import { IconX, IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery } from '@tabler/icons-react'
-import type { ShipmentStatus } from './types'
+import type { ShipmentStatus } from '../../utils/types'
 
 export interface ShipmentDisplayInput{
     shipment: unknown  

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Group, Text } from '@mantine/core'
 
-import type { ShipmentStatus } from "./types";
+import type { ShipmentStatus } from "../../utils/types";
 import ErrorDisplay from "../Error";
 import { IconCheck } from "@tabler/icons-react";
 import api from "../../utils/api";

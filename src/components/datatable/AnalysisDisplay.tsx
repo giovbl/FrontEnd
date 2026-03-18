@@ -2,7 +2,7 @@ import {Group,Text} from '@mantine/core'
 import { IconCircleFilled } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
-import {type AnalysisStatus} from './types'
+import {type AnalysisStatus} from '../../utils/types'
 
 export interface AnalysisDisplayInput{
     status: AnalysisStatus,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from '@mantine/core'
 
-import { type AnalysisStatus } from "./types"
+import { type AnalysisStatus } from "../../utils/types"
 import ErrorDisplay from "../Error";
 import api from "../../utils/api";
 

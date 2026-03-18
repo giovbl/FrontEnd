@@ -67,7 +67,7 @@ function DataTable({type,data}:DataTableInput){
             case 'patient':
                 setTdata(data.filter((itm) =>
                     (itm.name+' '+itm.surname).toLowerCase().includes(query) ||
-                    itm.fiscalCode.includes(query)
+                    itm.fiscalCode.toLowerCase().includes(query)
                 ))
                 break;
             case 'sampleOncologo':

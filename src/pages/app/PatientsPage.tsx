@@ -11,7 +11,6 @@ export async function loader(){
     
     try{
         const res = await api.get('patient')
-        console.log(res.data)
         return res.data
     }catch(err){
         if(err.status === 401)

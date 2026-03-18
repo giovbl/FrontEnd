@@ -50,7 +50,7 @@ const router = createBrowserRouter([
               <ErrorDisplay
                 width={300}
                 iconSize={150} 
-                textSize="lg" 
+                textSize="lg"
                 text="Errore di comunicazione col server"/>
           </AllCenter>
         )
@@ -92,7 +92,7 @@ const router = createBrowserRouter([
               <ErrorDisplay
                 width={300}
                 iconSize={150} 
-                textSize="lg" 
+                textSize="lg"
                 text="Errore di comunicazione col server"/>
           </AllCenter>
         )
