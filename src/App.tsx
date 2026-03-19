@@ -1,4 +1,6 @@
 import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+
 import { MantineProvider } from '@mantine/core';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -20,6 +22,7 @@ import OncologoPage, {loader as oncologoLoader} from './pages/app/OncologoPage'
 import AnalystPage, {loader as analystLoader} from './pages/app/AnalystPage'
 import CourierPage, {loader as courierLoader} from './pages/app/CourierPage'
 import PatientsPage, {loader as patientsLoader} from './pages/app/PatientsPage';
+import PatientPage from './pages/app/visualize/PatientPage'
 
 
 const router = createBrowserRouter([
@@ -96,6 +99,10 @@ const router = createBrowserRouter([
                 text="Errore di comunicazione col server"/>
           </AllCenter>
         )
+      },
+      {
+        path:'/patient/:id',
+        element: <PatientPage/>
       },
       {
         path:'/user',

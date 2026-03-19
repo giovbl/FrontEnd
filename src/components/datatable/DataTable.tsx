@@ -14,9 +14,10 @@ import ShipmentState from "./ShipmentState"
 interface DataTableInput{
     type: 'sampleOncologo' | 'sampleAnalyst' | 'patient' | 'shipment',
     data: Array<unknown>
+    btnfun?: ()=>void
 }
 
-function DataTable({type,data}:DataTableInput){
+function DataTable({type,data,btnfun=()=>{}}:DataTableInput){
 
     const navigate = useNavigate()
 
@@ -116,7 +117,8 @@ function DataTable({type,data}:DataTableInput){
                     <Group>
                         <Button
                             leftSection={<IconPlus/>}
-                            variant="default">
+                            variant="default"
+                            onClick={()=>btnfun()}>
                             {type === 'sampleOncologo'? "Crea campione":"Crea paziente"}
                         </Button>
                         
@@ -184,10 +186,8 @@ function DataTable({type,data}:DataTableInput){
                                     <ActionIcon 
                                         variant="outline" 
                                         aria-label="Visualizza"
-                                        onClick={()=> navigate('patient/'+btoa(itm.fiscalCode),{state: itm})}>
-
-                                        <IconEye/>
-
+                                        onClick={()=> navigate('/patient/'+itm.fiscalCode,{state: itm})}>
+                                            <IconEye/>
                                     </ActionIcon>
                                 </Table.Td>
                             </Table.Tr>
@@ -197,12 +197,13 @@ function DataTable({type,data}:DataTableInput){
                         tdata.map((itm) => (
                             <Table.Tr key={itm.id}>
                                 <Table.Td>
-                                    <Link to={"sample/"+btoa(String(itm.id))}>
+                                    <Link to={"/sample/"+String(itm.id)}
+                                          state={itm}>
                                         {itm.id}
                                     </Link>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Link to={"patient/"+btoa(String(itm.patient))}>
+                                    <Link to={"/patient/"+itm.patient}>
                                         {itm.patient}
                                     </Link>
                                 </Table.Td>
@@ -229,7 +230,8 @@ function DataTable({type,data}:DataTableInput){
                         tdata.map((itm) => (
                             <Table.Tr key={itm.id}>
                                 <Table.Td>
-                                    <Link to={"sample/"+btoa(String(itm.id))}>
+                                   <Link to={"/sample/"+String(itm.id)}
+                                          state={itm}>
                                         {itm.id}
                                     </Link>
                                 </Table.Td>

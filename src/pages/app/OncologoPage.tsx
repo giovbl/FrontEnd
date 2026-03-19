@@ -15,7 +15,7 @@ export async function loader(){
         return res.data
     }catch(err){
         if(err.status === 401)
-            throw redirect("auth/login")
+            throw redirect("/auth/login")
         else
             throw err;
     }

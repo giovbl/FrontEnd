@@ -50,10 +50,7 @@ function RegisterForm(){
       pwd: data.password,
       userType: data.type
     })
-    .then((res) => {
-
-      console.log(res)
-
+    .then(() => {
       navigate('/auth/login?reg=true')
     })
     .catch((error) =>{
