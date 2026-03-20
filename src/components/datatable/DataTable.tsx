@@ -214,7 +214,8 @@ function DataTable({type,data,btnfun=()=>{}}:DataTableInput){
                                 </Table.Td>
                                 <Table.Td>
                                     <ShipmentDisplay 
-                                        shipment={itm.shipment} 
+                                        shipment={itm.shipment}
+                                        courierUsed={itm.isCourierUsed}
                                         strfun={shippingString}/>
                                 </Table.Td>
                                 <Table.Td>
@@ -242,7 +243,7 @@ function DataTable({type,data,btnfun=()=>{}}:DataTableInput){
                                 </Table.Td>
                                 <Table.Td>
                                     <ShipmentDisplay 
-                                        shipment={itm.shipment} 
+                                        shipment={itm.shipment}
                                         strfun={shippingString}/>
                                 </Table.Td>
                                 <Table.Td>

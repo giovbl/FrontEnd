@@ -1,9 +1,10 @@
 import {Group,Text,Box} from '@mantine/core'
-import { IconX, IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery } from '@tabler/icons-react'
+import {IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery, IconPackageOff, IconClockQuestion } from '@tabler/icons-react'
 import type { ShipmentStatus } from '../../utils/types'
 
 export interface ShipmentDisplayInput{
-    shipment: unknown  
+    shipment: unknown,
+    courierUsed: boolean,
     strfun: (stat:string) => string
 }
 
@@ -20,7 +21,7 @@ function ShipmentIcon({status}:{status:ShipmentStatus}){
     }
 }
 
-function ShipmentDisplay({shipment,strfun}:ShipmentDisplayInput){
+function ShipmentDisplay({shipment,courierUsed,strfun}:ShipmentDisplayInput){
     
     return (
         <>
@@ -62,10 +63,19 @@ function ShipmentDisplay({shipment,strfun}:ShipmentDisplayInput){
                     }
                 </Group>
                 :
-                <Group>
-                <IconX color="red"/>
-                <Text>No spedizione</Text>
-                </Group>
+                <>
+                    {courierUsed?
+                    <Group>
+                        <IconClockQuestion/>
+                        <Text>Da spedire</Text>
+                    </Group>
+                    :
+                    <Group>
+                        <IconPackageOff/>
+                        <Text>Nessuna spedizione</Text>
+                    </Group>
+                    }
+                </>
             }
         </>
     )
