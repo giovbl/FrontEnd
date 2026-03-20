@@ -11,7 +11,6 @@ import AllCenter from './components/AllCenter';
 import Login from './pages/LoginPage'
 import Register from './pages/Register'
 import MainPage from './pages/app/MainPage'
-import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
 import UserInfoPage from './pages/app/UserInfoPage';
 
 import AppLayout, {loader as appLoader} from './components/AppLayout'
@@ -23,6 +22,8 @@ import AnalystPage, {loader as analystLoader} from './pages/app/AnalystPage'
 import CourierPage, {loader as courierLoader} from './pages/app/CourierPage'
 import PatientsPage, {loader as patientsLoader} from './pages/app/PatientsPage';
 import PatientPage from './pages/app/visualize/PatientPage'
+import SamplePage, {loader as samplePageLoader} from './pages/app/visualize/SamplePage';
+import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
 
 
 const router = createBrowserRouter([
@@ -103,6 +104,19 @@ const router = createBrowserRouter([
       {
         path:'/patient/:id',
         element: <PatientPage/>
+      },
+      {
+        path:'/sample/:id',
+        element: <SamplePage/>,
+        loader: samplePageLoader,
+        errorElement: (
+          <AllCenter>
+              <ErrorDisplay 
+                width={300}
+                iconSize={150} 
+                textSize="lg" 
+                text="Errore di comunicazione col server"/>
+          </AllCenter>)
       },
       {
         path:'/user',

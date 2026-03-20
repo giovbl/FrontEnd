@@ -1,5 +1,5 @@
-import {Box, Fieldset, NativeSelect, TextInput, Group, NumberInput, Textarea, Switch, Space, Button, Stack, Alert, LoadingOverlay} from '@mantine/core'
-import {DateInput} from '@mantine/dates'
+import {Box, Fieldset, NativeSelect, TextInput, Group, NumberInput, Textarea, Switch, Space, Button, Stack, Alert} from '@mantine/core'
+import { DateInput } from '@mantine/dates'
 
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -427,7 +427,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Alert variant="light" color="red" title="Paziente esistente" icon={<IconAlertTriangle/>}/>
                 }
                 {failed && 
-                    <Alert variant="light" color="red" title="Error durante la creazione" icon={<IconAlertTriangle/>}/>
+                    <Alert variant="light" color="red" title="Errore durante la creazione" icon={<IconAlertTriangle/>}/>
                 }
             </form>
         </Box>

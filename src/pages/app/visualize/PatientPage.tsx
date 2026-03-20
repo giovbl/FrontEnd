@@ -23,7 +23,7 @@ function PatientPage(){
                 setPatient(res.data)
                 setLoading(false)
             }).catch((err) =>{
-                if(err.status === 400)
+                if(err.status === 404)
                     setExistence(false)
                 setLoading(false)
             })

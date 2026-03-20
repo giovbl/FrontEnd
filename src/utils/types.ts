@@ -73,3 +73,22 @@ export interface Patient{
     allergies: string,
     previousTreatments: string
 }
+
+export interface Sample{
+    id: number,
+    typeOfBiologicalMaterial: 'Tissue'|'Blood'|'Other',
+    exhaustedBiologicalMaterial: boolean,
+    histologicalNumber: string,
+    tissuePreservationMode: 'Formalin'|'Frozen'|'Paraffin',
+    tissueSamplingMode: 'Biopsy'|'Surgery'|'Cytology',
+    otherTissueSamplingMode: string,
+    biopsyType: 'Core'|'FineNeedle'|'Incisional'|'Excisional',
+    tissueProvenance: string,
+    metaStaticSite: string,
+    pctTumorCells: number,
+    ageOfSample:  number,
+    isCourierUsed: boolean,
+    pathologistNotes: string,
+    patient: string,
+    analysisStat: 'unanalyzed'|'analyzing'|'completed'
+}
