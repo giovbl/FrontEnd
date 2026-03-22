@@ -15,9 +15,10 @@ interface DataTableInput{
     type: 'sampleOncologo' | 'sampleAnalyst' | 'patient' | 'shipment',
     data: Array<unknown>
     btnfun?: ()=>void
+    secbtnfun?: ()=>void
 }
 
-function DataTable({type,data,btnfun=()=>{}}:DataTableInput){
+function DataTable({type,data,btnfun=()=>{},secbtnfun=()=>{}}:DataTableInput){
 
     const navigate = useNavigate()
 
@@ -216,7 +217,8 @@ function DataTable({type,data,btnfun=()=>{}}:DataTableInput){
                                     <ShipmentDisplay 
                                         shipment={itm.shipment}
                                         courierUsed={itm.isCourierUsed}
-                                        strfun={shippingString}/>
+                                        strfun={shippingString}
+                                        createShipment={secbtnfun}/>
                                 </Table.Td>
                                 <Table.Td>
                                     <AnalysisDisplay 
@@ -244,7 +246,8 @@ function DataTable({type,data,btnfun=()=>{}}:DataTableInput){
                                 <Table.Td>
                                     <ShipmentDisplay 
                                         shipment={itm.shipment}
-                                        strfun={shippingString}/>
+                                        strfun={shippingString}
+                                        courierUsed={itm.isCourierUsed}/>
                                 </Table.Td>
                                 <Table.Td>
                                     <AnalysisState 

@@ -7,6 +7,8 @@ import Loading from "../../components/Loading";
 import { Modal } from "@mantine/core";
 import SampleForm from "../../components/forms/SampleForm";
 import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
+import ShipmentForm from "../../components/forms/ShipmentForm";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -30,6 +32,8 @@ function OncologoPage(){
     const data = useLoaderData()
     const navigation = useNavigation()
 
+    const [form, setForm] = useState('sample')
+
     const [opened, { open, close }] = useDisclosure(false);
 
     if(navigation.state === 'loading')
@@ -37,11 +41,15 @@ function OncologoPage(){
     else
         return (
             <>
-                <Modal opened={opened} onClose={close} title="Creazione paziente">
-                    <SampleForm facilities={data.facilities}/>
+                <Modal opened={opened} onClose={close} title={`Creazione ${form==='ship'?'spedizione':'campione'}`}>
+                    {form === 'sample'?
+                        <SampleForm facilities={data.facilities}/>
+                        :
+                        <ShipmentForm sampleId={1}/>
+                    }
                 </Modal>
 
-                <DataTable type="sampleOncologo" data={data.samples} btnfun={open}/>
+                <DataTable type="sampleOncologo" data={data.samples} btnfun={()=>{setForm('sample');open()}} secbtnfun={()=>{setForm('ship');open()}}/>
             </>
         )
 }

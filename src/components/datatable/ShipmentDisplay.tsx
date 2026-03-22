@@ -5,7 +5,8 @@ import type { ShipmentStatus } from '../../utils/types'
 export interface ShipmentDisplayInput{
     shipment: unknown,
     courierUsed: boolean,
-    strfun: (stat:string) => string
+    strfun: (stat:string) => string,
+    createShipment?: ()=>void
 }
 
 function ShipmentIcon({status}:{status:ShipmentStatus}){
@@ -21,8 +22,8 @@ function ShipmentIcon({status}:{status:ShipmentStatus}){
     }
 }
 
-function ShipmentDisplay({shipment,courierUsed,strfun}:ShipmentDisplayInput){
-    
+function ShipmentDisplay({shipment,courierUsed,strfun,createShipment}:ShipmentDisplayInput){
+
     return (
         <>
             {shipment?
@@ -65,15 +66,21 @@ function ShipmentDisplay({shipment,courierUsed,strfun}:ShipmentDisplayInput){
                 :
                 <>
                     {courierUsed?
-                    <Group>
-                        <IconClockQuestion/>
-                        <Text>Da spedire</Text>
-                    </Group>
-                    :
-                    <Group>
-                        <IconPackageOff/>
-                        <Text>Nessuna spedizione</Text>
-                    </Group>
+                        <Group>
+                            <IconClockQuestion/>
+                            <Text>Da spedire</Text>
+                        </Group>
+                        :
+                        <>
+                        {typeof createShipment === 'function'?
+                            <Button></Button>
+                            :
+                            <Group>
+                                <IconPackageOff/>
+                                <Text>Nessuna spedizione</Text>
+                            </Group>
+                        }
+                        </>
                     }
                 </>
             }
