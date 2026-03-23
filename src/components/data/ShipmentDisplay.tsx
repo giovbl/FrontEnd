@@ -1,12 +1,13 @@
-import {Group,Text,Box} from '@mantine/core'
-import {IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery, IconPackageOff, IconClockQuestion } from '@tabler/icons-react'
+import {Group,Text,Box, Button} from '@mantine/core'
+import {IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery, IconPackageOff, IconClockQuestion, IconCubeSend } from '@tabler/icons-react'
 import type { ShipmentStatus } from '../../utils/types'
 
 export interface ShipmentDisplayInput{
+    sampleId: number
     shipment: unknown,
     courierUsed: boolean,
     strfun: (stat:string) => string,
-    createShipment?: ()=>void
+    createShipment?: (sampleId:number)=>void
 }
 
 function ShipmentIcon({status}:{status:ShipmentStatus}){
@@ -22,7 +23,7 @@ function ShipmentIcon({status}:{status:ShipmentStatus}){
     }
 }
 
-function ShipmentDisplay({shipment,courierUsed,strfun,createShipment}:ShipmentDisplayInput){
+function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:ShipmentDisplayInput){
 
     return (
         <>
@@ -65,15 +66,14 @@ function ShipmentDisplay({shipment,courierUsed,strfun,createShipment}:ShipmentDi
                 </Group>
                 :
                 <>
-                    {courierUsed?
-                        <Group>
-                            <IconClockQuestion/>
-                            <Text>Da spedire</Text>
-                        </Group>
-                        :
+                    {createShipment?
                         <>
-                        {typeof createShipment === 'function'?
-                            <Button></Button>
+                        {courierUsed?
+                            <Button
+                                leftSection={<IconCubeSend/>}
+                                onClick={()=>{createShipment(sampleId)}}>
+                                Spedisci
+                            </Button>
                             :
                             <Group>
                                 <IconPackageOff/>
@@ -81,6 +81,11 @@ function ShipmentDisplay({shipment,courierUsed,strfun,createShipment}:ShipmentDi
                             </Group>
                         }
                         </>
+                        :
+                        <Group>
+                            <IconClockQuestion/>
+                            <Text>Da spedire</Text>
+                        </Group>
                     }
                 </>
             }

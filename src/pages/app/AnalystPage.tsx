@@ -1,9 +1,14 @@
-import { useLoaderData, redirect, useNavigation } from "react-router-dom";
+import { useLoaderData, redirect, useNavigation, Link } from "react-router-dom";
 
-import DataTable from "../../components/datatable/DataTable";
+import DataTable from "../../components/DataTable";
 
 import api from "../../utils/api";
 import Loading from "../../components/Loading";
+import { sampleStatusString, shipmentString } from "../../utils/utils";
+import { useState } from "react";
+import WorkgroupInfo from "../../components/data/WorkgroupInfo";
+import ShipmentDisplay from "../../components/data/ShipmentDisplay";
+import AnalysisState from "../../components/data/AnalysisState";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -13,7 +18,9 @@ export async function loader(){
         const res = await api.get('sample?oncologiWorkgroup=1')
         console.log(res.data)
         return res.data
-    }catch(err){
+    }catch(error){
+        const err = error as AxiosError
+                
         if(err.status === 401)
             throw redirect("/auth/login")
         else
@@ -23,13 +30,42 @@ export async function loader(){
 
 function AnalystPage(){
 
-    const samples = useLoaderData()
+    const odata = useLoaderData() as Array<unknown>
+    const [data,setData] = useState(odata)
     const navigation = useNavigation()
+
+    //Function implementing DataTable's search function
+    function search(query:string){
+
+        if(!query){
+            setData(odata)
+            return
+        }
+
+        setData(data.filter((itm) =>
+            String(itm.id).includes(query) ||
+            itm.oncologiWorkgroup.facility.nome.toLowerCase().includes(query) ||
+            itm.oncologiWorkgroup.groupName.toLowerCase().includes(query) ||
+            itm.patient.toLowerCase().includes(query) ||
+            shipmentString(itm.shipping?.status).toLowerCase().includes(query) ||
+            sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
+        ))
+    }
+
+    const cols = ['Campione (ID)','Centro oncologico','Spedizione','Stato analisi']
+    const rows = data.map((itm)=>[
+            <Link key={`${itm.id}.1`} to={"/sample/"+String(itm.id)} state={itm}>{itm.id}</Link>,
+            <WorkgroupInfo key={`${itm.id}.2`} workgroup={itm.oncologiWorkgroup.groupName} facility={itm.oncologiWorkgroup.facility.nome}/>,
+            <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shippingString} courierUsed={itm.isCourierUsed}/>,
+            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={data} setData={setData}/>
+        ])
+
+
     
     if(navigation.state === 'loading')
         return <Loading/>
     else
-        return <DataTable type="sampleAnalyst" data={samples}/>
+        return <DataTable cols={cols} rows={rows} searchfun={search}/>
 }
 
 export default AnalystPage

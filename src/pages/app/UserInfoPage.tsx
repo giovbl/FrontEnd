@@ -4,7 +4,7 @@ import {Box, Space, TextInput, Group, Fieldset} from '@mantine/core'
 
 import { UserContext } from '../../utils/context'
 import type { UserData } from '../../utils/types'
-import WorkgroupInfo from '../../components/datatable/WorkgroupInfo'
+import WorkgroupInfo from '../../components/data/WorkgroupInfo'
 
 function UserInfoPage(){
 
