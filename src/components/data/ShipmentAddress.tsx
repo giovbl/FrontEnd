@@ -1,7 +1,8 @@
 import { Text,Group } from "@mantine/core"
+import type { Facility } from "../../utils/types"
 
 
-function ShipmentAddress({facility}:{facility:unknown}){
+function ShipmentAddress({facility}:{facility:Facility}){
 
     return (
         <>

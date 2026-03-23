@@ -9,6 +9,7 @@ import api from '../utils/api';
 
 import AllCenter from './AllCenter';
 import { UserContext } from '../utils/context';
+import type { AxiosError } from 'axios';
 
 //Loader for getting current user's info
 // eslint-disable-next-line react-refresh/only-export-components
@@ -17,7 +18,9 @@ export async function loader(){
     try{
         const res = await api.get('user')
         return res.data
-    }catch(err){
+    }catch(error){
+        const err = error as AxiosError
+
         if(err.status === 401)
             throw redirect("/auth/login")
         else

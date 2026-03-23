@@ -39,6 +39,7 @@ function AnalysisState({status,sampleid,data,setData}:AnalysisStateInput){
 
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const createReferto = (e: React.MouseEvent<HTMLButtonElement>) => {
 
         //Pass to page state sample id

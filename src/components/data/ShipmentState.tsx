@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Group, Text } from '@mantine/core'
 
-import type { ShipmentStatus } from "../../utils/types";
+import type { ShipmentInfo, ShipmentStatus } from "../../utils/types";
 import ErrorDisplay from "../Error";
 import { IconCheck } from "@tabler/icons-react";
 import api from "../../utils/api";
@@ -9,14 +9,15 @@ import api from "../../utils/api";
 interface ShipmentStateInput{
     shipmentId: number,
     status: ShipmentStatus,
-    data: Array<unknown>,
-    setData: (input: Array<unknown>) => void
+    data: Array<ShipmentInfo>,
+    setData: (input: Array<ShipmentInfo>) => void
 }
 
 function ShipmentState({shipmentId,status,data,setData}:ShipmentStateInput){
 
     const [failed, setFailed] = useState(false)
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const changeStatus = async (e: React.MouseEvent<HTMLButtonElement>) => {
         
         let newStatus:ShipmentStatus;

@@ -74,15 +74,24 @@ export interface Patient{
     previousTreatments: string
 }
 
-export interface Shipment{
+export interface ShipmentBase{
     id: number,
-    status: ShipmentStatus
-    sender: number,
-    recipient: number,    
+    status: ShipmentStatus   
     effectiveDeliveryDate: Date | null
     effectiveTakenDate: Date | null
     expectedDeliveryDate: Date,
     expectedTakenDate: Date
+}
+
+export interface Shipment extends ShipmentBase{
+    sender: number,
+    recipient: number,
+}
+
+export interface ShipmentInfo extends ShipmentBase{
+    sender: FacilityInfo,
+    recipient: FacilityInfo,
+    sample: number
 }
 
 export interface Sample{

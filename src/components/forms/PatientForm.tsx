@@ -10,6 +10,7 @@ import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import api from '../../utils/api'
 import { IconAlertTriangle } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
+import type { AxiosError } from 'axios'
 
 const schema = z.object({
     fiscalCode: z.string().nonempty("Inserire codice fiscale"),
@@ -85,7 +86,9 @@ function PatientForm({readonly,data}:PatientFormInput){
             await api.post("patient",rdata)
 
             navigate(0)
-        }catch(err){
+        }catch(error){
+            const err = error as AxiosError
+
             if(err.status === 409)
                 setPatientExists(true)
             else

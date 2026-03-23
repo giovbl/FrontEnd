@@ -10,6 +10,7 @@ import ShipmentState from "../../components/data/ShipmentState";
 import { useState } from "react";
 import { Text } from "@mantine/core";
 import type { AxiosError } from "axios";
+import type { ShipmentInfo } from "../../utils/types";
 
 //Loader for getting user's shippings
 // eslint-disable-next-line react-refresh/only-export-components
@@ -30,7 +31,7 @@ export async function loader(){
 
 function CourierPage(){
 
-    const odata = useLoaderData() as Array<unknown>
+    const odata = useLoaderData() as Array<ShipmentInfo>
     const [data,setData] = useState(odata)
     const navigation = useNavigation()
 
