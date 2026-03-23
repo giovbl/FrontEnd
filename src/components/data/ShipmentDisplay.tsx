@@ -1,10 +1,10 @@
 import {Group,Text,Box, Button} from '@mantine/core'
 import {IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery, IconPackageOff, IconClockQuestion, IconCubeSend } from '@tabler/icons-react'
-import type { ShipmentStatus } from '../../utils/types'
+import type { Shipment, ShipmentStatus } from '../../utils/types'
 
 export interface ShipmentDisplayInput{
     sampleId: number
-    shipment: unknown,
+    shipment: Shipment,
     courierUsed: boolean,
     strfun: (stat:string) => string,
     createShipment?: (sampleId:number)=>void
@@ -41,7 +41,7 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                     {shipment.status === 'taken' &&
                         <Box>
                             <Text size="sm">
-                                In data: {shipment.effectiveTakenDate.toLocaleString()}
+                                In data: {shipment.effectiveTakenDate?.toLocaleString()}
                             </Text>
                             <Text size="sm">
                                 Consegna il: {shipment.expectedDeliveryDate.toLocaleString()}
@@ -51,7 +51,7 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                     {shipment.status === 'in transit' &&
                         <Box>
                             <Text size="sm">
-                                Preso in data: {shipment.effectiveTakenDate.toLocaleString()}
+                                Preso in data: {shipment.effectiveTakenDate?.toLocaleString()}
                             </Text>
                             <Text size="sm">
                                 Consegna il: {shipment.expectedDeliveryDate.toLocaleString()}
@@ -60,7 +60,7 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                     }
                     {shipment.status === 'arrived' &&
                             <Text size="sm">
-                                In data: {shipment.effectiveDeliveryDate.toLocaleString()}
+                                In data: {shipment.effectiveDeliveryDate?.toLocaleString()}
                             </Text>
                     }
                 </Group>

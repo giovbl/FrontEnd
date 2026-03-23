@@ -10,6 +10,7 @@ import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import AnalysisState from "../../components/data/AnalysisState";
 import type { AxiosError } from "axios";
+import type { SampleInfo } from "../../utils/types";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -31,7 +32,7 @@ export async function loader(){
 
 function AnalystPage(){
 
-    const odata = useLoaderData() as Array<unknown>
+    const odata = useLoaderData() as Array<SampleInfo>
     const [data,setData] = useState(odata)
     const navigation = useNavigation()
 
@@ -48,7 +49,7 @@ function AnalystPage(){
             itm.oncologiWorkgroup.facility.nome.toLowerCase().includes(query) ||
             itm.oncologiWorkgroup.groupName.toLowerCase().includes(query) ||
             itm.patient.toLowerCase().includes(query) ||
-            shipmentString(itm.shipping?.status).toLowerCase().includes(query) ||
+            shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
             sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
         ))
     }
@@ -57,7 +58,7 @@ function AnalystPage(){
     const rows = data.map((itm)=>[
             <Link key={`${itm.id}.1`} to={"/sample/"+String(itm.id)} state={itm}>{itm.id}</Link>,
             <WorkgroupInfo key={`${itm.id}.2`} workgroup={itm.oncologiWorkgroup.groupName} facility={itm.oncologiWorkgroup.facility.nome}/>,
-            <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shippingString} courierUsed={itm.isCourierUsed}/>,
+            <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shipmentString} courierUsed={itm.isCourierUsed}/>,
             <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={data} setData={setData}/>
         ])
 

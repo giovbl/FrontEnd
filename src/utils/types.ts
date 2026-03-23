@@ -74,6 +74,17 @@ export interface Patient{
     previousTreatments: string
 }
 
+export interface Shipment{
+    id: number,
+    status: ShipmentStatus
+    sender: number,
+    recipient: number,    
+    effectiveDeliveryDate: Date | null
+    effectiveTakenDate: Date | null
+    expectedDeliveryDate: Date,
+    expectedTakenDate: Date
+}
+
 export interface Sample{
     id: number,
     typeOfBiologicalMaterial: 'Tissue'|'Blood'|'Other',
@@ -91,4 +102,11 @@ export interface Sample{
     pathologistNotes: string,
     patient: string,
     analysisStat: 'unanalyzed'|'analyzing'|'completed'
+}
+
+export interface SampleInfo extends Sample{
+    analystWorkgroup: WorkgroupInfo,
+    shipment: Shipment,
+    referto: number | null
+    oncologiWorkgroup: WorkgroupInfo
 }

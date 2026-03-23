@@ -9,6 +9,7 @@ import ShipmentAddress from "../../components/data/ShipmentAddress";
 import ShipmentState from "../../components/data/ShipmentState";
 import { useState } from "react";
 import { Text } from "@mantine/core";
+import type { AxiosError } from "axios";
 
 //Loader for getting user's shippings
 // eslint-disable-next-line react-refresh/only-export-components

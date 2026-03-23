@@ -14,6 +14,7 @@ import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import { sampleStatusString, shipmentString } from "../../utils/utils";
 import AnalysisDisplay from "../../components/data/AnalysisDisplay";
 import type { AxiosError } from "axios";
+import type { SampleInfo } from "../../utils/types";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -39,7 +40,7 @@ function OncologoPage(){
     const [sampleShip, setSampleShip] = useState<number | null>(null)
 
     const data = useLoaderData()
-    const [tdata,setTData] = useState(data.samples)
+    const [tdata,setTData] = useState<Array<SampleInfo>>(data.samples)
 
     const navigation = useNavigation()
 
@@ -67,7 +68,7 @@ function OncologoPage(){
             itm.analystWorkgroup.facility.nome.toLowerCase().includes(query) ||
             itm.analystWorkgroup.groupName.toLowerCase().includes(query) ||
             itm.patient.toLowerCase().includes(query) ||
-            shipmentString(itm.shipping?.status).toLowerCase().includes(query) ||
+            shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
             sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
         ))
     }

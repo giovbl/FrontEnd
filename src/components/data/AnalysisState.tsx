@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Button } from '@mantine/core'
 
-import { type AnalysisStatus } from "../../utils/types"
+import { type AnalysisStatus, type SampleInfo } from "../../utils/types"
 import ErrorDisplay from "../Error";
 import api from "../../utils/api";
 
 interface AnalysisStateInput{
     status: AnalysisStatus,
-    data: Array<unknown>
+    data: Array<SampleInfo>
     sampleid: number,
-    setData: (input: Array<unknown>) => void
+    setData: (input: Array<SampleInfo>) => void
 }
 
 function AnalysisState({status,sampleid,data,setData}:AnalysisStateInput){
