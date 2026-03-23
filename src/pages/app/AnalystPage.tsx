@@ -9,6 +9,7 @@ import { useState } from "react";
 import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import AnalysisState from "../../components/data/AnalysisState";
+import type { AxiosError } from "axios";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
