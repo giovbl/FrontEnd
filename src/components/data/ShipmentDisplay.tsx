@@ -35,7 +35,7 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                     </Group>
                     {shipment.status === 'received' &&
                             <Text size="sm">
-                                Verrà preso il: {shipment.expectedTakenDate.toLocaleString()}
+                                Data di ritiro: {new Date(shipment.expectedTakenDate).toLocaleDateString()}
                             </Text>
                     }
                     {shipment.status === 'taken' &&

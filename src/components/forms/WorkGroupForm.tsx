@@ -9,7 +9,7 @@ import {z} from 'zod'
 
 import api from "../../utils/api"
 
-import type { Facility, UserData, UserType } from "../../utils/types"
+import type { FacilityInfo, UserData, UserType } from "../../utils/types"
 import { IconAlertTriangle } from "@tabler/icons-react"
 
 const schema = z.object({
@@ -18,7 +18,7 @@ const schema = z.object({
 type WorkgroupData = z.infer<typeof schema>
 
 interface WorkGroupFormType{
-    facilities:Array<Facility>,
+    facilities:Array<FacilityInfo>,
     user: UserData
 }
 
@@ -72,7 +72,7 @@ function WorkGroupForm({facilities, user}: WorkGroupFormType) {
                         label="Struttura"
                         onChange={(e)=>setFacility(Number(e.target.value))}>
                         {facilities &&
-                            facilities.map((itm:Facility) =>(
+                            facilities.map((itm:FacilityInfo) =>(
                                 <option key={itm.id} value={itm.id}>{itm.nome}</option>
                             ))
                         }

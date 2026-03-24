@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
-import { Button, Alert, Box, NativeSelect, Space, Text } from '@mantine/core';
-import {IconAlertTriangle} from '@tabler/icons-react'
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
+import { Button, Alert, Box, NativeSelect, Space, Text, Group } from '@mantine/core';
+import {IconAlertTriangle, IconTestPipe2} from '@tabler/icons-react'
 
 import {zodResolver} from '@hookform/resolvers/zod'
 import {z} from 'zod'
 
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import api from '../../utils/api'
 import ErrorDisplay from '../Error';
 import Loading from '../Loading';
 import type { UserData } from '../../utils/types';
+import { DateInput } from '@mantine/dates';
 
 const schema = z.object({
-  courier: z.number().nonoptional("Inserire un corriere")
+  courier: z.string().nonempty("Scelgiere un corriere"),
+  expected: z.string().nonempty("Inserire una data").nonoptional("Inserire una data")
 })
 type ShipmentCreation = z.infer<typeof schema>
 
@@ -34,6 +36,7 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
 
     const {
         register,
+        control,
         handleSubmit,
         formState: {errors}
     } = useForm<ShipmentCreation>({
@@ -42,8 +45,8 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
 
     //Fetching dei corrieri disponibili
     useEffect(()=>{
-        api.get('user?type=courier').then((res) =>{
-            setCouriers([res.data])
+        api.get('user/courier').then((res) =>{
+            setCouriers(res.data)
         }).catch(()=>{
             setFetchFailed(true)
         }).finally(()=>{
@@ -58,8 +61,10 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
 
         setFailed(false)
 
-        api.post('/auth/login', {
-        
+        api.post(`/sample/${sampleId}/ship`, {
+            sample: sampleId,
+            courier: Number(data.courier),
+            expectedTakenDate: new Date(data.expected)
         })
         .then(() => {
             navigate(0)
@@ -87,7 +92,12 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
         <Box>
         <form onSubmit={handleSubmit(onSubmit)}>
 
-            <Text>Spedizione per campione ID: {sampleId}</Text>
+            <Group>
+                <IconTestPipe2/>
+                <Text>ID: {sampleId}</Text>
+            </Group>
+
+            <Space h="md"/>
 
             <NativeSelect
             label="Seleziona corriere"
@@ -99,6 +109,27 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
                 )
             }
             </NativeSelect>
+
+            <Space h="md"/>
+
+            <Controller
+                control={control}
+                name="expected"
+                rules={{ required: true }}
+                render={({ field }) => {
+                    return (
+                        <DateInput
+                            label="Data preferita di ritiro"
+                            placeholder='Scegliere una data'
+                            minDate={new Date((new Date()).getTime() + 1 * 24 * 60 * 60 * 1000)}
+                            error={errors.expected?.message}
+                            onChange={(e) => {
+                                field.onChange(e);
+                            }}
+                        />
+                    );
+                }}
+            />
 
             <Space h="md"/>
 
