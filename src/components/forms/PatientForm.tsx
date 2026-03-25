@@ -66,6 +66,7 @@ function PatientForm({readonly,data}:PatientFormInput){
         resolver: zodResolver(schema)
     })
 
+    const [loading,setLoading] = useState(false)
     const [otherEthnicity, setOtherEthnicity] = useState(false)
     const [patientExists,setPatientExists] = useState(false)
     const [failed, setFailed] = useState(false)
@@ -76,6 +77,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
     const onSubmit:SubmitHandler<PatientData> = async (data:PatientData) =>{
 
+        setLoading(true)
         setPatientExists(false)
         setFailed(false)
         
@@ -85,8 +87,10 @@ function PatientForm({readonly,data}:PatientFormInput){
         try{
             await api.post("patient",rdata)
 
+            setLoading(false)
             navigate(0)
         }catch(error){
+            setLoading(false)
             const err = error as AxiosError
 
             if(err.status === 409)
@@ -424,7 +428,13 @@ function PatientForm({readonly,data}:PatientFormInput){
                 <Space h="md"/>
 
                 {!readonly &&
+                <>
+                    {loading?
+                    <Button type='submit' loading loaderProps={{ type: 'dots' }}>Crea paziente</Button>
+                    :
                     <Button type='submit'>Crea paziente</Button>
+                    }
+                </>
                 }
                 {patientExists &&
                     <Alert variant="light" color="red" title="Paziente esistente" icon={<IconAlertTriangle/>}/>

@@ -27,6 +27,7 @@ interface ShipmentFormInput{
 function ShipmentForm({sampleId}:ShipmentFormInput){
 
     const [loading,setLoading] = useState(true)
+    const [formLoading,setFormLoading] = useState(true)
     const [failed,setFailed] = useState(false)
 
     const [couriers,setCouriers] = useState<Array<UserData> | null>(null)
@@ -59,6 +60,7 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
     */
     const onSubmit: SubmitHandler<ShipmentCreation> = (data:ShipmentCreation) =>{
 
+        setFormLoading(true)
         setFailed(false)
 
         api.post(`/sample/${sampleId}/ship`, {
@@ -70,7 +72,9 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
             navigate(0)
         })
         .catch(() =>{
-        setFailed(true)
+            setFailed(true)
+        }).finally(()=>{
+            setFormLoading(false)
         })
 
     }
@@ -140,7 +144,11 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
             </>
             }
 
-            <Button type='submit'>Crea spedizione</Button>
+            {formLoading?
+                <Button type='submit' loading loaderProps={{ type: 'dots' }}>Crea spedizione</Button>
+                :
+                <Button type='submit'>Crea spedizione</Button>
+            }
         </form>
         </Box>
     )

@@ -20,6 +20,7 @@ type LoginData = z.infer<typeof schema>
 function LoginForm(){
 
   const [login, setLogin] = useState({failed:false,message:""})
+  const [loading,setLoading] = useState(false)
   const navigate = useNavigate();
 
   const {
@@ -35,6 +36,7 @@ function LoginForm(){
   */
   const onSubmit: SubmitHandler<LoginData> = (data:LoginData) =>{
 
+    setLoading(true)
     setLogin({failed:false,message:""})
 
     api.post('/auth/login', {
@@ -42,6 +44,7 @@ function LoginForm(){
       pwd: data.password
     })
     .then((res) => {
+      setLoading(false)
 
       if(res.data.requiresConfig)
         navigate('/user/setup')
@@ -49,6 +52,8 @@ function LoginForm(){
         navigate('/')
     })
     .catch((error) =>{
+      setLoading(false)
+
       if(error.status === 401)
         setLogin({failed:true,message: "Email o password invalidi"})
       else
@@ -80,7 +85,11 @@ function LoginForm(){
                 {...register('password',{required: true})}
               />
 
-              <Button type='submit'>Login</Button>
+              {loading?
+                <Button type='submit' loading loaderProps={{ type: 'dots' }}>Login</Button>
+                :
+                <Button type='submit'>Login</Button>
+              }
 
               {login.failed && 
                 <Alert variant="light" color="red" title={login.message} icon={<IconAlertTriangle/>}/>

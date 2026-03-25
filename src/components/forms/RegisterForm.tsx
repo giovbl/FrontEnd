@@ -19,6 +19,7 @@ const schema = z.object({
 
 function RegisterForm(){
 
+  const [loading,setLoading] = useState(false)
   const [failed, setFailed] = useState(false)
   const [userExsists, setUserExsists] = useState(false)
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ function RegisterForm(){
   */
   const onSubmit:SubmitHandler<RegisterData> = (data:RegisterData) =>{
 
+    setLoading(true)
     setFailed(false)
     setUserExsists(false)
 
@@ -51,9 +53,11 @@ function RegisterForm(){
       userType: data.type
     })
     .then(() => {
+      setLoading(false)
       navigate('/auth/login?reg=true')
     })
     .catch((error) =>{
+      setLoading(false)
       if(error.status === 409)
         setUserExsists(true)
       else
@@ -100,7 +104,11 @@ function RegisterForm(){
                   <option key="Analista" value="Analista">Analista</option>
                 </NativeSelect>
 
-                <Button type='submit'>Registrati</Button>
+                {loading?
+                  <Button type='submit' loading loaderProps={{ type: 'dots' }}>Registrati</Button>
+                  :
+                  <Button type='submit'>Registrati</Button>
+                }
 
                 {failed && 
                 <Alert variant="light" color="red" title="Errore al server" icon={<IconAlertTriangle/>}/>

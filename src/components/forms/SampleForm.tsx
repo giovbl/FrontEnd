@@ -49,6 +49,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
         resolver: zodResolver(schema)
     })
 
+    const [loading,setLoading] = useState(false)
     const [facility, setFacility] = useState(facilities[0].id)
     const [bioType, setBioType] = useState('Tissue')
     const [failed, setFailed] = useState(false)
@@ -57,6 +58,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
     const onSubmit:SubmitHandler<SampleData> = async (data:SampleData) =>{
 
+        setLoading(true)
         setFailed(false)
         
         try{
@@ -77,9 +79,10 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                 pathologistNotes: data.pathologistNotes,
                 patient: data.patient
             })
-
+            setLoading(false)
             navigate(0)
         }catch(err){
+            setLoading(false)
             setFailed(true)
         }
     }
@@ -314,7 +317,13 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                 }
 
                 {!readonly &&
-                    <Button type='submit'>Crea</Button>
+                <>
+                    {loading?
+                    <Button type='submit' loading loaderProps={{ type: 'dots' }}>Crea campione</Button>
+                    :
+                    <Button type='submit'>Crea campione</Button>
+                    }
+                </>
                 }
             </form>
         </Box>

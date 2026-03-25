@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { Box, Button, NativeSelect, Stack, Alert } from "@mantine/core"
 
 import {zodResolver} from '@hookform/resolvers/zod'
-import {z} from 'zod'
+import {flattenError, z} from 'zod'
 
 import api from "../../utils/api"
 
@@ -24,6 +24,7 @@ interface WorkGroupFormType{
 
 function WorkGroupForm({facilities, user}: WorkGroupFormType) {
 
+    const [loading,setLoading] = useState(false)
     const [facility, setFacility] = useState(facilities[0].id)
     const [failed, setFailed] = useState(false)
 
@@ -50,6 +51,7 @@ function WorkGroupForm({facilities, user}: WorkGroupFormType) {
 
     const onSubmit: SubmitHandler<WorkgroupData> = (data:WorkgroupData) =>{
 
+        setLoading(true)
         setFailed(false)
 
         api.patch('user/workgroup',{
@@ -61,6 +63,8 @@ function WorkGroupForm({facilities, user}: WorkGroupFormType) {
                 navigate('/auth/login')
             else
                 setFailed(true)
+        }).finally(()=>{
+            setLoading(false)
         })
     }
 
@@ -92,7 +96,11 @@ function WorkGroupForm({facilities, user}: WorkGroupFormType) {
                         }
                     </NativeSelect>
 
-                    <Button type="submit">Conferma scelta</Button>
+                    {loading?
+                        <Button type='submit' loading loaderProps={{ type: 'dots' }}>Conferma</Button>
+                        :
+                        <Button type='submit'>Conferma</Button>
+                    }
                 </Stack>
             </form>
 
