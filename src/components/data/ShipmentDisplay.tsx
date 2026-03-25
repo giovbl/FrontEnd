@@ -1,4 +1,4 @@
-import {Group,Text,Box, Button} from '@mantine/core'
+import {Group,Text,Box, Button, Stack} from '@mantine/core'
 import {IconCheck, IconCheckupList, IconTruckLoading, IconTruckDelivery, IconPackageOff, IconClockQuestion, IconCubeSend } from '@tabler/icons-react'
 import type { Shipment, ShipmentStatus } from '../../utils/types'
 
@@ -34,9 +34,14 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                         <Text>{strfun(shipment.status)}</Text>
                     </Group>
                     {shipment.status === 'received' &&
+                        <Box>
                             <Text size="sm">
                                 Data di ritiro: {new Date(shipment.expectedTakenDate).toLocaleDateString()}
                             </Text>
+                            <Text size="sm">
+                                Consegna prevista: {new Date(shipment.expectedDeliveryDate).toLocaleDateString()}
+                            </Text>
+                        </Box>
                     }
                     {shipment.status === 'taken' &&
                         <Box>
