@@ -31,7 +31,7 @@ const schema = z.object({
 type SampleData = z.infer<typeof schema>
 
 interface SampleFormInput{
-    facilities: Array<FacilityInfo>,
+    facilities?: Array<FacilityInfo>,
     readonly?: boolean,
     data?: Sample
 }
@@ -50,7 +50,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     })
 
     const [loading,setLoading] = useState(false)
-    const [facility, setFacility] = useState(facilities[0].id)
+    const [facility, setFacility] = useState(facilities?facilities[0].id:-1)
     const [bioType, setBioType] = useState('Tissue')
     const [failed, setFailed] = useState(false)
     const [tissueSampling,setTissueSampling] = useState('Biopsy')

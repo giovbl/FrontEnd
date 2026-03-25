@@ -1,19 +1,10 @@
 import { useEffect, useState } from "react";
 import Loading from "../Loading";
-import { useLoaderData, useLocation, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useNavigation, useParams } from "react-router-dom";
 import api from "../../../utils/api";
 import { Alert, Box, Button, Space } from "@mantine/core";
 import { IconArrowLeft, IconUserX } from "@tabler/icons-react";
 import SampleForm from "../../../components/forms/SampleForm";
-
-//Loader for getting workgroup data
-// eslint-disable-next-line react-refresh/only-export-components
-export async function loader(){
-    
-    const resfac = await api.get('facility')
-
-    return resfac.data
-}
 
 function SamplePage(){
 
@@ -25,7 +16,6 @@ function SamplePage(){
     const params = useParams();
     const navigate = useNavigate()
     const navigation = useNavigation()
-    const facilities = useLoaderData()
 
     useEffect(()=>{
 
@@ -63,7 +53,7 @@ function SamplePage(){
                     {loading || navigation.state === 'loading'?
                         <Loading/>
                         :
-                        <SampleForm facilities={facilities} readonly data={(sample!=null)?sample:undefined}/>
+                        <SampleForm readonly data={(sample!=null)?sample:undefined}/>
                     }
                 </>
             }

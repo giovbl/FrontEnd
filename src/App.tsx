@@ -109,16 +109,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/sample/:id',
-        element: <SamplePage/>,
-        loader: samplePageLoader,
-        errorElement: (
-          <AllCenter>
-              <ErrorDisplay 
-                width={300}
-                iconSize={150} 
-                textSize="lg" 
-                text="Errore di comunicazione col server"/>
-          </AllCenter>),
+        element: <SamplePage/>
       },
       {
         path:'/user',
