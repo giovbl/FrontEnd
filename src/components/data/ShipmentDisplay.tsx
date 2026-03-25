@@ -66,7 +66,7 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                 </Group>
                 :
                 <>
-                    {createShipment?
+                    {typeof createShipment === "function"?
                         <>
                         {courierUsed?
                             <Button

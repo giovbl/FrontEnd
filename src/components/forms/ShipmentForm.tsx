@@ -27,7 +27,7 @@ interface ShipmentFormInput{
 function ShipmentForm({sampleId}:ShipmentFormInput){
 
     const [loading,setLoading] = useState(true)
-    const [formLoading,setFormLoading] = useState(true)
+    const [formLoading,setFormLoading] = useState(false)
     const [failed,setFailed] = useState(false)
 
     const [couriers,setCouriers] = useState<Array<UserData> | null>(null)
