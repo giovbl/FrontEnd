@@ -1,9 +1,8 @@
-import { useLoaderData, redirect, useNavigation } from "react-router-dom";
+import { useLoaderData, redirect } from "react-router-dom";
 
 import DataTable from "../../components/DataTable";
 
 import api from "../../utils/api";
-import Loading from "../../components/Loading";
 import { shipmentString } from "../../utils/utils";
 import ShipmentAddress from "../../components/data/ShipmentAddress";
 import ShipmentState from "../../components/data/ShipmentState";
@@ -33,7 +32,6 @@ function CourierPage(){
 
     const odata = useLoaderData() as Array<ShipmentInfo>
     const [data,setData] = useState(odata)
-    const navigation = useNavigation()
 
     //Function implementing DataTable's search function
     function search(query:string){
@@ -66,10 +64,7 @@ function CourierPage(){
             <ShipmentState key={`${itm.id}.5`} shipmentId={itm.id} status={itm.status} data={data} setData={setData}/>
         ])
     
-    if(navigation.state === 'loading')
-        return <Loading/>
-    else
-        return <DataTable cols={cols} rows={rows} searchfun={search}/>
+    return <DataTable cols={cols} rows={rows} searchfun={search}/>
 }
 
 export default CourierPage

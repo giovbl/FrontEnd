@@ -1,9 +1,8 @@
-import { useLoaderData, redirect, useNavigation, Link } from "react-router-dom";
+import { useLoaderData, redirect, Link } from "react-router-dom";
 
 import DataTable from "../../components/DataTable";
 
 import api from "../../utils/api";
-import Loading from "../../components/Loading";
 import { sampleStatusString, shipmentString } from "../../utils/utils";
 import { useState } from "react";
 import WorkgroupInfo from "../../components/data/WorkgroupInfo";
@@ -18,7 +17,6 @@ export async function loader(){
     
     try{
         const res = await api.get('sample?oncologiWorkgroup=1')
-        console.log(res.data)
         return res.data
     }catch(error){
         const err = error as AxiosError
@@ -34,7 +32,6 @@ function AnalystPage(){
 
     const odata = useLoaderData() as Array<SampleInfo>
     const [data,setData] = useState(odata)
-    const navigation = useNavigation()
 
     //Function implementing DataTable's search function
     function search(query:string){
@@ -62,12 +59,7 @@ function AnalystPage(){
             <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={data} setData={setData}/>
         ])
 
-
-    
-    if(navigation.state === 'loading')
-        return <Loading/>
-    else
-        return <DataTable cols={cols} rows={rows} searchfun={search}/>
+    return <DataTable cols={cols} rows={rows} searchfun={search}/>
 }
 
 export default AnalystPage

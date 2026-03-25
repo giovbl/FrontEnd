@@ -81,7 +81,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
             })
             setLoading(false)
             navigate(0)
-        }catch(err){
+        }catch{
             setLoading(false)
             setFailed(true)
         }
@@ -182,13 +182,6 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     </Group>
 
                     <Group>
-                        <TextInput
-                            label="Numero istologico"
-                            disabled={readonly}
-                            value={data?.histologicalNumber}
-                            error={errors.histologicalNumber?.message}
-                            {...register('histologicalNumber',{required:true})}/>
-
                         <Controller
                             control={control}
                             name="pctTumorCells"
@@ -222,6 +215,13 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                 <Space h="md"/>
 
                 <Fieldset legend='Informazioni tessuto'>
+                    <TextInput
+                            label="Numero istologico"
+                            disabled={readonly}
+                            value={data?.histologicalNumber}
+                            error={errors.histologicalNumber?.message}
+                            maw={170}
+                            {...register('histologicalNumber')}/>
                     <Group>
                         <NativeSelect
                             label="Preservazione"

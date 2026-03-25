@@ -1,9 +1,8 @@
-import { useLoaderData, redirect, useNavigation, useNavigate } from "react-router-dom";
+import { useLoaderData, redirect, useNavigate } from "react-router-dom";
 
 import DataTable from "../../components/DataTable";
 
 import api from "../../utils/api";
-import Loading from "../../components/Loading";
 import { ActionIcon, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import PatientForm from "../../components/forms/PatientForm";
@@ -36,7 +35,6 @@ function PatientsPage(){
     const odata = useLoaderData() as Array<Patient>
     const [data,setData] = useState(odata)
 
-    const navigation = useNavigation()
     const navigate = useNavigate()
     const [opened, { open, close }] = useDisclosure(false);
 
@@ -66,20 +64,17 @@ function PatientsPage(){
         </ActionIcon>
     ])
     
-    if(navigation.state === 'loading')
-        return <Loading/>
-    else
-        return (
-            <>
-                <Modal opened={opened} onClose={close} title="Creazione paziente">
-                    <PatientForm/>
-                </Modal>
+    return (
+        <>
+            <Modal opened={opened} onClose={close} title="Creazione paziente">
+                <PatientForm/>
+            </Modal>
 
-                <DataTable 
-                    cols={cols} rows={rows} searchfun={search}
-                    showbtn btntext="Crea paziente" btnfun={open}/>
-            </>
-        )
+            <DataTable 
+                cols={cols} rows={rows} searchfun={search}
+                showbtn btntext="Crea paziente" btnfun={open}/>
+        </>
+    )
 }
 
 export default PatientsPage

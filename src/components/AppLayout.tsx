@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { redirect, useLoaderData, useMatch, useNavigate } from 'react-router'
+import { redirect, useLoaderData, useMatch, useNavigate, useNavigation } from 'react-router'
 
 import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Center, Group, Text, NavLink, Divider } from "@mantine/core";
@@ -10,6 +10,9 @@ import api from '../utils/api';
 import AllCenter from './AllCenter';
 import { UserContext } from '../utils/context';
 import type { AxiosError } from 'axios';
+import Loading from '../pages/app/Loading';
+import { Suspense } from 'react';
+import Logo from './Logo';
 
 //Loader for getting current user's info
 // eslint-disable-next-line react-refresh/only-export-components
@@ -48,7 +51,7 @@ function AppLayout(){
                     <Group h="100%" px="md">
                         <Burger opened={opened} onClick={toggle} aria-label="Toggle Menu" />
                         <AllCenter>
-                            <Text>LOGOTEXT</Text>
+                            <Logo/>
                         </AllCenter>
                     </Group>
                 </AppShell.Header>
@@ -105,7 +108,9 @@ function AppLayout(){
 
                 <AppShell.Main>
                     <Center>
-                        <Outlet/>
+                        <Suspense fallback={<p>Caricamento rotta...</p>}>
+                            <Outlet/>
+                        </Suspense>
                     </Center>
                 </AppShell.Main>
 

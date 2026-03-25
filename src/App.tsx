@@ -24,6 +24,7 @@ import PatientsPage, {loader as patientsLoader} from './pages/app/PatientsPage';
 import PatientPage from './pages/app/visualize/PatientPage'
 import SamplePage, {loader as samplePageLoader} from './pages/app/visualize/SamplePage';
 import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
+import Loading from './pages/app/Loading';
 
 
 const router = createBrowserRouter([
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
             text="Errore di comunicazione col server"/>
       </AllCenter>
     ),
+    hydrateFallbackElement: <Loading />,
     children:[
       {
         path:'/',
@@ -116,7 +118,7 @@ const router = createBrowserRouter([
                 iconSize={150} 
                 textSize="lg" 
                 text="Errore di comunicazione col server"/>
-          </AllCenter>)
+          </AllCenter>),
       },
       {
         path:'/user',
