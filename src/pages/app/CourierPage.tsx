@@ -23,6 +23,8 @@ export async function loader(){
                 
         if(err.status === 401)
             throw redirect("/auth/login")
+        else if(err.status === 403)
+            throw redirect("/")
         else
             throw err;
     }
