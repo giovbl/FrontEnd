@@ -22,7 +22,7 @@ import AnalystPage, {loader as analystLoader} from './pages/app/AnalystPage'
 import CourierPage, {loader as courierLoader} from './pages/app/CourierPage'
 import PatientsPage, {loader as patientsLoader} from './pages/app/PatientsPage';
 import PatientPage from './pages/app/visualize/PatientPage'
-import SamplePage, {loader as samplePageLoader} from './pages/app/visualize/SamplePage';
+import SamplePage from './pages/app/visualize/SamplePage';
 import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
 import Loading from './pages/app/Loading';
 
