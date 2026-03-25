@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { Box, Button, NativeSelect, Stack, Alert } from "@mantine/core"
 
 import {zodResolver} from '@hookform/resolvers/zod'
-import {flattenError, z} from 'zod'
+import {z} from 'zod'
 
 import api from "../../utils/api"
 
