@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { redirect, useLoaderData, useMatch, useNavigate, useNavigation } from 'react-router'
+import { redirect, useLoaderData, useMatch, useNavigate } from 'react-router'
 
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Center, Group, Text, NavLink, Divider } from "@mantine/core";
+import { AppShell, Burger, Center, Group, NavLink, Divider } from "@mantine/core";
 import { IconPackage, IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
 
 import api from '../utils/api';
@@ -10,7 +10,6 @@ import api from '../utils/api';
 import AllCenter from './AllCenter';
 import { UserContext } from '../utils/context';
 import type { AxiosError } from 'axios';
-import Loading from '../pages/app/Loading';
 import { Suspense } from 'react';
 import Logo from './Logo';
 
