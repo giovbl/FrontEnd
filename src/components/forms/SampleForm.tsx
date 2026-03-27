@@ -191,6 +191,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                                     <NumberInput
                                         label="Percentuale cellule tumorali"
                                         suffix="%"
+                                        placeholder="%"
                                         disabled={readonly}
                                         value={data?.pctTumorCells}
                                         error={errors.pctTumorCells?.message}
@@ -217,6 +218,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                 <Fieldset legend='Informazioni tessuto'>
                     <TextInput
                             label="Numero istologico"
+                            placeholder="0000/00"
                             disabled={readonly}
                             value={data?.histologicalNumber}
                             error={errors.histologicalNumber?.message}

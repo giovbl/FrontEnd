@@ -4,17 +4,24 @@ import { Button } from '@mantine/core'
 import { type AnalysisStatus, type SampleInfo } from "../../utils/types"
 import ErrorDisplay from "../Error";
 import api from "../../utils/api";
+import { useNavigate } from "react-router-dom";
+import { IconEye } from "@tabler/icons-react";
 
 interface AnalysisStateInput{
     status: AnalysisStatus,
     data: Array<SampleInfo>
     sampleid: number,
-    setData: (input: Array<SampleInfo>) => void
+    setData: (input: Array<SampleInfo>) => void,
+    createfun: (sampleId:number) => void
 }
 
-function AnalysisState({status,sampleid,data,setData}:AnalysisStateInput){
+function AnalysisState({status,sampleid,data,setData,createfun}:AnalysisStateInput){
 
     const [failed, setFailed] = useState(false)
+    const navigate = useNavigate()
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const createReferto = (e: React.MouseEvent<HTMLButtonElement>) => createfun(sampleid);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const setToAnalyze = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -39,13 +46,8 @@ function AnalysisState({status,sampleid,data,setData}:AnalysisStateInput){
 
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const createReferto = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const refertoId = data.filter((itm)=>itm.id === sampleid)[0].referto
 
-        //Pass to page state sample id
-        //Move to the page for making a referto
-
-    };
 
     if(failed)
         return <ErrorDisplay iconSize={30} textSize="xs" text="Errore: impossibile modificare lo stato"/>
@@ -57,9 +59,17 @@ function AnalysisState({status,sampleid,data,setData}:AnalysisStateInput){
                     Segna come in analisi
                 </Button>
                 :
-                <Button size="compact-sm" onClick={createReferto}>
-                    Crea referto
-                </Button>
+                <>
+                {status === 'completed'?
+                    <Button 
+                        leftSection={<IconEye/>}
+                        onClick={()=>navigate('/referto/'+refertoId)}>Visualizza referto</Button>
+                    :
+                    <Button size="compact-sm" onClick={createReferto}>
+                        Crea referto
+                    </Button>
+                }
+                </>
             }
             </>
         )

@@ -10,6 +10,9 @@ import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import AnalysisState from "../../components/data/AnalysisState";
 import type { AxiosError } from "axios";
 import type { SampleInfo } from "../../utils/types";
+import { Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import RefertoForm from "../../components/forms/RefertoForm";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -34,6 +37,15 @@ function AnalystPage(){
 
     const odata = useLoaderData() as Array<SampleInfo>
     const [data,setData] = useState(odata)
+    const [sampleId,setSampleId] = useState(-1)
+
+    const [opened, { open, close }] = useDisclosure(false);
+
+    //Function for handling referto creation
+    function refCreate(sampleId:number){
+        setSampleId(sampleId),
+        open()
+    }
 
     //Function implementing DataTable's search function
     function search(query:string){
@@ -58,10 +70,18 @@ function AnalystPage(){
             <Link key={`${itm.id}.1`} to={"/sample/"+String(itm.id)} state={itm}>{itm.id}</Link>,
             <WorkgroupInfo key={`${itm.id}.2`} workgroup={itm.oncologiWorkgroup.groupName} facility={itm.oncologiWorkgroup.facility.nome}/>,
             <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shipmentString} courierUsed={itm.isCourierUsed}/>,
-            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={data} setData={setData}/>
+            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={data} setData={setData} createfun={refCreate}/>
         ])
 
-    return <DataTable cols={cols} rows={rows} searchfun={search}/>
+    return (
+        <>
+            <Modal size="auto" opened={opened} onClose={close} title={`Creazione referto (per campione id: ${sampleId})`}>
+                <RefertoForm sampleId={sampleId}/>
+            </Modal>
+
+            <DataTable cols={cols} rows={rows} searchfun={search}/>
+        </>
+    )
 }
 
 export default AnalystPage
