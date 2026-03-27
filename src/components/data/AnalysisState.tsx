@@ -34,13 +34,12 @@ function AnalysisState({status,sampleid,data,setData,createfun}:AnalysisStateInp
 
             setData(data.map(itm => {
                   if(itm.id == sampleid)
-                     return Object.assign({}, itm, {status:newState})
+                     return Object.assign({}, itm, {analysisStat:newState})
                   return itm
                 })
             )
         }
         catch(err){
-            console.log(err)
             setFailed(true)
         }
 
@@ -54,22 +53,20 @@ function AnalysisState({status,sampleid,data,setData,createfun}:AnalysisStateInp
     else
         return (
             <>
-            {status === 'unanalyzed'?
+            {status === 'unanalyzed' &&
                 <Button size="compact-sm" onClick={setToAnalyze}>
                     Segna come in analisi
                 </Button>
-                :
-                <>
-                {status === 'completed'?
-                    <Button 
-                        leftSection={<IconEye/>}
-                        onClick={()=>navigate('/referto/'+refertoId)}>Visualizza referto</Button>
-                    :
-                    <Button size="compact-sm" onClick={createReferto}>
-                        Crea referto
-                    </Button>
-                }
-                </>
+            }
+            {status === 'analyzing' &&
+                <Button size="compact-sm" onClick={createReferto}>
+                    Crea referto
+                </Button>
+            }
+            {status === 'completed' &&
+                <Button 
+                    leftSection={<IconEye/>}
+                    onClick={()=>navigate('/referto/'+refertoId)}>Visualizza referto</Button>
             }
             </>
         )

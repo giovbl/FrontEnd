@@ -32,8 +32,14 @@ export async function loader(){
 
 function CourierPage(){
 
-    const odata = useLoaderData() as Array<ShipmentInfo>
+    const [odata,setOdata] = useState(useLoaderData() as Array<ShipmentInfo>)
     const [data,setData] = useState(odata)
+
+    //Function for correctly updating page's data
+    function setAllData(newData:Array<ShipmentInfo>){
+        setOdata(newData)
+        setData(newData)
+    }
 
     //Function implementing DataTable's search function
     function search(query:string){
@@ -63,7 +69,7 @@ function CourierPage(){
             <Text key={`${itm.id}.2`}>{itm.sample}</Text>,
             <ShipmentAddress key={`${itm.id}.3`} facility={itm.sender}/>,
             <ShipmentAddress key={`${itm.id}.4`} facility={itm.recipient}/>,
-            <ShipmentState key={`${itm.id}.5`} shipmentId={itm.id} status={itm.status} data={data} setData={setData}/>
+            <ShipmentState key={`${itm.id}.5`} shipmentId={itm.id} status={itm.status} data={odata} setData={setOdata}/>
         ])
     
     return <DataTable cols={cols} rows={rows} searchfun={search}/>

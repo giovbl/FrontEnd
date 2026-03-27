@@ -35,11 +35,17 @@ export async function loader(){
 
 function AnalystPage(){
 
-    const odata = useLoaderData() as Array<SampleInfo>
+    const [odata,setOdata] = useState(useLoaderData() as Array<SampleInfo>)
     const [data,setData] = useState(odata)
     const [sampleId,setSampleId] = useState(-1)
 
     const [opened, { open, close }] = useDisclosure(false);
+
+    //Function for correctly updating page's data
+    function setAllData(newData:Array<SampleInfo>){
+        setOdata(newData)
+        setData(newData)
+    }
 
     //Function for handling referto creation
     function refCreate(sampleId:number){
@@ -70,7 +76,7 @@ function AnalystPage(){
             <Link key={`${itm.id}.1`} to={"/sample/"+String(itm.id)} state={itm}>{itm.id}</Link>,
             <WorkgroupInfo key={`${itm.id}.2`} workgroup={itm.oncologiWorkgroup.groupName} facility={itm.oncologiWorkgroup.facility.nome}/>,
             <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shipmentString} courierUsed={itm.isCourierUsed}/>,
-            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={data} setData={setData} createfun={refCreate}/>
+            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={odata} setData={setAllData} createfun={refCreate}/>
         ])
 
     return (

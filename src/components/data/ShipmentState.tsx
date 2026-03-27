@@ -51,7 +51,6 @@ function ShipmentState({shipmentId,status,data,setData}:ShipmentStateInput){
             )
         }
         catch(err){
-            console.log(err)
             setFailed(true)
         }
     }
