@@ -2,6 +2,16 @@ export type UserType = 'Oncologo' | 'Corriere' | 'Analista'
 export type WorkgroupType = "oncologo" | 'analyst'
 export type AnalysisStatus = 'unanalyzed' | 'analyzing' | 'completed';
 export type ShipmentStatus = 'received' | 'taken' | 'in transit' | 'arrived';
+export type RefertoElegibility = 'Damaged'|'Missing'|'Other'
+export type DnaQuality = 'Low'|'Medium'|'High'
+export type Technique = 'SOPHiA DDM'|'NGS'|'Amoy Dx'|'Thermo Fisher'|'Illumina'
+export type InstabilityStatus = 'Low'|'Medium'|'High'
+export type HrdStatus = 'Positivo+'|'Positivo'|'Indeterminabile'|'HRP'
+export type IntegrityStatus = 'Good'|'Moderate'|'Poor'
+export type BrcaMutationStatus = 'WildType'|'Mutato'|'VUS'|'NonValutabile'
+export type GenotypeBrca = 'Omozigote'|'Eterozigote'|'AssenzaVarianti'
+export type VariantStatus = 'Somatica'|'Germinale'|'GermlineSomatica'
+export type GeneMutation = 'BRCA1'|'BRCA2'
 
 export interface WorkgroupBase{
     id: number,
@@ -118,4 +128,43 @@ export interface SampleInfo extends Sample{
     shipment: Shipment,
     referto: number | null
     oncologiWorkgroup: WorkgroupInfo
+}
+
+export interface RefertoResult{
+    id: number,
+    dnaQuality: DnaQuality,
+    technique: Technique,
+    genomicInstabilityStatus: InstabilityStatus,
+    lossOfHeterozygosityPercentage: number,
+    genomicInstabilityMetric: string,
+    hrdStatus: HrdStatus,
+    hrdScore: number,
+    genomicIntegrityStatus: IntegrityStatus,
+    brcaMutationStatus: BrcaMutationStatus,
+    genotypeBrca: GenotypeBrca,
+    variantStatus: VariantStatus,
+    geneMutation: GeneMutation,
+    geneOther: string,
+    exon: string,
+    intron: string,
+    nucleotideSubstitution: string,
+    aminoacidSubstitution: string,
+    reportingNotes: string,
+    reportingNotesBRCA: string,
+    refertingNotesHrd: string,
+    technicalNotes: string,
+    notesAnalysisCenter: string
+}
+
+export interface RefertoInfo{
+    id: number,
+    isLabelEligible: boolean,
+    notElegibleReason: RefertoElegibility,
+    otherNotElegibleReason: string,
+    isSampleElegible: boolean,
+    reasonSampleNotElegible: string,
+    result?: RefertoResult,
+    sample: Sample
+    refertoPdf: string,
+    summary: string
 }

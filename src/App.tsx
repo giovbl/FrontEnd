@@ -25,7 +25,7 @@ import PatientPage from './pages/app/visualize/PatientPage'
 import SamplePage from './pages/app/visualize/SamplePage';
 import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
 import Loading from './pages/app/Loading';
-import RefertoForm from './components/forms/RefertoForm';
+import RefertoPage from './pages/app/visualize/RefertoPage';
 
 
 const router = createBrowserRouter([
@@ -115,13 +115,13 @@ const router = createBrowserRouter([
       {
         path:'/user',
         element: <UserInfoPage/>
-      }
+      },
+      {
+        path:'/referto/:id',
+        element: <RefertoPage/>
+      },
     ],
   },
-  {
-        path:'/referto/:id',
-        element: <RefertoForm/>
-      },
   {
     path:'auth',
     element: <AuthLayout/>,

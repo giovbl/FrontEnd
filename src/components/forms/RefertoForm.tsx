@@ -353,7 +353,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                             error={resErrors.genomicInstabilityMetric?.message}
                                             {...resRegister('genomicInstabilityMetric',{required: true})}/>
                                     </Group>
-                                    <Group>     
+                                    <Group align="center">     
                                         <Controller
                                             control={resControl}
                                             name="lossOfHeterozygosityPercentage"

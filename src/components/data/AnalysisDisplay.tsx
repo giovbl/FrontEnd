@@ -28,7 +28,7 @@ function AnalysisDisplay({status,refertoid,strfun}:AnalysisDisplayInput){
         <Group>
             <CircleIcon status={status}/>
             {status === 'completed'?
-                <Link to={"referto/"+btoa(String(refertoid))}>
+                <Link to={"/referto/"+refertoid}>
                     {strfun(status)}
                 </Link>
                 :
