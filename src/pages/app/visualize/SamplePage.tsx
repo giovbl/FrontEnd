@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loading from "../Loading";
+import Loading from "../../../components/LoadingLayout";
 import { useLocation, useNavigate, useNavigation, useParams } from "react-router-dom";
 import api from "../../../utils/api";
 import { Alert, Box, Button, Space } from "@mantine/core";

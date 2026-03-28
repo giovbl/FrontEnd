@@ -1,9 +1,9 @@
 import { AppShell, Burger, Group, Loader,Skeleton } from "@mantine/core";
-import AllCenter from "../../components/AllCenter";
+import AllCenter from "./AllCenter";
 import { useDisclosure } from "@mantine/hooks";
-import Logo from "../../components/Logo";
+import Logo from "./Logo";
 
-function Loading(){
+function LoadingLayout(){
 
     const [opened, { toggle }] = useDisclosure();
 
@@ -39,4 +39,4 @@ function Loading(){
     )
 }
 
-export default Loading
+export default LoadingLayout

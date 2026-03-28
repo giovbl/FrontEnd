@@ -24,7 +24,7 @@ import PatientsPage, {loader as patientsLoader} from './pages/app/PatientsPage';
 import PatientPage from './pages/app/visualize/PatientPage'
 import SamplePage from './pages/app/visualize/SamplePage';
 import WorkgroupPage, {loader as workgroupPageLoader} from './pages/WorkgroupPage'
-import Loading from './pages/app/Loading';
+import LoadingLayout from './components/LoadingLayout';
 import RefertoPage from './pages/app/visualize/RefertoPage';
 
 
@@ -42,11 +42,11 @@ const router = createBrowserRouter([
             text="Errore di comunicazione col server"/>
       </AllCenter>
     ),
-    hydrateFallbackElement: <Loading />,
+    hydrateFallbackElement: <LoadingLayout/>,
     children:[
       {
         path:'/',
-        element: <MainPage/>
+        element: <MainPage/>,
       },
       {
         path:'/oncologo',

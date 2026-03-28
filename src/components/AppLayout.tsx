@@ -1,8 +1,8 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { redirect, useLoaderData, useMatch, useNavigate } from 'react-router'
+import { redirect, useLoaderData, useMatch, useNavigate, useNavigation } from 'react-router'
 
 import { useDisclosure } from '@mantine/hooks';
-import { AppShell, Burger, Center, Group, NavLink, Divider } from "@mantine/core";
+import { AppShell, Burger, Center, Group, NavLink, Divider, Loader } from "@mantine/core";
 import { IconPackage, IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
 
 import api from '../utils/api';
@@ -12,6 +12,7 @@ import { UserContext } from '../utils/context';
 import type { AxiosError } from 'axios';
 import { Suspense } from 'react';
 import Logo from './Logo';
+import LoadingIndicator from './LoadingIndicator';
 
 //Loader for getting current user's info
 // eslint-disable-next-line react-refresh/only-export-components
@@ -36,8 +37,10 @@ function AppLayout(){
 
     const match = useMatch(useLocation().pathname);
     const navigate = useNavigate();
+    const navigation = useNavigation()
 
     const user = useLoaderData()
+    const isNavigating = Boolean(navigation.location);
 
     return(
         <UserContext.Provider value={user}>
@@ -62,7 +65,7 @@ function AppLayout(){
                             <>
                                 <NavLink
                                     label="Campioni"
-                                    active={!!match && match.pathname === '/oncologo'}
+                                    active={!!match && (match.pathname === '/oncologo' || match.pathname === '/')}
                                     leftSection={<IconTestPipe2Filled/>}
                                     onClick={()=>navigate('/oncologo')}/>
 
@@ -107,9 +110,11 @@ function AppLayout(){
 
                 <AppShell.Main>
                     <Center>
-                        <Suspense fallback={<p>Caricamento rotta...</p>}>
+                        {isNavigating?
+                            <LoadingIndicator/>
+                            :
                             <Outlet/>
-                        </Suspense>
+                        }
                     </Center>
                 </AppShell.Main>
 

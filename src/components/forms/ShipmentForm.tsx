@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import api from '../../utils/api'
 import ErrorDisplay from '../Error';
-import Loading from '../../pages/app/Loading';
+import Loading from '../LoadingLayout';
 import type { UserData } from '../../utils/types';
 import { DateInput } from '@mantine/dates';
 
