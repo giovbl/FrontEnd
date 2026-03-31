@@ -57,9 +57,9 @@ function PatientsPage(){
         <Text key={`${i}.2`}>{itm.name}</Text>,
         <Text key={`${i}.3`}>{itm.surname}</Text>,
         <ActionIcon key={`${i}.4`}
-            variant="outline" 
+            variant="outline"
             aria-label="Visualizza"
-            onClick={()=> navigate('/patient/'+itm.fiscalCode,{state: itm})}>
+            onClick={()=> navigate('/patient/'+String(itm.id),{state: itm})}>
                 <IconEye/>
         </ActionIcon>
     ])

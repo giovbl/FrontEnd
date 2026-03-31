@@ -51,6 +51,7 @@ export interface UserData{
 }
 
 export interface Patient{
+    id: number,
     fiscalCode: string,
     isForeign: boolean,
     name: string,
@@ -120,6 +121,7 @@ export interface Sample{
     isCourierUsed: boolean,
     pathologistNotes: string,
     patient: string,
+    patientId: number,
     analysisStat: 'unanalyzed'|'analyzing'|'completed'
 }
 

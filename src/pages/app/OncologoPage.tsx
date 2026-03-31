@@ -76,7 +76,7 @@ function OncologoPage(){
     const cols = ['Campione (ID)','Paziente','Centro analisi','Spedizione','Analisi']
     const rows = tdata.map((itm)=>([
         <Link key={`${itm.id}.1`} to={"/sample/"+String(itm.id)} state={itm}>{itm.id}</Link>,
-        <Link key={`${itm.id}.2`} to={"/patient/"+itm.patient}>{itm.patient}</Link>,
+        <Link key={`${itm.id}.2`} to={"/patient/"+String(itm.patientId)}>{itm.patient}</Link>,
         <WorkgroupInfo key={`${itm.id}.3`} workgroup={itm.analystWorkgroup.groupName} facility={itm.analystWorkgroup.facility.nome}/>,
         <ShipmentDisplay key={`${itm.id}.4`} sampleId={itm.id} shipment={itm.shipment} courierUsed={itm.isCourierUsed} strfun={shipmentString} createShipment={createShipment}/>,
         <AnalysisDisplay key={`${itm.id}.5`} status={itm.analysisStat} refertoid={itm.referto} strfun={sampleStatusString}/>
