@@ -15,7 +15,7 @@ const schema = z.object({
     analystWorkgroup: z.string().nonoptional("Inserire un opzione"),
     typeOfBiologicalMaterial: z.string().nonempty("Inserire un opzione"),
     exhaustedBiologicalMaterial: z.boolean(),
-    histologicalNumber: z.string().nonempty("Inserire il numero istologico"),
+    histologicalNumber: z.string().nonempty("Inserire il numero istologico").regex(/[0-9]+[\/][0-9]+/,"Inserire nel formato 0000/00"),
     tissuePreservationMode: z.string(),
     tissueSamplingMode: z.string(),
     otherTissueSamplingMode: z.string(),
