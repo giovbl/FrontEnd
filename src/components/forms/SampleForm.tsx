@@ -1,12 +1,12 @@
-import { Alert, Box, Button, Fieldset, Group, NativeSelect, NumberInput, Space, Switch, Textarea, TextInput } from "@mantine/core"
+import { Alert, Box, Button, Fieldset, Group, NativeSelect, NumberInput, Space, Switch, Text, Textarea, TextInput } from "@mantine/core"
 
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
-import { useContext, useState } from "react"
+import { useContext, useState, type ChangeEvent } from "react"
 import type { FacilityInfo, Sample, UserData } from "../../utils/types"
-import { IconAlertTriangle } from "@tabler/icons-react"
+import { IconAlertTriangle, IconX } from "@tabler/icons-react"
 import api from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../utils/context"
@@ -43,6 +43,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     const {
         register,
         control,
+        trigger,
         handleSubmit,
         formState: {errors}
     } = useForm<SampleData>({
@@ -54,9 +55,24 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     const [bioType, setBioType] = useState('Tissue')
     const [failed, setFailed] = useState(false)
     const [tissueSampling,setTissueSampling] = useState('Biopsy')
+    const [patientError,setPatientError] = useState(false)
     const navigate = useNavigate()
 
+    function patientExists(e: ChangeEvent<HTMLInputElement>){
+        if(e.target.value.length < 16)
+            return
+
+        api.post('patient/exists',{
+            fiscalCode: e.target.value
+        }).then((res) =>{
+            setPatientError(!res.data.exists)
+        })
+    }
+
     const onSubmit:SubmitHandler<SampleData> = async (data:SampleData) =>{
+
+        if(patientError)
+            return
 
         setLoading(true)
         setFailed(false)
@@ -96,8 +112,14 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             disabled={readonly}
                             value={data?.patient}
                             error={errors.patient?.message}
-                            {...register('patient',{required:true})}
+                            {...register('patient',{required:true,
+                                onChange: patientExists
+                            })}
                             />
+
+                        {patientError &&
+                            <Text c='red' size="sm"><IconX size={10}/>Paziente non esistente</Text>
+                        }
                 </Fieldset>
 
                 <Space h="md"/>
