@@ -43,7 +43,6 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     const {
         register,
         control,
-        trigger,
         handleSubmit,
         formState: {errors}
     } = useForm<SampleData>({
@@ -80,7 +79,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
         try{
             await api.post("sample",{
                 oncologiWorkgroup: user.workgroup.id,
-                analystWorkgroup: data.analystWorkgroup,
+                analystWorkgroup: Number(data.analystWorkgroup),
                 typeofBiologicalMaterial: data.typeOfBiologicalMaterial,
                 exhaustedBiologicalMaterial: data.exhaustedBiologicalMaterial,
                 histologicalNumber: data.histologicalNumber,
@@ -102,6 +101,14 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
             setFailed(true)
         }
     }
+
+    const wdata = facilities?.filter((itm) =>(
+        itm.id === facility
+    ))[0].workgroups.filter((itm)=>(
+        itm.groupType === 'analyst'
+    )).map((itm) =>(
+        {label: itm.groupName, value: String(itm.id)}
+    ))
 
     return (
         <Box>
@@ -139,17 +146,9 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
                         <NativeSelect 
                             label="Workgroup" 
+                            data={wdata}
                             error={errors.analystWorkgroup?.message}
                             {...register('analystWorkgroup',{required:true})}>
-                            {facilities &&
-                                facilities.filter((itm) =>(
-                                    itm.id === facility
-                                ))[0].workgroups.filter((itm)=>(
-                                    itm.groupType === 'analyst'
-                                )).map((itm) =>(
-                                    <option key={itm.id} value={itm.id}>{itm.groupName}</option>
-                                ))
-                            }
                         </NativeSelect>
                     </Fieldset>
 
