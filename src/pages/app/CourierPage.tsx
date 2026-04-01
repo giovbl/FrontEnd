@@ -69,7 +69,7 @@ function CourierPage(){
             <Text key={`${itm.id}.2`}>{itm.sample}</Text>,
             <ShipmentAddress key={`${itm.id}.3`} facility={itm.sender}/>,
             <ShipmentAddress key={`${itm.id}.4`} facility={itm.recipient}/>,
-            <ShipmentState key={`${itm.id}.5`} shipmentId={itm.id} status={itm.status} data={odata} setData={setOdata}/>
+            <ShipmentState key={`${itm.id}.5`} shipmentId={itm.id} status={itm.status} data={odata} setData={setAllData}/>
         ])
     
     return <DataTable cols={cols} rows={rows} searchfun={search}/>
