@@ -17,8 +17,7 @@ function ShipmentState({shipmentId,status,data,setData}:ShipmentStateInput){
 
     const [failed, setFailed] = useState(false)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const changeStatus = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const changeStatus = async (/*e: React.MouseEvent<HTMLButtonElement>*/) => {
         
         let newStatus:ShipmentStatus;
         

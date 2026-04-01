@@ -21,11 +21,9 @@ function AnalysisState({status,sampleid,data,shipping,setData,createfun}:Analysi
     const [failed, setFailed] = useState(false)
     const navigate = useNavigate()
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const createReferto = (e: React.MouseEvent<HTMLButtonElement>) => createfun(sampleid);
+    const createReferto = (/*e: React.MouseEvent<HTMLButtonElement>*/) => createfun(sampleid);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const setToAnalyze = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const setToAnalyze = async (/*e: React.MouseEvent<HTMLButtonElement>*/) => {
         const newState = 'analyzing'
 
         try{
