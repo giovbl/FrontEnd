@@ -108,6 +108,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Codice fiscale" 
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.fiscalCode}
                             error={errors.fiscalCode?.message}
                             {...register('fiscalCode',{required: true})}/>
@@ -123,7 +124,8 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <TextInput 
                         label="Nome"
-                        disabled={readonly} 
+                        disabled={readonly}
+                        withAsterisk
                         value={data?.name}
                         error={errors.name?.message}
                         {...register('name',{required: true})}/>
@@ -131,6 +133,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Cognome" 
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.surname}
                             error={errors.surname?.message}
                             {...register('surname',{required: true})}/>
@@ -138,6 +141,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <NativeSelect 
                             label="Sesso" 
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.gender}
                             error={errors.gender?.message}
                             {...register('gender',{required: true})}>
@@ -157,6 +161,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                     <DateInput 
                                         label="Data di nascita" 
                                         disabled={readonly}
+                                        withAsterisk
                                         value={data?.birthDate}
                                         error={errors.birthDate?.message}
                                         onChange={(e) => {
@@ -168,8 +173,9 @@ function PatientForm({readonly,data}:PatientFormInput){
                         />
 
                         <TextInput 
-                            label="Numero di telefono" 
+                            label="Numero di telefono"
                             disabled={readonly}
+                            withAsterisk
                             value={data?.phone}
                             error={errors.phone?.message}
                             {...register('phone',{required: true})}/>
@@ -181,6 +187,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Regione" 
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.residenceRegion}
                             error={errors.residenceRegion?.message}
                             {...register('residenceRegion',{required: true})}/>
@@ -188,6 +195,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Provincia" 
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.residenceProvince}
                             error={errors.residenceProvince?.message}
                             {...register('residenceProvince',{required: true})}/>
@@ -195,6 +203,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Città"
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.residenceCity}
                             error={errors.residenceCity?.message}
                             {...register('residenceCity',{required: true})}/>
@@ -203,6 +212,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="CAP"
                             disabled={readonly} 
+                            withAsterisk
                             value={data?.cap}
                             error={errors.cap?.message}
                             {...register('cap',{required: true})}/>
@@ -211,6 +221,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                             label="Indirizzo"
                             disabled={readonly} 
                             value={data?.address}
+                            withAsterisk
                             error={errors.address?.message}
                             {...register('address',{required: true})}/>
                         
@@ -223,6 +234,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                     <NumberInput
                                         label="Civico"
                                         disabled={readonly} 
+                                        withAsterisk
                                         value={data?.civicNumber}
                                         error={errors.civicNumber?.message}
                                         onChange={(e) => {
@@ -239,6 +251,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <NativeSelect 
                             label="Etnia"
                             disabled={readonly}
+                            withAsterisk
                             value={data?.ethnicOrigin}
                             error={errors.ethnicOrigin?.message}
                             {...register('ethnicOrigin',{
@@ -257,6 +270,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Altra etnia"
                             disabled={readonly || !otherEthnicity}
+                            withAsterisk={otherEthnicity}
                             value={data?.otherEthnicOrigin}
                             error={errors.otherEthnicOrigin?.message}
                             {...register('otherEthnicOrigin')}/>
@@ -269,6 +283,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <NativeSelect 
                             label="Diagnosi"
                             disabled={readonly}
+                            withAsterisk
                             value={data?.diagnosis}
                             error={errors.diagnosis?.message}
                             {...register('diagnosis',{required: true})}>
@@ -280,6 +295,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <NativeSelect 
                             label="Neoplasia"
                             disabled={readonly}
+                            withAsterisk
                             value={data?.neoplasia}
                             error={errors.neoplasia?.message}
                             {...register('neoplasia',{required: true})}>
@@ -297,6 +313,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                     <NumberInput
                                         label="Familiarità"
                                         disabled={readonly}
+                                        withAsterisk
                                         value={(Number.isNaN(data?.familiarity))?0:data?.familiarity}
                                         error={errors.familiarity?.message}
                                         onChange={(val) => {
@@ -314,6 +331,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <NativeSelect 
                             label="Mutazione"
                             disabled={readonly}
+                            withAsterisk
                             value={data?.mutationResult}
                             error={errors.mutationResult?.message}
                             {...register('mutationResult',{required: true})}>
@@ -337,6 +355,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                             label="Istologia"
                             resize="both"
                             disabled={readonly}
+                            withAsterisk
                             value={data?.histology}
                             error={errors.histology?.message}
                             {...register('histology',{required: true})}/>
