@@ -198,6 +198,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                 <Switch
                                     label="Etichetta idonea"
                                     defaultChecked={fdata.current.referto?.isLabelEligible}
+                                    withThumbIndicator
                                     error={refErrors.isLabelEligible?.message}
                                     {...refRegister('isLabelEligible',{
                                         required: true,

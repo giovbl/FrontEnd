@@ -15,7 +15,7 @@ import type { UserData } from '../../utils/types';
 import { DateInput } from '@mantine/dates';
 
 const schema = z.object({
-  courier: z.string().nonempty("Scelgiere un corriere"),
+  courier: z.string().nonempty("Scegliere un corriere"),
   expected: z.string().nonempty("Inserire una data").nonoptional("Inserire una data")
 })
 type ShipmentCreation = z.infer<typeof schema>
@@ -106,6 +106,7 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
             <NativeSelect
             label="Seleziona corriere"
             error={errors.courier?.message}
+            withAsterisk
             {...register('courier',{required:true})}>
             {couriers &&
                 couriers.map((itm)=>
@@ -125,6 +126,7 @@ function ShipmentForm({sampleId}:ShipmentFormInput){
                         <DateInput
                             label="Data preferita di ritiro"
                             placeholder='Scegliere una data'
+                            withAsterisk
                             minDate={new Date((new Date()).getTime() + 1 * 24 * 60 * 60 * 1000)}
                             error={errors.expected?.message}
                             onChange={(e) => {

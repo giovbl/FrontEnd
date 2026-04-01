@@ -24,7 +24,7 @@ function ShipmentIcon({status}:{status:ShipmentStatus}){
 }
 
 function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:ShipmentDisplayInput){
-
+    console.log(sampleId,Boolean(shipment),courierUsed,typeof createShipment === "function")
     return (
         <>
             {shipment?
@@ -87,10 +87,19 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                         }
                         </>
                         :
-                        <Group>
-                            <IconClockQuestion/>
-                            <Text>Da spedire</Text>
-                        </Group>
+                        <>
+                        {courierUsed?
+                            <Group>
+                                <IconClockQuestion/>
+                                <Text>Da spedire</Text>
+                            </Group>
+                            :
+                            <Group>
+                                <IconPackageOff/>
+                                <Text>Nessuna spedizione</Text>
+                            </Group>
+                        }
+                        </>
                     }
                 </>
             }

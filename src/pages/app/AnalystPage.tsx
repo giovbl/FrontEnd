@@ -76,8 +76,9 @@ function AnalystPage(){
             <Link key={`${itm.id}.1`} to={"/sample/"+String(itm.id)} state={itm}>{itm.id}</Link>,
             <WorkgroupInfo key={`${itm.id}.2`} workgroup={itm.oncologiWorkgroup.groupName} facility={itm.oncologiWorkgroup.facility.nome}/>,
             <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shipmentString} courierUsed={itm.isCourierUsed}/>,
-            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} data={odata} setData={setAllData} createfun={refCreate}/>
+            <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} shipping={itm.shipment?.status != 'arrived' && itm.isCourierUsed} data={odata} setData={setAllData} createfun={refCreate}/>
         ])
+        console.log(odata)
 
     return (
         <>

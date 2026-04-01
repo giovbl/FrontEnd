@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from '@mantine/core'
+import { Button, Text } from '@mantine/core'
 
 import { type AnalysisStatus, type SampleInfo } from "../../utils/types"
 import ErrorDisplay from "../Error";
@@ -11,11 +11,12 @@ interface AnalysisStateInput{
     status: AnalysisStatus,
     data: Array<SampleInfo>
     sampleid: number,
+    shipping: boolean,
     setData: (input: Array<SampleInfo>) => void,
     createfun: (sampleId:number) => void
 }
 
-function AnalysisState({status,sampleid,data,setData,createfun}:AnalysisStateInput){
+function AnalysisState({status,sampleid,data,shipping,setData,createfun}:AnalysisStateInput){
 
     const [failed, setFailed] = useState(false)
     const navigate = useNavigate()
@@ -54,9 +55,15 @@ function AnalysisState({status,sampleid,data,setData,createfun}:AnalysisStateInp
         return (
             <>
             {status === 'unanalyzed' &&
-                <Button size="compact-sm" onClick={setToAnalyze}>
-                    Segna come in analisi
-                </Button>
+                <>
+                {shipping?
+                    <Text>In attesa della consegna</Text>
+                    :
+                    <Button size="compact-sm" onClick={setToAnalyze}>
+                        Segna come in analisi
+                    </Button>
+                }
+                </>
             }
             {status === 'analyzing' &&
                 <Button size="compact-sm" onClick={createReferto}>

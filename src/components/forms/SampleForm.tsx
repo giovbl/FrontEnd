@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../utils/context"
 
 const schema = z.object({
-    analystWorkgroup: z.string().nonoptional("Inserire un opzione"),
+    analystWorkgroup: z.string().nonempty("Inserire un opzione").refine((val) => val !== 'null', { message: "Inserire un opzione'" }),
     typeOfBiologicalMaterial: z.string().nonempty("Inserire un opzione"),
     exhaustedBiologicalMaterial: z.boolean(),
     histologicalNumber: z.string().nonempty("Inserire il numero istologico").regex(/[0-9]+[\/][0-9]+/,"Inserire nel formato 0000/00"),
@@ -69,7 +69,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     }
 
     const onSubmit:SubmitHandler<SampleData> = async (data:SampleData) =>{
-
+        
         if(patientError)
             return
 
@@ -109,6 +109,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     )).map((itm) =>(
         {label: itm.groupName, value: String(itm.id)}
     ))
+    wdata?.unshift({label: "Seleziona un opzione", value:"null"})
 
     return (
         <Box>
@@ -119,6 +120,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             disabled={readonly}
                             value={data?.patient}
                             error={errors.patient?.message}
+                            withAsterisk
                             {...register('patient',{required:true,
                                 onChange: patientExists
                             })}
@@ -136,6 +138,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <Fieldset legend='Workgroup di analisi'>
                         <NativeSelect 
                             label="Struttura"
+                            withAsterisk
                             onChange={(e)=>setFacility(Number(e.target.value))}>
                             {facilities &&
                                 facilities.map((itm) =>(
@@ -147,6 +150,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         <NativeSelect 
                             label="Workgroup" 
                             data={wdata}
+                            withAsterisk
                             error={errors.analystWorkgroup?.message}
                             {...register('analystWorkgroup',{required:true})}>
                         </NativeSelect>
@@ -162,6 +166,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             label="Tipo di materiale"
                             disabled={readonly}
                             value={data?.typeOfBiologicalMaterial}
+                            withAsterisk
                             error={errors.typeOfBiologicalMaterial?.message}
                             {...register('typeOfBiologicalMaterial',{
                                 required:true,
@@ -184,6 +189,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                                         label="Età del campione"
                                         suffix=" mesi"
                                         disabled={readonly}
+                                        withAsterisk
                                         value={data?.ageOfSample}
                                         error={errors.ageOfSample?.message}
                                         onChange={(e) => {
@@ -214,6 +220,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                                         suffix="%"
                                         placeholder="%"
                                         disabled={readonly}
+                                        withAsterisk
                                         value={data?.pctTumorCells}
                                         error={errors.pctTumorCells?.message}
                                         onChange={(e) => {
@@ -227,6 +234,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <TextInput
                         label="Zona metastasi"
                         disabled={readonly}
+                        withAsterisk
                         value={data?.metaStaticSite}
                         error={errors.metaStaticSite?.message}
                         {...register('metaStaticSite',{required:true})}/>
@@ -241,6 +249,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             label="Numero istologico"
                             placeholder="0000/00"
                             disabled={readonly}
+                            withAsterisk={bioType === 'Tissue'}
                             value={data?.histologicalNumber}
                             error={errors.histologicalNumber?.message}
                             maw={170}
@@ -249,6 +258,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         <NativeSelect
                             label="Preservazione"
                             disabled={readonly || bioType != 'Tissue'}
+                            withAsterisk={bioType === 'Tissue'}
                             value={data?.tissuePreservationMode}
                             error={errors.tissuePreservationMode?.message}
                             {...register('tissuePreservationMode')}>
@@ -266,6 +276,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         <TextInput
                             label="Provenienza"
                             disabled={readonly || bioType != 'Tissue'}
+                            withAsterisk={bioType === 'Tissue'}
                             value={data?.tissueProvenance}
                             error={errors.tissueProvenance?.message}
                             {...register('tissueProvenance')}/>
@@ -275,6 +286,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         <NativeSelect
                             label="Tipo di sampling"
                             disabled={readonly || bioType != 'Tissue'}
+                            withAsterisk={bioType === 'Tissue'}
                             value={data?.tissueSamplingMode}
                             error={errors.tissueSamplingMode?.message}
                             {...register('tissueSamplingMode',{
@@ -305,6 +317,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             label="Tipo di biopsia"
                             disabled={readonly || tissueSampling != 'Biopsy' || bioType != 'Tissue'}
                             value={data?.biopsyType}
+                            withAsterisk={tissueSampling === 'Biopsy'}
                             error={errors.biopsyType?.message}
                             {...register('biopsyType')}>
                             
