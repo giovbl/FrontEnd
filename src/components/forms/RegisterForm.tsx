@@ -14,7 +14,7 @@ const schema = z.object({
   fullname: z.string().nonempty("Inserire un nome"),
   email: z.email("Email non corretta"),
   password: z.string().nonempty("Inserire una password"),
-  type: z.string().nonempty("Inserire un tipo")
+  type: z.string().nonempty("Inserire un tipo").refine((val)=>val !== 'null',"Inserire un tipo")
 })
 
 function RegisterForm(){
@@ -41,10 +41,6 @@ function RegisterForm(){
     setLoading(true)
     setFailed(false)
     setUserExsists(false)
-
-    if(data.type === 'null'){
-      return;
-    }
 
     api.post('/auth/register', {
       fullname: data.fullname,
@@ -95,8 +91,10 @@ function RegisterForm(){
                     {...register('password',{required: true})}
                 />
 
-                <NativeSelect label="Tipo di utente"
-                    {...register('type',{
+                <NativeSelect 
+                  label="Tipo di utente"
+                  error={errors.type?.message}
+                  {...register('type',{
                       required:true})}>
                   <option key='null' value='null'>Seleziona un opzione</option>
                   <option key="Oncologo" value="Oncologo">Oncologo</option>
