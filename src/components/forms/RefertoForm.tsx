@@ -198,7 +198,6 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                 <Switch
                                     label="Etichetta idonea"
                                     defaultChecked={fdata.current.referto?.isLabelEligible}
-                                    withThumbIndicator
                                     error={refErrors.isLabelEligible?.message}
                                     {...refRegister('isLabelEligible',{
                                         required: true,
@@ -209,6 +208,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                 <NativeSelect
                                     label="Motivazione"
                                     disabled={labelElibigle}
+                                    withAsterisk
                                     defaultValue={fdata.current.referto?.notElegibleReason}
                                     error={refErrors.notElegibleReason?.message}
                                     {...refRegister('notElegibleReason',{
@@ -350,6 +350,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                                         <TextInput 
                                             label="Metrica di instabilità" 
+                                            withAsterisk
                                             value={fdata.current.result?.genomicInstabilityMetric}
                                             error={resErrors.genomicInstabilityMetric?.message}
                                             {...resRegister('genomicInstabilityMetric',{required: true})}/>
@@ -366,6 +367,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                                         placeholder="%"
                                                         suffix="%"
                                                         w={150}
+                                                        withAsterisk
                                                         defaultValue={fdata.current.result?.lossOfHeterozygosityPercentage}
                                                         error={resErrors.lossOfHeterozygosityPercentage?.message}
                                                         onChange={(e) => {
@@ -380,6 +382,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                             label="Exon"
                                             placeholder="ATGGCCA..."
                                             w={180}
+                                            withAsterisk
                                             value={fdata.current.result?.exon}
                                             error={resErrors.exon?.message}
                                             {...resRegister('exon',{required: true})}/>
@@ -388,6 +391,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                             label="Intron"
                                             placeholder="GTGAGTAAA..."
                                             w={180}
+                                            withAsterisk
                                             value={fdata.current.result?.intron}
                                             error={resErrors.intron?.message}
                                             {...resRegister('intron',{required: true})}/>
@@ -397,12 +401,14 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                         <TextInput 
                                             label="Sostituzione aminoacidi"
                                             w={180}
+                                            withAsterisk
                                             value={fdata.current.result?.aminoacidSubstitution}
                                             error={resErrors.aminoacidSubstitution?.message}
                                             {...resRegister('aminoacidSubstitution',{required: true})}/>
                                         <TextInput 
                                             label="Sostituzione nucleotidi"
                                             w={180}
+                                            withAsterisk
                                             value={fdata.current.result?.nucleotideSubstitution}
                                             error={resErrors.nucleotideSubstitution?.message}
                                             {...resRegister('nucleotideSubstitution',{required: true})}/>
@@ -415,6 +421,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <NativeSelect
                                             label="Stato"
+                                            withAsterisk
                                             defaultValue={fdata.current.result?.hrdStatus}
                                             error={resErrors.hrdStatus?.message}
                                             {...resRegister('hrdStatus',{required:true})}>
@@ -434,6 +441,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                                         label="Score"
                                                         placeholder="00"
                                                         w={150}
+                                                        withAsterisk
                                                         defaultValue={fdata.current.result?.hrdScore}
                                                         error={resErrors.hrdScore?.message}
                                                         onChange={(e) => {
@@ -455,6 +463,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <NativeSelect
                                             label="Stato mutazione"
+                                            withAsterisk
                                             defaultValue={fdata.current.result?.brcaMutationStatus}
                                             error={resErrors.brcaMutationStatus?.message}
                                             {...resRegister('brcaMutationStatus',{required:true})}>
@@ -511,6 +520,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                             label="PDF referto"
                                             placeholder="Carica PDF"
                                             leftSection={<IconFile/>}
+                                            withAsterisk
                                             accept="application/pdf"
                                             defaultValue={fdata.current.final?.file}
                                             error={fileErrors.file?.message}
