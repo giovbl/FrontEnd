@@ -73,7 +73,7 @@ function AnalystPage(){
         setLoading(true)
         controller.current = new AbortController()
 
-        api.get('sample?analystWorkgroup=1&q='+encodeURIComponent(query),{
+        api.get('sample?oncologiWorkgroup=1&q='+encodeURIComponent(query),{
             signal: controller.current.signal
         }).then((res)=>{
             const rs = res.data as Array<SampleInfo>
