@@ -13,6 +13,10 @@ api.interceptors.response.use((response) => response,async (error) => {
   
     const originalRequest = error.config;
 
+    //Nothing to do if request was canceled
+    if(axios.isCancel(error))
+      return api(originalRequest)
+
     //If unauthorized and it's not a retry request
     if (error.response.status === 401 && !originalRequest._retry) {
 

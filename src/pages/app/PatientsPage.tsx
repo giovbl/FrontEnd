@@ -6,10 +6,10 @@ import api from "../../utils/api";
 import { ActionIcon, Modal, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import PatientForm from "../../components/forms/PatientForm";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { IconEye } from "@tabler/icons-react";
 import type { Patient } from "../../utils/types";
-import type { AxiosError } from "axios";
+import { isCancel, type AxiosError} from "axios";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -37,6 +37,7 @@ function PatientsPage(){
 
     const [error,setError] = useState(false)
     const [loading,setLoading] = useState(false)
+    const controller = useRef(new AbortController())
 
     const navigate = useNavigate()
     const [opened, { open, close }] = useDisclosure(false);
@@ -50,14 +51,22 @@ function PatientsPage(){
             return
         }
 
-        setLoading(true)
+        if(controller.current)
+            controller.current.abort()
 
-        api.get('patient?q='+encodeURIComponent(query)).then((res)=>{
+        setLoading(true)
+        controller.current = new AbortController()
+
+        api.get('patient?q='+encodeURIComponent(query),{
+            signal: controller.current.signal
+        }).then((res)=>{
             setData(res.data)
             setLoading(false)
-        }).catch(()=>{
-            setData([])
-            setError(true)
+        }).catch((err)=>{console.log(err)
+            if (!isCancel(err)){
+                setData([])
+                setError(true)
+            }
             setLoading(false)
         })
     }
