@@ -4,11 +4,11 @@ import DataTable from "../../components/DataTable";
 
 import api from "../../utils/api";
 import { sampleStatusString, shipmentString } from "../../utils/utils";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import AnalysisState from "../../components/data/AnalysisState";
-import type { AxiosError } from "axios";
+import { AxiosError,isCancel } from "axios";
 import type { SampleInfo } from "../../utils/types";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -39,6 +39,10 @@ function AnalystPage(){
     const [data,setData] = useState(odata)
     const [sampleId,setSampleId] = useState(-1)
 
+    const [error,setError] = useState(false)
+    const [loading,setLoading] = useState(false)
+    const controller = useRef(new AbortController())
+
     const [opened, { open, close }] = useDisclosure(false);
 
     //Function for correctly updating page's data
@@ -56,19 +60,45 @@ function AnalystPage(){
     //Function implementing DataTable's search function
     function search(query:string){
 
+        setError(false)
+
         if(!query){
             setData(odata)
             return
         }
 
-        setData(data.filter((itm) =>
+        if(controller.current)
+            controller.current.abort()
+
+        setLoading(true)
+        controller.current = new AbortController()
+
+        api.get('sample?analystWorkgroup=1&q='+encodeURIComponent(query),{
+            signal: controller.current.signal
+        }).then((res)=>{
+            const rs = res.data as Array<SampleInfo>
+            setData(rs.filter((itm)=>
+                itm.id === itm.id ||
+                shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
+                sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
+            ))
+            setLoading(false)
+        }).catch((err)=>{console.log(err)
+            if (!isCancel(err)){
+                setData([])
+                setError(true)
+            }
+            setLoading(false)
+        })
+
+        /*setData(data.filter((itm) =>
             String(itm.id).includes(query) ||
             itm.oncologiWorkgroup.facility.nome.toLowerCase().includes(query) ||
             itm.oncologiWorkgroup.groupName.toLowerCase().includes(query) ||
             itm.patient.toLowerCase().includes(query) ||
             shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
             sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
-        ))
+        ))*/
     }
 
     const cols = ['Campione (ID)','Centro oncologico','Spedizione','Stato analisi']
@@ -86,7 +116,8 @@ function AnalystPage(){
                 <RefertoForm sampleId={sampleId}/>
             </Modal>
 
-            <DataTable cols={cols} rows={rows} searchfun={search}/>
+            <DataTable cols={cols} rows={rows} searchfun={search}
+                       error={error} loading={loading}/>
         </>
     )
 }

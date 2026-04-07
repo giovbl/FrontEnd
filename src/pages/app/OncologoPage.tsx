@@ -6,13 +6,13 @@ import api from "../../utils/api";
 import { Modal } from "@mantine/core";
 import SampleForm from "../../components/forms/SampleForm";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ShipmentForm from "../../components/forms/ShipmentForm";
 import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import { sampleStatusString, shipmentString } from "../../utils/utils";
 import AnalysisDisplay from "../../components/data/AnalysisDisplay";
-import type { AxiosError } from "axios";
+import { AxiosError,isCancel } from "axios";
 import type { SampleInfo } from "../../utils/types";
 
 //Loader for getting user's samples
@@ -43,6 +43,10 @@ function OncologoPage(){
     const data = useLoaderData()
     const [tdata,setTData] = useState<Array<SampleInfo>>(data.samples)
 
+    const [error,setError] = useState(false)
+    const [loading,setLoading] = useState(false)
+    const controller = useRef(new AbortController())
+
     const [form, setForm] = useState('sample')
 
     const [opened, { open, close }] = useDisclosure(false);
@@ -56,20 +60,46 @@ function OncologoPage(){
 
     //Function implementing DataTable's search function
     function search(query:string){
-        
+
+        setError(false)
+
         if(!query){
             setTData(data.samples)
             return
         }
 
-        setTData(tdata.filter((itm) =>
+        if(controller.current)
+            controller.current.abort()
+
+        setLoading(true)
+        controller.current = new AbortController()
+
+        api.get('sample?analystWorkgroup=1&q='+encodeURIComponent(query),{
+            signal: controller.current.signal
+        }).then((res)=>{
+            const rs = res.data as Array<SampleInfo>
+            setTData(rs.filter((itm)=>
+                itm.id === itm.id ||
+                shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
+                sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
+            ))
+            setLoading(false)
+        }).catch((err)=>{console.log(err)
+            if (!isCancel(err)){
+                setTData([])
+                setError(true)
+            }
+            setLoading(false)
+        })
+
+        /*setTData(tdata.filter((itm) =>
             String(itm.id).includes(query) ||
             itm.analystWorkgroup.facility.nome.toLowerCase().includes(query) ||
             itm.analystWorkgroup.groupName.toLowerCase().includes(query) ||
             itm.patient.toLowerCase().includes(query) ||
             shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
             sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
-        ))
+        ))*/
     }
 
     //Defining columns and rows to show
@@ -94,7 +124,8 @@ function OncologoPage(){
 
             <DataTable 
                 rows={rows} cols={cols} searchfun={search}
-                showbtn btntext="Crea campione" btnfun={()=>{setForm('sample');open()}}/>
+                showbtn btntext="Crea campione" btnfun={()=>{setForm('sample');open()}}
+                error={error} loading={loading}/>
         </>
     )
 }
