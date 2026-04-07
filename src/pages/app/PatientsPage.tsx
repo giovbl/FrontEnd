@@ -36,6 +36,7 @@ function PatientsPage(){
     const [data,setData] = useState(odata)
 
     const [error,setError] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     const navigate = useNavigate()
     const [opened, { open, close }] = useDisclosure(false);
@@ -49,11 +50,15 @@ function PatientsPage(){
             return
         }
 
+        setLoading(true)
+
         api.get('patient?q='+encodeURIComponent(query)).then((res)=>{
             setData(res.data)
+            setLoading(false)
         }).catch(()=>{
             setData([])
             setError(true)
+            setLoading(false)
         })
     }
 
@@ -78,7 +83,8 @@ function PatientsPage(){
 
             <DataTable 
                 cols={cols} rows={rows} searchfun={search}
-                showbtn btntext="Crea paziente" btnfun={open}/>
+                showbtn btntext="Crea paziente" btnfun={open}
+                error={error} loading={loading}/>
         </>
     )
 }
