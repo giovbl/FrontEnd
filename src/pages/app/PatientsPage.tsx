@@ -35,20 +35,26 @@ function PatientsPage(){
     const odata = useLoaderData() as Array<Patient>
     const [data,setData] = useState(odata)
 
+    const [error,setError] = useState(false)
+
     const navigate = useNavigate()
     const [opened, { open, close }] = useDisclosure(false);
 
-    function search(query:string){
+    async function search(query:string){
+
+        setError(false)
 
         if(!query){
-            setData(data)
+            setData(odata)
             return
         }
 
-        setData(data.filter((itm) =>
-            (itm.name+' '+itm.surname).toLowerCase().includes(query) ||
-            itm.fiscalCode.toLowerCase().includes(query)
-        ))
+        api.get('patient?q='+encodeURIComponent(query)).then((res)=>{
+            setData(res.data)
+        }).catch(()=>{
+            setData([])
+            setError(true)
+        })
     }
 
     const cols = ['Codice fiscale','Nome','Cognome','Visualizza']
