@@ -1,4 +1,4 @@
-import { Table,Button,Stack,Group,TextInput,Center, Alert, Box, Skeleton } from "@mantine/core"
+import { Table,Button,Stack,Group,TextInput,Center, Alert, Skeleton } from "@mantine/core"
 import { IconAlertTriangle, IconPlus, IconSearch } from "@tabler/icons-react"
 import type { ReactElement } from "react"
 
