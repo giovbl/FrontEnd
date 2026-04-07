@@ -90,15 +90,7 @@ function AnalystPage(){
             }
             setLoading(false)
         })
-
-        /*setData(data.filter((itm) =>
-            String(itm.id).includes(query) ||
-            itm.oncologiWorkgroup.facility.nome.toLowerCase().includes(query) ||
-            itm.oncologiWorkgroup.groupName.toLowerCase().includes(query) ||
-            itm.patient.toLowerCase().includes(query) ||
-            shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
-            sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
-        ))*/
+        
     }
 
     const cols = ['Campione (ID)','Centro oncologico','Spedizione','Stato analisi']
