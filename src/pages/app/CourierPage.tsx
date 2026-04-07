@@ -70,25 +70,13 @@ function CourierPage(){
                 shipmentString(itm.status).toLowerCase().includes(query)
             ))
             setLoading(false)
-        }).catch((err)=>{console.log(err)
+        }).catch((err)=>{
             if (!isCancel(err)){
                 setData([])
                 setError(true)
             }
             setLoading(false)
         })
-
-        /*setData(data.filter((itm) =>
-            String(itm.id).includes(query) ||
-            itm.recipient.residenceCity.toLowerCase().includes(query) ||
-            itm.recipient.cap.toLowerCase().includes(query) ||
-            (itm.recipient.address+' '+itm.recipient.civicNumber).toLowerCase().includes(query) ||
-            itm.sender.residenceCity.toLowerCase().includes(query) ||
-            itm.sender.cap.toLowerCase().includes(query) ||
-            (itm.sender.address+' '+itm.sender.civicNumber).toLowerCase().includes(query) ||
-            shipmentString(itm.status).toLowerCase().includes(query) ||
-            String(itm.sample).includes(query)
-        ))*/
     }
 
     //Defining columns and rows to show

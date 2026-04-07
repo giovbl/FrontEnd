@@ -84,22 +84,13 @@ function OncologoPage(){
                 sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
             ))
             setLoading(false)
-        }).catch((err)=>{console.log(err)
+        }).catch((err)=>{
             if (!isCancel(err)){
                 setTData([])
                 setError(true)
             }
             setLoading(false)
         })
-
-        /*setTData(tdata.filter((itm) =>
-            String(itm.id).includes(query) ||
-            itm.analystWorkgroup.facility.nome.toLowerCase().includes(query) ||
-            itm.analystWorkgroup.groupName.toLowerCase().includes(query) ||
-            itm.patient.toLowerCase().includes(query) ||
-            shipmentString(itm.shipment?.status).toLowerCase().includes(query) ||
-            sampleStatusString(itm.analysisStat).toLowerCase().includes(query)
-        ))*/
     }
 
     //Defining columns and rows to show

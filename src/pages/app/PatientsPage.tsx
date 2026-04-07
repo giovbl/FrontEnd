@@ -62,7 +62,7 @@ function PatientsPage(){
         }).then((res)=>{
             setData(res.data)
             setLoading(false)
-        }).catch((err)=>{console.log(err)
+        }).catch((err)=>{
             if (!isCancel(err)){
                 setData([])
                 setError(true)

@@ -24,7 +24,6 @@ function ShipmentIcon({status}:{status:ShipmentStatus}){
 }
 
 function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:ShipmentDisplayInput){
-    console.log(sampleId,Boolean(shipment),courierUsed,typeof createShipment === "function")
     return (
         <>
             {shipment?
