@@ -546,7 +546,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                 <Group justify="center" mt="xl">
                     <Button variant="default"
-                            disabled={!failed && (active ===3 || active === 0)} 
+                            disabled={!failed && (active ===3 || active === 0) || loading} 
                             onClick={prevStep}>
                         Indietro
                     </Button>
