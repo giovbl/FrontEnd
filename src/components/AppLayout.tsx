@@ -3,7 +3,7 @@ import { redirect, useLoaderData, useMatch, useNavigate, useNavigation } from 'r
 
 import { useDisclosure } from '@mantine/hooks';
 import { AppShell, Burger, Center, Group, NavLink, Divider } from "@mantine/core";
-import { IconPackage, IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
+import { IconLogout, IconPackage, IconTestPipe2Filled, IconUserFilled, IconUsers } from '@tabler/icons-react';
 
 import api from '../utils/api';
 
@@ -40,6 +40,12 @@ function AppLayout(){
 
     const user = useLoaderData()
     const isNavigating = Boolean(navigation.location);
+
+    function logout(){
+        api.post('auth/logout').then(()=>{
+            navigate("/auth/login")
+        })
+    }
 
     return(
         <UserContext.Provider value={user}>
@@ -103,6 +109,11 @@ function AppLayout(){
                             active={!!match && match.pathname === '/user'}
                             leftSection={<IconUserFilled/>}
                             onClick={()=>navigate('/user')}/>
+
+                        <NavLink
+                            label="Logout"
+                            leftSection={<IconLogout/>}
+                            onClick={()=>logout()}/>
 
                     </AppShell.Navbar>
                 }
