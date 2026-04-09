@@ -42,7 +42,7 @@ function AppLayout(){
     const isNavigating = Boolean(navigation.location);
 
     function logout(){
-        api.post('auth/logout').then(()=>{
+        api.get('auth/logout').then(()=>{
             navigate("/auth/login")
         })
     }
