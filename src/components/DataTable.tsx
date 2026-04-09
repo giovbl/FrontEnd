@@ -61,6 +61,8 @@ function DataTable({rows,cols,error,loading,showbtn,btntext,btnfun,searchfun=()=
                             </Table.Tr>
                         ))}
                     </Table.Tbody>
+
+                    <Table.Caption>Utilizza la funzione di ricerca per ottenere risultati migliori</Table.Caption>
                 </Table>
             }
         </Stack>
