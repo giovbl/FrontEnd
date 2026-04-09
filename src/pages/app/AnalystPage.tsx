@@ -9,7 +9,7 @@ import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import AnalysisState from "../../components/data/AnalysisState";
 import { AxiosError,isCancel } from "axios";
-import type { SampleInfo, UserData, UserType } from "../../utils/types";
+import type { SampleInfo } from "../../utils/types";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import RefertoForm from "../../components/forms/RefertoForm";
