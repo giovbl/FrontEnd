@@ -1,4 +1,4 @@
-import { useLoaderData, redirect, Link } from "react-router-dom";
+import { useLoaderData, redirect, Link, useNavigate } from "react-router-dom";
 
 import DataTable from "../../components/DataTable";
 
@@ -6,7 +6,7 @@ import api from "../../utils/api";
 import { Modal } from "@mantine/core";
 import SampleForm from "../../components/forms/SampleForm";
 import { useDisclosure } from "@mantine/hooks";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ShipmentForm from "../../components/forms/ShipmentForm";
 import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
@@ -14,6 +14,7 @@ import { sampleStatusString, shipmentString } from "../../utils/utils";
 import AnalysisDisplay from "../../components/data/AnalysisDisplay";
 import { AxiosError,isCancel } from "axios";
 import type { SampleInfo } from "../../utils/types";
+import { UserContext } from "../../utils/context";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -37,6 +38,8 @@ export async function loader(){
 }
 
 function OncologoPage(){
+    const user = useContext(UserContext)
+    const navigate = useNavigate()
 
     const [sampleShip, setSampleShip] = useState<number | null>(null)
 
@@ -50,6 +53,11 @@ function OncologoPage(){
     const [form, setForm] = useState('sample')
 
     const [opened, { open, close }] = useDisclosure(false);
+
+    useEffect(()=>{
+            if(user?.userType !== 'Oncologo')
+                navigate("/")
+    },[])
 
     //Function for letting the user create a shipment for a sample
     function createShipment(sampleId:number){

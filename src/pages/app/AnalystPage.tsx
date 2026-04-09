@@ -1,18 +1,19 @@
-import { useLoaderData, redirect, Link } from "react-router-dom";
+import { useLoaderData, redirect, Link, useNavigate } from "react-router-dom";
 
 import DataTable from "../../components/DataTable";
 
 import api from "../../utils/api";
 import { sampleStatusString, shipmentString } from "../../utils/utils";
-import { useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import WorkgroupInfo from "../../components/data/WorkgroupInfo";
 import ShipmentDisplay from "../../components/data/ShipmentDisplay";
 import AnalysisState from "../../components/data/AnalysisState";
 import { AxiosError,isCancel } from "axios";
-import type { SampleInfo } from "../../utils/types";
+import type { SampleInfo, UserData, UserType } from "../../utils/types";
 import { Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import RefertoForm from "../../components/forms/RefertoForm";
+import { UserContext } from "../../utils/context";
 
 //Loader for getting user's samples
 // eslint-disable-next-line react-refresh/only-export-components
@@ -34,6 +35,8 @@ export async function loader(){
 }
 
 function AnalystPage(){
+    const user = useContext(UserContext)
+    const navigate = useNavigate()
 
     const [odata,setOdata] = useState(useLoaderData() as Array<SampleInfo>)
     const [data,setData] = useState(odata)
@@ -44,6 +47,11 @@ function AnalystPage(){
     const controller = useRef(new AbortController())
 
     const [opened, { open, close }] = useDisclosure(false);
+
+    useEffect(()=>{
+        if(user?.userType !== 'Analista')
+            navigate("/")
+    },[])
 
     //Function for correctly updating page's data
     function setAllData(newData:Array<SampleInfo>){
@@ -100,7 +108,6 @@ function AnalystPage(){
             <ShipmentDisplay key={`${itm.id}.3`} sampleId={itm.id} shipment={itm.shipment} strfun={shipmentString} courierUsed={itm.isCourierUsed}/>,
             <AnalysisState key={`${itm.id}.4`} sampleid={itm.id} status={itm.analysisStat} shipping={itm.shipment?.status != 'arrived' && itm.isCourierUsed} data={odata} setData={setAllData} createfun={refCreate}/>
         ])
-        console.log(odata)
 
     return (
         <>
