@@ -24,6 +24,18 @@ function ShipmentIcon({status}:{status:ShipmentStatus}){
 }
 
 function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:ShipmentDisplayInput){
+
+    function dateString(date:Date,time:boolean){
+        date = new Date(date)
+
+        let str = `${date.getDay()}/${date.getDate()}/${date.getFullYear()}`
+
+        if(time)
+            str += ` ${date.getHours()}:${date.getMinutes()}`
+
+        return str;
+    }
+
     return (
         <>
             {shipment?
@@ -35,36 +47,36 @@ function ShipmentDisplay({sampleId,shipment,courierUsed,strfun,createShipment}:S
                     {shipment.status === 'received' &&
                         <Box>
                             <Text size="sm">
-                                Data di ritiro: {new Date(shipment.expectedTakenDate).toLocaleDateString()}
+                                Ritiro previsto: {dateString(shipment.expectedTakenDate,false)}
                             </Text>
                             <Text size="sm">
-                                Consegna prevista: {new Date(shipment.expectedDeliveryDate).toLocaleDateString()}
+                                Consegna prevista: {dateString(shipment.expectedDeliveryDate,false)}
                             </Text>
                         </Box>
                     }
                     {shipment.status === 'taken' &&
                         <Box>
                             <Text size="sm">
-                                In data: {shipment.effectiveTakenDate?.toLocaleString()}
+                                In data: {dateString(shipment.effectiveTakenDate?shipment.effectiveTakenDate:new Date(-1),true)}
                             </Text>
                             <Text size="sm">
-                                Consegna il: {shipment.expectedDeliveryDate.toLocaleString()}
+                                Consegna il: {dateString(shipment.expectedDeliveryDate,false)}
                             </Text>
                         </Box>
                     }
                     {shipment.status === 'in transit' &&
                         <Box>
                             <Text size="sm">
-                                Preso in data: {shipment.effectiveTakenDate?.toLocaleString()}
+                                Preso in data: {dateString(shipment.effectiveTakenDate?shipment.effectiveTakenDate:new Date(-1),true)}
                             </Text>
                             <Text size="sm">
-                                Consegna il: {shipment.expectedDeliveryDate.toLocaleString()}
+                                Consegna il: {dateString(shipment.expectedDeliveryDate,false)}
                             </Text>
                         </Box>
                     }
                     {shipment.status === 'arrived' &&
                             <Text size="sm">
-                                In data: {shipment.effectiveDeliveryDate?.toLocaleString()}
+                                In data: {dateString(shipment.effectiveDeliveryDate?shipment.effectiveDeliveryDate:new Date(-1),true)}
                             </Text>
                     }
                 </Group>
