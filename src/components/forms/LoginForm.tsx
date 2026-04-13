@@ -46,18 +46,17 @@ function LoginForm(){
     .then((res) => {
       setLoading(false)
 
+      if(res.data.failed)
+        setLogin({failed:true,message: "Email o password invalidi"})
+
       if(res.data.requiresConfig)
         navigate('/user/setup')
       else
         navigate('/')
     })
-    .catch((error) =>{
+    .catch(() =>{
       setLoading(false)
-
-      if(error.status === 401)
-        setLogin({failed:true,message: "Email o password invalidi"})
-      else
-        setLogin({failed:true,message: "Errore al server"})
+      setLogin({failed:true,message: "Errore al server"})
     })
 
   }
