@@ -25,7 +25,7 @@ const resSchema = z.object({
     lossOfHeterozygosityPercentage: z.number("Inserire un valore").nonoptional("Inserire un valore"),
     genomicInstabilityMetric: z.string().nonempty("Inserire la metrica"),
     hrdStatus: z.string().nonempty("Inserire un opzione"),
-    hrdScore: z.number().nonoptional("Inserire un opzione"),
+    hrdScore: z.number("Inserire un valore").nonoptional("Inserire un opzione"),
     genomicIntegrityStatus: z.string().nonempty("Inserire un opzione"),
     brcaMutationStatus: z.string().nonempty("Inserire un opzione"),
     genotypeBrca: z.string().nonempty("Inserire un opzione"),
@@ -261,6 +261,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                 <Fieldset legend="Tecnica">
                                     <NativeSelect
                                         label="Tipo di tecnica"
+                                        withAsterisk
                                         disabled={readonly}
                                         defaultValue={fdata.current.result?.technique}
                                         error={resErrors.technique?.message}
@@ -286,6 +287,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <NativeSelect
                                             label="Qualità DNA"
+                                            withAsterisk
                                             w={100}
                                             disabled={readonly}
                                             defaultValue={fdata.current.result?.dnaQuality}
@@ -298,6 +300,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                                         <NativeSelect
                                             label="Mutazione gene"
+                                            withAsterisk
                                             defaultValue={fdata.current.result?.geneMutation}
                                             error={resErrors.geneMutation?.message}
                                             {...resRegister('geneMutation',{required:true})}>
@@ -307,6 +310,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                                         <NativeSelect
                                             label="Stato di integrità"
+                                            withAsterisk
                                             defaultValue={fdata.current.result?.genomicIntegrityStatus}
                                             error={resErrors.genomicIntegrityStatus?.message}
                                             {...resRegister('genomicIntegrityStatus',{required:true})}>
@@ -327,6 +331,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                                         <NativeSelect
                                             label="Stato variante"
+                                            withAsterisk
                                             w={170}
                                             defaultValue={fdata.current.result?.variantStatus}
                                             error={resErrors.variantStatus?.message}
@@ -340,6 +345,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <NativeSelect
                                             label="Stato instabilità genoma"
+                                            withAsterisk
                                             defaultValue={fdata.current.result?.genomicInstabilityStatus}
                                             error={resErrors.genomicInstabilityStatus?.message}
                                             {...resRegister('genomicInstabilityStatus',{required:true})}>
@@ -366,7 +372,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                                         label="Perdita di eterozigosità"
                                                         placeholder="%"
                                                         suffix="%"
-                                                        w={150}
+                                                        w={180}
                                                         withAsterisk
                                                         defaultValue={fdata.current.result?.lossOfHeterozygosityPercentage}
                                                         error={resErrors.lossOfHeterozygosityPercentage?.message}

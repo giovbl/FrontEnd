@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import { useContext, useState, type ChangeEvent } from "react"
 import type { FacilityInfo, Sample, UserData } from "../../utils/types"
-import { IconAlertTriangle, IconX } from "@tabler/icons-react"
+import { IconAlertTriangle, IconCheck, IconX } from "@tabler/icons-react"
 import api from "../../utils/api"
 import { useNavigate } from "react-router-dom"
 import { UserContext } from "../../utils/context"
@@ -21,7 +21,7 @@ const schema = z.object({
     otherTissueSamplingMode: z.string(),
     biopsyType: z.string(),
     tissueProvenance: z.string(),
-    metaStaticSite: z.string(),
+    metaStaticSite: z.string().nonempty("Inserire il sito metastatico"),
     pctTumorCells: z.number().min(0,'Inserire un numero valido').max(100,'Inserire un numero valido').nonoptional('Inserire una percentuale'),
     ageOfSample: z.number("Inserire l'età del campione").min(0,'Inserire un numero valido'),
     pathologistNotes: z.string(),
@@ -55,16 +55,21 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
     const [failed, setFailed] = useState(false)
     const [tissueSampling,setTissueSampling] = useState('Biopsy')
     const [patientError,setPatientError] = useState(false)
+    const [patientExist,setPatientExist] = useState(false)
     const navigate = useNavigate()
 
     function patientExists(e: ChangeEvent<HTMLInputElement>){
-        if(e.target.value.length < 16)
+        if(e.target.value.length != 16){
+            setPatientError(true)
+            setPatientExist(false)
             return
+        }
 
         api.post('patient/exists',{
             fiscalCode: e.target.value
         }).then((res) =>{
             setPatientError(!res.data.exists)
+            setPatientExist(res.data.exists)
         })
     }
 
@@ -115,8 +120,10 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
         <Box>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <Fieldset legend='Paziente'>
+                    
                         <TextInput
                             label="Codice fiscale"
+                            rightSection={patientError?<IconX size={20} color="red"/>:(patientExist?<IconCheck size={20} color="green"/>:"")}
                             disabled={readonly}
                             value={data?.patient}
                             error={errors.patient?.message}
@@ -126,8 +133,14 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             })}
                             />
 
-                        {patientError &&
-                            <Text c='red' size="sm"><IconX size={10}/>Paziente non esistente</Text>
+                        {patientError?
+                            <Text ta="right" c='red' size="sm">Paziente non esistente</Text>
+                            :
+                            <>
+                                {patientExist &&
+                                    <Text ta="right" c='green' size="sm">Paziente esistente</Text>
+                                }
+                            </>
                         }
                 </Fieldset>
 
@@ -179,6 +192,13 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             <option key="Other" value="Other">Altro</option>
                         </NativeSelect>
 
+                        <Switch
+                            label="Materiale esaurito"
+                            disabled={readonly}
+                            checked={data?.exhaustedBiologicalMaterial}
+                            error={errors.exhaustedBiologicalMaterial?.message}
+                            {...register('exhaustedBiologicalMaterial',{required: true})}/>
+
                         <Controller
                             control={control}
                             name="ageOfSample"
@@ -199,13 +219,6 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                                 );
                             }}
                         />
-
-                        <Switch
-                            label="Esausto"
-                            disabled={readonly}
-                            checked={data?.exhaustedBiologicalMaterial}
-                            error={errors.exhaustedBiologicalMaterial?.message}
-                            {...register('exhaustedBiologicalMaterial',{required: true})}/>
                     </Group>
 
                     <Group>
@@ -232,7 +245,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     </Group>
 
                     <TextInput
-                        label="Zona metastasi"
+                        label="Sito metastatico"
                         disabled={readonly}
                         withAsterisk
                         value={data?.metaStaticSite}
@@ -248,7 +261,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <TextInput
                             label="Numero istologico"
                             placeholder="0000/00"
-                            disabled={readonly}
+                            disabled={readonly || bioType !== 'Tissue'}
                             withAsterisk={bioType === 'Tissue'}
                             value={data?.histologicalNumber}
                             error={errors.histologicalNumber?.message}
@@ -284,7 +297,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         
                     <Group>
                         <NativeSelect
-                            label="Tipo di sampling"
+                            label="Modalità campionamento"
                             disabled={readonly || bioType != 'Tissue'}
                             withAsterisk={bioType === 'Tissue'}
                             value={data?.tissueSamplingMode}
@@ -306,7 +319,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                             }
                         </NativeSelect>
                         <TextInput
-                            label="Altro tipo di sampling"
+                            label="Altra modalità campionamento"
                             disabled={readonly || tissueSampling != 'altro' || bioType != 'Tissue'}
                             value={data?.otherTissueSamplingMode}
                             error={errors.otherTissueSamplingMode?.message}

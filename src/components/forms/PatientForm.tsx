@@ -123,12 +123,12 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                     <Group>
                         <TextInput 
-                        label="Nome"
-                        disabled={readonly}
-                        withAsterisk
-                        value={data?.name}
-                        error={errors.name?.message}
-                        {...register('name',{required: true})}/>
+                            label="Nome"
+                            disabled={readonly}
+                            withAsterisk
+                            value={data?.name}
+                            error={errors.name?.message}
+                            {...register('name',{required: true})}/>
 
                         <TextInput 
                             label="Cognome" 
@@ -249,7 +249,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                 <Fieldset legend="Dati medici">
                     <Group>
                         <NativeSelect 
-                            label="Etnia"
+                            label="Origine etnica"
                             disabled={readonly}
                             withAsterisk
                             value={data?.ethnicOrigin}
@@ -341,7 +341,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         </NativeSelect>
 
                         <Switch
-                            label="BRCA eseguito"
+                            label="Esecuzione test somatico BRCA"
                             disabled={readonly}
                             checked={data?.brcaSomaticTest}
                             error={errors.brcaSomaticTest?.message}
@@ -369,7 +369,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                             {...register('otherHistology')}/>
 
                         <Textarea
-                            label="Dettagli isotopo"
+                            label="Altri dettagli isotipo"
                             resize="vertical"
                             disabled={readonly}
                             value={data?.isoTypeOtherDetails}
@@ -391,7 +391,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <Stack>
                             <Switch
-                                label="Trattamento sistemico"
+                                label="Trattamento sistemico ricevuto"
                                 disabled={readonly}
                                 checked={data?.hasReceivedSystemicTreatment}
                                 error={errors.hasReceivedSystemicTreatment?.message}
