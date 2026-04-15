@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import api from "../../../utils/api"
 import { useNavigate, useParams } from "react-router-dom"
-import { Alert, Box, Button, Center, Fieldset, Group, Loader, NumberInput, Space, Switch, Text, Textarea, TextInput } from "@mantine/core"
+import { Alert, Box, Button, Center, Fieldset, Group, Loader, NumberInput, Space, Switch, Textarea, TextInput } from "@mantine/core"
 import { IconArrowLeft, IconPdf, IconX } from "@tabler/icons-react"
 import type { RefertoInfo } from "../../../utils/types"
 import RefSummary from "../../../components/RefSummary"

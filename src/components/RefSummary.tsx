@@ -1,4 +1,4 @@
-import { Alert, Button, Group, Loader, Text } from "@mantine/core"
+import { Alert, Group, Loader, Text } from "@mantine/core"
 import { useEffect, useState } from "react"
 import api from "../utils/api"
 import { IconX } from "@tabler/icons-react"
