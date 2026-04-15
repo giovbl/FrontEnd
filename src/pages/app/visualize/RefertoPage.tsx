@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Alert, Box, Button, Center, Fieldset, Group, Loader, NumberInput, Space, Switch, Text, Textarea, TextInput } from "@mantine/core"
 import { IconArrowLeft, IconPdf, IconX } from "@tabler/icons-react"
 import type { RefertoInfo } from "../../../utils/types"
+import RefSummary from "../../../components/RefSummary"
 
 function RefertoPage(){
 
@@ -11,7 +12,7 @@ function RefertoPage(){
     const [existence,setExistence] = useState(true)
     const [loading,setLoading] = useState(true)
 
-    const params = useParams();
+    const params = useParams()
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -46,11 +47,7 @@ function RefertoPage(){
 
             <Box>
                 <Fieldset legend='Sommario'>
-                    {referto?.summary != null?
-                        <Text>{referto?.summary}</Text>
-                        :
-                        <Text>In fase di generazione. Riprova più tardi</Text>
-                    }
+                    <RefSummary refertoId={Number(params.id)} summary={(referto?.summary)?referto?.summary:null}/>
                 </Fieldset>
                  <Space h='md'/>
                 <Center>
