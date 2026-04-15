@@ -13,20 +13,22 @@ function RefSummary({refertoId,summary: smry}:RefSummaryInput){
     const [summary,setSummary] = useState(smry)
     const [error,setError] = useState(false)
 
+    const [effState, setEffState] = useState(false)
     useEffect(()=>{
         if(summary == null){
             const timer = setTimeout(()=>{
                 api.get(`referto/${refertoId}/summary`).then((res)=>{
                     setSummary(res.data.summary)
                     setError(false)
+                    setEffState((res.data.summary === summary)?!effState:effState)
                 }).catch(()=>{
                     setError(true)
                 })
-            },1000)
+            },10000)
 
             return () => clearTimeout(timer);
         }
-    },[summary])
+    },[summary,effState])
 
     return (
         <>
