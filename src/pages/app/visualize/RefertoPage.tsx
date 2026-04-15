@@ -5,6 +5,7 @@ import { Alert, Box, Button, Center, Fieldset, Group, Loader, NumberInput, Space
 import { IconArrowLeft, IconPdf, IconX } from "@tabler/icons-react"
 import type { RefertoInfo } from "../../../utils/types"
 import RefSummary from "../../../components/RefSummary"
+import AllCenter from "../../../components/AllCenter"
 
 function RefertoPage(){
 
@@ -26,6 +27,9 @@ function RefertoPage(){
         })
     },[])
 
+    if(loading)
+        return <AllCenter><Loader type="bars"/></AllCenter>
+
     return (
         <Box>
             <Button
@@ -39,10 +43,6 @@ function RefertoPage(){
 
             {!existence &&
                 <Alert variant="light" color="red" title="Referto non esistente" icon={<IconX/>}/>
-            }
-
-            {loading &&
-                <Loader type="bars"/>
             }
 
             <Box>
