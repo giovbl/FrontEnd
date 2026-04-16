@@ -124,7 +124,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         <TextInput
                             label="Codice fiscale"
                             rightSection={patientError?<IconX size={20} color="red"/>:(patientExist?<IconCheck size={20} color="green"/>:"")}
-                            disabled={readonly}
+                            readOnly={readonly}
                             value={data?.patient}
                             error={errors.patient?.message}
                             withAsterisk
@@ -177,7 +177,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <Group>
                         <NativeSelect
                             label="Tipo di materiale"
-                            disabled={readonly}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
                             value={data?.typeOfBiologicalMaterial}
                             withAsterisk
                             error={errors.typeOfBiologicalMaterial?.message}
@@ -194,7 +194,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
                         <Switch
                             label="Materiale esaurito"
-                            disabled={readonly}
+                            readOnly={readonly}
                             checked={data?.exhaustedBiologicalMaterial}
                             error={errors.exhaustedBiologicalMaterial?.message}
                             {...register('exhaustedBiologicalMaterial',{required: true})}/>
@@ -208,7 +208,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                                     <NumberInput
                                         label="Età del campione"
                                         suffix=" mesi"
-                                        disabled={readonly}
+                                        readOnly={readonly}
                                         withAsterisk
                                         value={data?.ageOfSample}
                                         error={errors.ageOfSample?.message}
@@ -232,7 +232,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                                         label="Percentuale cellule tumorali"
                                         suffix="%"
                                         placeholder="%"
-                                        disabled={readonly}
+                                        readOnly={readonly}
                                         withAsterisk
                                         value={data?.pctTumorCells}
                                         error={errors.pctTumorCells?.message}
@@ -246,7 +246,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
                     <TextInput
                         label="Sito metastatico"
-                        disabled={readonly}
+                        readOnly={readonly}
                         withAsterisk
                         value={data?.metaStaticSite}
                         error={errors.metaStaticSite?.message}
@@ -261,7 +261,8 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <TextInput
                             label="Numero istologico"
                             placeholder="0000/00"
-                            disabled={readonly || bioType !== 'Tissue'}
+                            readOnly={readonly}
+                            disabled={bioType !== 'Tissue'}
                             withAsterisk={bioType === 'Tissue'}
                             value={data?.histologicalNumber}
                             error={errors.histologicalNumber?.message}
@@ -270,7 +271,8 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <Group>
                         <NativeSelect
                             label="Preservazione"
-                            disabled={readonly || bioType != 'Tissue'}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
+                            disabled={bioType != 'Tissue'}
                             withAsterisk={bioType === 'Tissue'}
                             value={data?.tissuePreservationMode}
                             error={errors.tissuePreservationMode?.message}
@@ -288,7 +290,8 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
                         <TextInput
                             label="Provenienza"
-                            disabled={readonly || bioType != 'Tissue'}
+                            readOnly={readonly}
+                            disabled={bioType != 'Tissue'}
                             withAsterisk={bioType === 'Tissue'}
                             value={data?.tissueProvenance}
                             error={errors.tissueProvenance?.message}
@@ -298,7 +301,8 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                     <Group>
                         <NativeSelect
                             label="Modalità campionamento"
-                            disabled={readonly || bioType != 'Tissue'}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
+                            disabled={bioType != 'Tissue'}
                             withAsterisk={bioType === 'Tissue'}
                             value={data?.tissueSamplingMode}
                             error={errors.tissueSamplingMode?.message}
@@ -320,7 +324,8 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
                         </NativeSelect>
                         <TextInput
                             label="Altra modalità campionamento"
-                            disabled={readonly || tissueSampling != 'altro' || bioType != 'Tissue'}
+                            readOnly={readonly}
+                            disabled={tissueSampling != 'altro' || bioType != 'Tissue'}
                             value={data?.otherTissueSamplingMode}
                             error={errors.otherTissueSamplingMode?.message}
                             {...register('otherTissueSamplingMode')}/>
@@ -328,7 +333,8 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
                      <NativeSelect
                             label="Tipo di biopsia"
-                            disabled={readonly || tissueSampling != 'Biopsy' || bioType != 'Tissue'}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
+                            disabled={tissueSampling != 'Biopsy' || bioType != 'Tissue'}
                             value={data?.biopsyType}
                             withAsterisk={tissueSampling === 'Biopsy'}
                             error={errors.biopsyType?.message}
@@ -351,7 +357,7 @@ function SampleForm({facilities,readonly,data}:SampleFormInput){
 
                 <Textarea
                     label='Note patologo'
-                    disabled={readonly}
+                    readOnly={readonly}
                     value={data?.pathologistNotes}
                     error={errors.pathologistNotes?.message}
                     {...register('pathologistNotes')}/>

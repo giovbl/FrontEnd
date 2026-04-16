@@ -118,7 +118,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <TextInput 
                             label="Codice fiscale"
                             rightSection={(data === undefined && !errors.fiscalCode && fce) && <IconCheck size={20} color="green"/>}
-                            disabled={readonly}
+                            readOnly={readonly}
                             withAsterisk
                             value={data?.fiscalCode}
                             error={errors.fiscalCode?.message}
@@ -133,7 +133,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         
                         <Switch
                             label="Estero"
-                            disabled={readonly}
+                            readOnly={readonly}
                             checked={data?.isForeign}
                             error={errors.isForeign?.message}
                             {...register('isForeign',{required: true})}/>
@@ -142,7 +142,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <TextInput 
                             label="Nome"
-                            disabled={readonly}
+                            readOnly={readonly}
                             withAsterisk
                             value={data?.name}
                             error={errors.name?.message}
@@ -150,15 +150,15 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <TextInput 
                             label="Cognome" 
-                            disabled={readonly} 
+                            readOnly={readonly} 
                             withAsterisk
                             value={data?.surname}
                             error={errors.surname?.message}
                             {...register('surname',{required: true})}/>
 
                         <NativeSelect 
-                            label="Sesso" 
-                            disabled={readonly} 
+                            label="Sesso"
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
                             withAsterisk
                             value={data?.gender}
                             error={errors.gender?.message}
@@ -178,7 +178,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                 return (
                                     <DateInput 
                                         label="Data di nascita" 
-                                        disabled={readonly}
+                                        readOnly={readonly}
                                         withAsterisk
                                         value={data?.birthDate}
                                         error={errors.birthDate?.message}
@@ -192,7 +192,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <TextInput 
                             label="Numero di telefono"
-                            disabled={readonly}
+                            readOnly={readonly}
                             withAsterisk
                             value={data?.phone}
                             error={errors.phone?.message}
@@ -204,7 +204,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <TextInput 
                             label="Regione" 
-                            disabled={readonly} 
+                            readOnly={readonly} 
                             withAsterisk
                             value={data?.residenceRegion}
                             error={errors.residenceRegion?.message}
@@ -212,7 +212,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <TextInput 
                             label="Provincia" 
-                            disabled={readonly} 
+                            readOnly={readonly} 
                             withAsterisk
                             value={data?.residenceProvince}
                             error={errors.residenceProvince?.message}
@@ -220,7 +220,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <TextInput 
                             label="Città"
-                            disabled={readonly} 
+                            readOnly={readonly} 
                             withAsterisk
                             value={data?.residenceCity}
                             error={errors.residenceCity?.message}
@@ -229,7 +229,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <TextInput 
                             label="CAP"
-                            disabled={readonly} 
+                            readOnly={readonly} 
                             withAsterisk
                             value={data?.cap}
                             error={errors.cap?.message}
@@ -237,7 +237,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <TextInput 
                             label="Indirizzo"
-                            disabled={readonly} 
+                            readOnly={readonly} 
                             value={data?.address}
                             withAsterisk
                             error={errors.address?.message}
@@ -251,7 +251,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                 return (
                                     <NumberInput
                                         label="Civico"
-                                        disabled={readonly} 
+                                        readOnly={readonly} 
                                         withAsterisk
                                         value={data?.civicNumber}
                                         error={errors.civicNumber?.message}
@@ -268,7 +268,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <NativeSelect 
                             label="Origine etnica"
-                            disabled={readonly}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
                             withAsterisk
                             value={data?.ethnicOrigin}
                             error={errors.ethnicOrigin?.message}
@@ -287,7 +287,8 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <TextInput 
                             label="Altra etnia"
-                            disabled={readonly || !otherEthnicity}
+                            readOnly={readonly}
+                            disabled={!otherEthnicity}
                             withAsterisk={otherEthnicity}
                             value={data?.otherEthnicOrigin}
                             error={errors.otherEthnicOrigin?.message}
@@ -300,7 +301,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <NativeSelect 
                             label="Diagnosi"
-                            disabled={readonly}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
                             withAsterisk
                             value={data?.diagnosis}
                             error={errors.diagnosis?.message}
@@ -312,7 +313,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <NativeSelect 
                             label="Neoplasia"
-                            disabled={readonly}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
                             withAsterisk
                             value={data?.neoplasia}
                             error={errors.neoplasia?.message}
@@ -330,7 +331,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                 return (
                                     <NumberInput
                                         label="Familiarità"
-                                        disabled={readonly}
+                                        readOnly={readonly}
                                         withAsterisk
                                         value={(Number.isNaN(data?.familiarity))?0:data?.familiarity}
                                         error={errors.familiarity?.message}
@@ -348,7 +349,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <NativeSelect 
                             label="Mutazione"
-                            disabled={readonly}
+                            style={(readonly)?{ pointerEvents: 'none' }:{}}
                             withAsterisk
                             value={data?.mutationResult}
                             error={errors.mutationResult?.message}
@@ -360,7 +361,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                         <Switch
                             label="Esecuzione test somatico BRCA"
-                            disabled={readonly}
+                            readOnly={readonly}
                             checked={data?.brcaSomaticTest}
                             error={errors.brcaSomaticTest?.message}
                             {...register('brcaSomaticTest',{required: true})}/>
@@ -372,7 +373,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <Textarea
                             label="Istologia"
                             resize="both"
-                            disabled={readonly}
+                            readOnly={readonly}
                             withAsterisk
                             value={data?.histology}
                             error={errors.histology?.message}
@@ -381,7 +382,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <Textarea
                             label="Altra istologia"
                             resize="both"
-                            disabled={readonly}
+                            readOnly={readonly}
                             value={data?.otherHistology}
                             error={errors.otherHistology?.message}
                             {...register('otherHistology')}/>
@@ -389,7 +390,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <Textarea
                             label="Altri dettagli isotipo"
                             resize="vertical"
-                            disabled={readonly}
+                            readOnly={readonly}
                             value={data?.isoTypeOtherDetails}
                             error={errors.isoTypeOtherDetails?.message}
                             {...register('isoTypeOtherDetails')}/>
@@ -401,7 +402,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Group>
                         <NativeSelect
                                 label="Sensibilità al platino"
-                                disabled={readonly}
+                                style={(readonly)?{ pointerEvents: 'none' }:{}}
                                 withAsterisk
                                 w={140}
                                 value={(data?.platinumSensitive !== undefined)?String(data?.platinumSensitive):undefined}
@@ -415,7 +416,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                         <Textarea
                             label="Trattamenti precedenti"
                             resize="both"
-                            disabled={readonly}
+                            readOnly={readonly}
                             value={data?.previousTreatments}
                             error={errors.previousTreatments?.message}
                             {...register('previousTreatments')}/>
@@ -424,7 +425,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                             <Switch
                                 label="Trattamento sistemico ricevuto"
-                                disabled={readonly}
+                                readOnly={readonly}
                                 checked={data?.hasReceivedSystemicTreatment}
                                 error={errors.hasReceivedSystemicTreatment?.message}
                                 {...register('hasReceivedSystemicTreatment',{required: true})}/>
@@ -438,7 +439,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Textarea
                         label="Allergie"
                         resize="both"
-                        disabled={readonly}
+                        readOnly={readonly}
                         value={data?.allergies}
                         error={errors.allergies?.message}
                         {...register('allergies')}/>
@@ -446,7 +447,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                     <Textarea
                         label="Altre note"
                         resize="both"
-                        disabled={readonly}
+                        readOnly={readonly}
                         value={data?.oncologistNotes}
                         error={errors.oncologistNotes?.message}
                         {...register('oncologistNotes')}/>
@@ -455,7 +456,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                 <Fieldset legend="Condizioni privacy">
                     <Switch
                         label="Consenso al trattamento dei dati personali"
-                        disabled={readonly}
+                        readOnly={readonly}
                         checked={data?.privacyPersonalData}
                         error={errors.privacyPersonalData?.message}
                         {...register('privacyPersonalData',{required: true})}/>
@@ -464,7 +465,7 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                     <Switch
                         label="Consenso ai termini e condizioni della privacy"
-                        disabled={readonly}
+                        readOnly={readonly}
                         checked={data?.privacyAndConditions}
                         error={errors.privacyAndConditions?.message}
                         {...register('privacyAndConditions',{required: true})}/>
