@@ -413,13 +413,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                 checked={data?.hasReceivedSystemicTreatment}
                                 error={errors.hasReceivedSystemicTreatment?.message}
                                 {...register('hasReceivedSystemicTreatment',{required: true})}/>
-
-                            <Switch
-                                label="Sensibilità al platino"
-                                disabled={readonly}
-                                checked={data?.platinumSensitive}
-                                error={errors.platinumSensitive?.message}
-                                {...register('platinumSensitive',{required: true})}/>
+                                
                         </Stack>
                     </Group>
                 </Fieldset>
@@ -466,9 +460,9 @@ function PatientForm({readonly,data}:PatientFormInput){
                 {!readonly &&
                 <>
                     {loading?
-                    <Button type='submit' loading loaderProps={{ type: 'dots' }}>Crea paziente</Button>
-                    :
-                    <Button type='submit'>Crea paziente</Button>
+                        <Button type='submit' loading loaderProps={{ type: 'dots' }}>Crea paziente</Button>
+                        :
+                        <Button type='submit'>Crea paziente</Button>
                     }
                 </>
                 }
