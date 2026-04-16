@@ -9,7 +9,7 @@ import {type Patient} from '../../utils/types'
 import { useState } from 'react'
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import api from '../../utils/api'
-import { IconAlertTriangle, IconCheck, IconX } from '@tabler/icons-react'
+import { IconAlertTriangle, IconCheck} from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import type { AxiosError } from 'axios'
 
