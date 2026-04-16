@@ -39,7 +39,7 @@ const schema = z.object({
     otherHistology: z.string(),
     isoTypeOtherDetails: z.string(),
     hasReceivedSystemicTreatment: z.boolean(),
-    platinumSensitive: z.boolean(),
+    platinumSensitive: z.string(),
     oncologistNotes: z.string(),
     allergies: z.string(),
     previousTreatments: z.string()
@@ -85,7 +85,10 @@ function PatientForm({readonly,data}:PatientFormInput){
         rdata.initials = data.name.substring(0,3) + '. ' + data.surname.substring(0,3) + '.'
         
         try{
-            await api.post("patient",rdata)
+            await api.post("patient",{
+                ...rdata,
+                platinumSensitive: (data.platinumSensitive !== 'null')?Boolean(data.platinumSensitive):null
+            })
 
             setLoading(false)
             navigate(0)
@@ -381,6 +384,19 @@ function PatientForm({readonly,data}:PatientFormInput){
 
                 <Fieldset legend="Trattamento">
                     <Group>
+                        <NativeSelect
+                                label="Sensibilità al platino"
+                                disabled={readonly}
+                                withAsterisk
+                                w={140}
+                                value={(data?.platinumSensitive)?String(data.platinumSensitive):undefined}
+                                error={errors.platinumSensitive?.message}
+                                {...register('platinumSensitive',{required: true})}>
+                                    <option key="true" value="true">Si</option>
+                                    <option key="false" value="false">No</option>
+                                    <option key="null" value="null">Non noto</option>
+                        </NativeSelect>
+
                         <Textarea
                             label="Trattamenti precedenti"
                             resize="both"
@@ -390,6 +406,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                             {...register('previousTreatments')}/>
 
                         <Stack>
+
                             <Switch
                                 label="Trattamento sistemico ricevuto"
                                 disabled={readonly}
