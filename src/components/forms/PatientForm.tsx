@@ -87,7 +87,7 @@ function PatientForm({readonly,data}:PatientFormInput){
         try{
             await api.post("patient",{
                 ...rdata,
-                platinumSensitive: (data.platinumSensitive !== 'null')?Boolean(data.platinumSensitive):null
+                platinumSensitive: (data.platinumSensitive !== 'null')?(data.platinumSensitive === 'true'):null
             })
 
             setLoading(false)
@@ -389,7 +389,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                 disabled={readonly}
                                 withAsterisk
                                 w={140}
-                                value={(data?.platinumSensitive)?String(data.platinumSensitive):undefined}
+                                value={(data?.platinumSensitive !== undefined)?String(data?.platinumSensitive):undefined}
                                 error={errors.platinumSensitive?.message}
                                 {...register('platinumSensitive',{required: true})}>
                                     <option key="true" value="true">Si</option>
@@ -413,7 +413,7 @@ function PatientForm({readonly,data}:PatientFormInput){
                                 checked={data?.hasReceivedSystemicTreatment}
                                 error={errors.hasReceivedSystemicTreatment?.message}
                                 {...register('hasReceivedSystemicTreatment',{required: true})}/>
-                                
+
                         </Stack>
                     </Group>
                 </Fieldset>
