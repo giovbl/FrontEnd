@@ -3,17 +3,22 @@ import { DateInput } from '@mantine/dates'
 
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import CodiceFiscale from "codice-fiscale-js"
 
 import {type Patient} from '../../utils/types'
 import { useState } from 'react'
 import { Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import api from '../../utils/api'
-import { IconAlertTriangle } from '@tabler/icons-react'
+import { IconAlertTriangle, IconCheck, IconX } from '@tabler/icons-react'
 import { useNavigate } from 'react-router-dom'
 import type { AxiosError } from 'axios'
 
 const schema = z.object({
-    fiscalCode: z.string().nonempty("Inserire codice fiscale"),
+    fiscalCode: z.string()
+                 .nonempty("Inserire codice fiscale")
+                 .refine((val)=>CodiceFiscale.check(val),{
+                    message: "Codice fiscale non valido"
+                  }),
     isForeign: z.boolean(),
     name: z.string().nonempty("Inserire nome"),
     surname: z.string().nonempty("Inserire cognome"),
@@ -60,6 +65,7 @@ function PatientForm({readonly,data}:PatientFormInput){
     const {
         register,
         control,
+        trigger,
         handleSubmit,
         formState: {errors}
     } = useForm<PatientData>({
@@ -69,6 +75,7 @@ function PatientForm({readonly,data}:PatientFormInput){
     const [loading,setLoading] = useState(false)
     const [otherEthnicity, setOtherEthnicity] = useState(false)
     const [patientExists,setPatientExists] = useState(false)
+    const [fce,setFce] = useState(false)
     const [failed, setFailed] = useState(false)
     const navigate = useNavigate()
 
@@ -109,12 +116,20 @@ function PatientForm({readonly,data}:PatientFormInput){
                 <Fieldset legend='Generalità'>
                     <Group>
                         <TextInput 
-                            label="Codice fiscale" 
-                            disabled={readonly} 
+                            label="Codice fiscale"
+                            rightSection={(data === undefined && !errors.fiscalCode && fce) && <IconCheck size={20} color="green"/>}
+                            disabled={readonly}
                             withAsterisk
                             value={data?.fiscalCode}
                             error={errors.fiscalCode?.message}
-                            {...register('fiscalCode',{required: true})}/>
+                            {...register('fiscalCode',{
+                                required: true,
+                                onChange: async (e) =>{
+                                    setFce(e.target.value != "")
+                                    await trigger("fiscalCode")
+                                }
+                                })
+                            }/>
                         
                         <Switch
                             label="Estero"
