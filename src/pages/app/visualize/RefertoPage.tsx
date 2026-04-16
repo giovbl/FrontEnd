@@ -67,28 +67,28 @@ function RefertoPage(){
                         <Fieldset legend='Idoneità etichetta'>
                             <Switch
                                 label="Etichetta idonea"
-                                disabled
+                                readOnly
                                 checked={referto.isLabelEligible}/>
 
                             <TextInput
                                 label="Motivazione"
-                                disabled
+                                readOnly
                                 value={referto.notElegibleReason}/>
 
                             <Textarea
                                 label="Altra motivazione"
-                                disabled
+                                readOnly
                                 value={referto.otherNotElegibleReason}/>
                         </Fieldset>
                         <Fieldset legend='Idoneità campione'>
                             <Switch
                                 label="Campione idoneo"
-                                disabled
+                                readOnly
                                 checked={referto?.isSampleElegible}/>
 
                             <Textarea
                                 label="Motivazione"
-                                disabled
+                                readOnly
                                 resize="both"
                                 value={referto?.reasonSampleNotElegible}/>
                         </Fieldset>
@@ -101,13 +101,13 @@ function RefertoPage(){
                             <Fieldset legend="Tecnica">
                                 <TextInput
                                     label="Tipo di tecnica"
-                                    disabled
+                                    readOnly
                                     value={referto.result?.technique}/>
 
                                 <Textarea
                                     label="Note tecniche"
                                     resize="both"
-                                    disabled
+                                    readOnly
                                     value={referto.result?.technicalNotes}/>
                             </Fieldset>
 
@@ -118,17 +118,17 @@ function RefertoPage(){
                                     <TextInput
                                         label="Qualità DNA"
                                         w={100}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.dnaQuality}/>
 
                                     <TextInput
                                         label="Mutazione gene"
-                                        disabled
+                                        readOnly
                                         value={referto.result?.geneMutation}/>
 
                                     <TextInput
                                         label="Stato di integrità"
-                                        disabled
+                                        readOnly
                                         value={referto.result?.genomicIntegrityStatus}/>
                                 </Group>
 
@@ -136,25 +136,25 @@ function RefertoPage(){
                                     <TextInput
                                         label="Altro gene"
                                         w={150}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.geneOther}/>
 
                                     <TextInput
                                         label="Stato variante"
                                         w={170}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.variantStatus}/>
                                 </Group>
 
                                 <Group>
                                     <TextInput
                                         label="Stato instabilità genoma"
-                                        disabled
+                                        readOnly
                                         defaultValue={referto.result?.genomicInstabilityStatus}/>
 
                                     <TextInput 
                                         label="Metrica di instabilità"
-                                        disabled
+                                        readOnly
                                         value={referto.result?.genomicInstabilityMetric}/>
                                 </Group>
                                 <Group align="center">           
@@ -163,7 +163,7 @@ function RefertoPage(){
                                     placeholder="%"
                                     suffix="%"
                                     w={150}
-                                    disabled
+                                    readOnly
                                     value={referto.result?.lossOfHeterozygosityPercentage}/>                      
                                 </Group>
 
@@ -172,14 +172,14 @@ function RefertoPage(){
                                         label="Exon"
                                         placeholder="ATGGCCA..."
                                         w={180}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.exon}/>
 
                                     <TextInput 
                                         label="Intron"
                                         placeholder="GTGAGTAAA..."
                                         w={180}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.intron}/>
                                 </Group>
 
@@ -187,12 +187,12 @@ function RefertoPage(){
                                     <TextInput 
                                         label="Sostituzione aminoacidi"
                                         w={180}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.aminoacidSubstitution}/>
                                     <TextInput 
                                         label="Sostituzione nucleotidi"
                                         w={180}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.nucleotideSubstitution}/>
                                 </Group>
                             </Fieldset>
@@ -203,21 +203,21 @@ function RefertoPage(){
                                 <Group>
                                     <TextInput
                                         label="Stato"
-                                        disabled
+                                        readOnly
                                         value={referto.result?.hrdStatus}/>
 
                                     <NumberInput
                                         label="Score"
                                         placeholder="00"
                                         w={150}
-                                        disabled
+                                        readOnly
                                         value={referto.result?.hrdScore}/>
                                 </Group>
 
                                 <Textarea
                                     label="Note"
                                     resize="both"
-                                    disabled
+                                    readOnly
                                     value={referto.result?.refertingNotesHrd}/>
                             </Fieldset>
 
@@ -225,18 +225,18 @@ function RefertoPage(){
                                 <Group>
                                     <TextInput
                                         label="Stato mutazione"
-                                        disabled
+                                        readOnly
                                         value={referto.result?.brcaMutationStatus}/>
                                     <TextInput
                                         label="Genotipo"
-                                        disabled
+                                        readOnly
                                         value={referto.result?.genotypeBrca}/>
                                 </Group>
                                 
                                 <Textarea
                                     label="Note"
                                     resize="both"
-                                    disabled
+                                    readOnly
                                     value={referto.result?.reportingNotesBRCA}/>
                             </Fieldset>
                             
@@ -244,12 +244,12 @@ function RefertoPage(){
                                 <Textarea
                                     label="Altre note"
                                     resize="both"
-                                    disabled
+                                    readOnly
                                     defaultValue={referto.result?.reportingNotes}/>
                                 <Textarea
                                     label="Note centro analisi"
                                     resize="both"
-                                    disabled
+                                    readOnly
                                     defaultValue={referto.result?.notesAnalysisCenter}/>
                             </Fieldset>
                         </Fieldset>
