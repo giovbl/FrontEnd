@@ -386,7 +386,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <TextInput 
                                             label="Exon"
-                                            placeholder="Es. c.1234C>T"
+                                            placeholder="es. Exon 6"
                                             w={180}
                                             withAsterisk
                                             value={fdata.current.result?.exon}
@@ -395,7 +395,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                                         <TextInput 
                                             label="Intron"
-                                            placeholder="Es. c.567+2T>G"
+                                            placeholder="es. Introne 11"
                                             w={180}
                                             withAsterisk
                                             value={fdata.current.result?.intron}
