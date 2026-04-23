@@ -386,7 +386,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <TextInput 
                                             label="Exon"
-                                            placeholder="ATGGCCA..."
+                                            placeholder="Es. c.1234C>T"
                                             w={180}
                                             withAsterisk
                                             value={fdata.current.result?.exon}
@@ -395,7 +395,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
                                         <TextInput 
                                             label="Intron"
-                                            placeholder="GTGAGTAAA..."
+                                            placeholder="Es. c.567+2T>G"
                                             w={180}
                                             withAsterisk
                                             value={fdata.current.result?.intron}
@@ -406,6 +406,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     <Group>
                                         <TextInput 
                                             label="Sostituzione aminoacidi"
+                                            placeholder="Es. p.Gly144Ser"
                                             w={180}
                                             withAsterisk
                                             value={fdata.current.result?.aminoacidSubstitution}
@@ -413,6 +414,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                             {...resRegister('aminoacidSubstitution',{required: true})}/>
                                         <TextInput 
                                             label="Sostituzione nucleotidi"
+                                            placeholder="Es. c.430G>A"
                                             w={180}
                                             withAsterisk
                                             value={fdata.current.result?.nucleotideSubstitution}
