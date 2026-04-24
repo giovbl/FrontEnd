@@ -10,7 +10,7 @@ import api from "../../utils/api"
 //Schema for Referto form
 const schema = z.object({
     isLabelEligible: z.boolean().nonoptional(),
-    notElegibleReason: z.string(),
+    notElegibleReason: z.string().nullable(),
     otherNotElegibleReason: z.string(),
     isSampleElegible: z.boolean().nonoptional(),
     reasonSampleNotElegible: z.string()
@@ -101,6 +101,9 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
 
     //Referto handling function
     function onRefSubmit(data:RefertoData){
+
+        if(!data.isLabelEligible)
+            data.notElegibleReason = null
 
         fdata.current.referto = data;
 
@@ -209,7 +212,7 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
                                     label="Motivazione"
                                     disabled={labelElibigle}
                                     withAsterisk
-                                    defaultValue={fdata.current.referto?.notElegibleReason}
+                                    defaultValue={(fdata.current.referto?.notElegibleReason)?fdata.current.referto?.notElegibleReason:""}
                                     error={refErrors.notElegibleReason?.message}
                                     {...refRegister('notElegibleReason',{
                                         onChange: (e)=>setOtherEl(e.target.value === 'Other')

@@ -79,7 +79,7 @@ function PatientForm({readonly,data}:PatientFormInput){
     const [failed, setFailed] = useState(false)
     const navigate = useNavigate()
 
-    if(data?.ethnicOrigin === 'Altro')
+    if(data?.ethnicOrigin === 'Altro' && !readonly)
         setOtherEthnicity(true)
 
     const onSubmit:SubmitHandler<PatientData> = async (data:PatientData) =>{
@@ -87,7 +87,7 @@ function PatientForm({readonly,data}:PatientFormInput){
         setLoading(true)
         setPatientExists(false)
         setFailed(false)
-        
+
         const rdata:PatientDataExtended = data as PatientDataExtended
         rdata.initials = data.name.substring(0,3) + '. ' + data.surname.substring(0,3) + '.'
         
