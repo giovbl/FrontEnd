@@ -102,9 +102,6 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
     //Referto handling function
     function onRefSubmit(data:RefertoData){
 
-        if(!data.isLabelEligible)
-            data.notElegibleReason = null
-
         fdata.current.referto = data;
 
         if(!(labelElibigle && data.isSampleElegible))
@@ -152,6 +149,10 @@ function RefertoForm({readonly,sampleId}:RefertoFormInput){
             const res = await api.post('referto',{
                 referto: {
                     ...fdata.current.referto,
+                    notElegibleReason: (!fdata.current.referto.isLabelEligible)? 
+                                            fdata.current.referto.notElegibleReason
+                                            :
+                                            null,
                     sample: sampleId
                 },
                 result: (labelElibigle && sampleElibigle)?fdata.current.result:null
