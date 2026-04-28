@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             width={300}
             iconSize={150} 
             textSize="lg" 
-            text="Errore di comunicazione col server"/>
+            text="Si è verificato un errore"/>
       </AllCenter>
     ),
     hydrateFallbackElement: <LoadingLayout/>,
@@ -58,7 +58,7 @@ const router = createBrowserRouter([
                 width={300}
                 iconSize={150} 
                 textSize="lg"
-                text="Errore di comunicazione col server"/>
+                text="Si è verificato un errore"/>
           </AllCenter>
         )
       },
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
                 width={300}
                 iconSize={150} 
                 textSize="lg" 
-                text="Errore di comunicazione col server"/>
+                text="Si è verificato un errore"/>
           </AllCenter>
         )
       },
@@ -86,7 +86,7 @@ const router = createBrowserRouter([
                 width={300}
                 iconSize={150} 
                 textSize="lg" 
-                text="Errore di comunicazione col server"/>
+                text="Si è verificato un errore"/>
           </AllCenter>
         )
       },
@@ -100,7 +100,7 @@ const router = createBrowserRouter([
                 width={300}
                 iconSize={150} 
                 textSize="lg"
-                text="Errore di comunicazione col server"/>
+                text="Si è verificato un errore"/>
           </AllCenter>
         )
       },
@@ -150,7 +150,7 @@ const router = createBrowserRouter([
             width={300}
             iconSize={150} 
             textSize="lg" 
-            text="Errore di comunicazione col server"/>
+            text="Si è verificato un errore"/>
       </AllCenter>)
   },
   {
