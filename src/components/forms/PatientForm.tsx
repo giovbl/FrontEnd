@@ -4,6 +4,7 @@ import { DateInput } from '@mantine/dates'
 import z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import CodiceFiscale from "codice-fiscale-js"
+import parsePhoneNumber,{ AsYouType } from 'libphonenumber-js'
 
 import {type Patient} from '../../utils/types'
 import { useState } from 'react'
@@ -34,9 +35,11 @@ const schema = z.object({
     civicNumber: z.number("Inserire il civico").nonnegative("Inserire un numero valido").nonoptional("Inserire il civico"),
     phone: z.string()
             .nonempty("Inserire un numero di telefono")
-            .refine((val)=>(
-                val.replaceAll(/(-| |\.)/g,'').match(/^\+(?:[0-9] ?){6,14}[0-9]$/)!==null
-            ),{ message: "Numero di telefono non valido"}),
+            .refine((val)=>{
+                const phoneNumber = parsePhoneNumber(val, 'IT')
+
+                return (phoneNumber === null)?false:phoneNumber?.isValid()
+            },{ message: "Numero di telefono non valido"}),
     privacyAndConditions: z.boolean(),
     privacyPersonalData: z.boolean(),
     diagnosis: z.string(),
@@ -194,13 +197,28 @@ function PatientForm({readonly,data}:PatientFormInput){
                             }}
                         />
 
-                        <TextInput 
-                            label="Numero di telefono"
-                            readOnly={readonly}
-                            withAsterisk
-                            value={data?.phone}
-                            error={errors.phone?.message}
-                            {...register('phone',{required: true})}/>
+                        <Controller
+                            control={control}
+                            name="phone"
+                            rules={{ required: true }}
+                            render={({ field }) => {
+                                return (
+                                    <TextInput 
+                                        label="Numero di telefono"
+                                        readOnly={readonly}
+                                        withAsterisk
+                                        value={data?.phone}
+                                        error={errors.phone?.message}
+                                        onChange={async (e) => {
+                                            e.target.value = new AsYouType('IT').input(e.target.value)
+                                            field.onChange(e);
+                                            await trigger("phone")
+                                        }}
+                                    />
+                                );
+                            }}
+                        />
+
                     </Group>
                 </Fieldset>
 
