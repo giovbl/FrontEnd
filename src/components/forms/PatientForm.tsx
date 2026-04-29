@@ -39,9 +39,9 @@ const schema = z.object({
                 const phoneNumber = parsePhoneNumber(val, 'IT')
 
                 return (phoneNumber === null)?false:phoneNumber?.isValid()
-            },{ message: "Numero di telefono non valido"}),
-    privacyAndConditions: z.boolean(),
-    privacyPersonalData: z.boolean(),
+            },{message: "Numero di telefono non valido"}),
+    privacyAndConditions: z.boolean().refine((val)=>val===true,{message: "Le condizioni devono essere accettate"}),
+    privacyPersonalData: z.boolean().refine((val)=>val===true,{message: "Le condizioni devono essere accettate"}),
     diagnosis: z.string(),
     neoplasia: z.string(),
     familiarity: z.number("Inserire familiarità").nonoptional("Inserire familiarità"),
