@@ -32,7 +32,11 @@ const schema = z.object({
     cap: z.string().nonempty("Inserire CAP"),
     address: z.string().nonempty("Inserire indirizzo"),
     civicNumber: z.number("Inserire il civico").nonnegative("Inserire un numero valido").nonoptional("Inserire il civico"),
-    phone: z.string().nonempty("Inserire un numero di telefono"),
+    phone: z.string()
+            .nonempty("Inserire un numero di telefono")
+            .refine((val)=>(
+                val.replaceAll(/(-| |\.)/g,'').match(/^\+(?:[0-9] ?){6,14}[0-9]$/)!==null
+            ),{ message: "Numero di telefono non valido"}),
     privacyAndConditions: z.boolean(),
     privacyPersonalData: z.boolean(),
     diagnosis: z.string(),
